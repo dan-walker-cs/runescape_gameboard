@@ -7,12 +7,84 @@ html, body {
     font-family: "Inter", sans-serif;
 }
 
+
 header {
     height: 10%;
-    background-color: rgb(208, 190, 255);
+    background-color: rgb(217, 217, 217);
 
     display: flex;
     flex-direction: row;
+}
+
+.brand__image {
+    --outline: auto;
+    width: 10%;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.brand__image img {
+    max-width: 100%;
+    max-height: 100%;
+
+    border-radius: 30%;
+}
+
+.brand__name {
+    --outline: auto;
+    width: 20%;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.brand__name p {
+    font-family: "Kablammo", system-ui;
+    font-optical-sizing: auto;
+    font-weight: 400;
+    font-style: normal;
+    font-variation-settings:
+        "MORF" 0;
+    font-size: 4em;
+}
+
+nav {
+    --outline: auto;
+    width: 70%;
+
+    display: flex;
+    flex-direction: row;
+}
+
+.header__nav__item {
+    --outline: auto;
+    flex: 1;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.header__nav__item :hover {
+    font-size: 1.2em;
+    font-weight: 600;
+
+    transition: font-size 0.25s ease;
+}
+
+.header__nav__item :active {
+    filter: invert(1);
+    transition: font-size 0.5s ease;
+}
+
+.header__nav__item p {
+    font-family: "Michroma", sans-serif;
+    font-weight: 400;
+    font-style: normal;
+    font-size: 1em;
 }
 
 main {
