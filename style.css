@@ -7,6 +7,13 @@ html, body {
     font-family: "Inter", sans-serif;
 }
 
+.font--primary {
+    font-family: "Michroma", sans-serif;
+    font-weight: 400;
+    font-style: normal;
+    font-size: 1em;
+}
+
 
 header {
     height: 10%;
@@ -80,25 +87,33 @@ nav {
     transition: font-size 0.5s ease;
 }
 
-.header__nav__item p {
-    font-family: "Michroma", sans-serif;
-    font-weight: 400;
-    font-style: normal;
-    font-size: 1em;
-}
-
 main {
-    height: 75%;
-    background-color: rgb(164, 255, 157);
+    height: 80%;
 
     display: flex;
     flex-direction: column;
 }
 
 footer {
-    height: 15%;
-    background-color: rgb(153, 221, 255);
+    height: 10%;
+    background-color: rgb(217, 217, 217);
 
     display: flex;
     flex-direction: row;
+}
+
+.footer__credits {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+}
+
+.footer__credits__item {
+    --outline: auto;
+    flex: 1;
+
+    display: flex;
+
+    justify-content: center;
+    align-items: center;
 }
