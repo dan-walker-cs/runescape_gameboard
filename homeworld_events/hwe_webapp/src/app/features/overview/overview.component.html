@@ -4,15 +4,15 @@
             <h2>Overview</h2>
         </div>
         <div class="main__section font--primary">
-            <h3>Winter 2025 Bingo</h3>
+            <h3>{{ overview_fields.EVENT_TITLE }}</h3>
             <hr class="shadow--primary"/>
-            <p><b>Start:</b> November 11, 2025 @ 10:00</p>
-            <p><b>End:</b> November 23, 2025 @ 23:59</p>
+            <p><b>Start:</b> {{ overview_fields.START_DT }}</p>
+            <p><b>End:</b> {{ overview_fields.END_DT }}</p>
             <br/>
-            <p><b>Team 1: team-name</b></p>
-            <p><b>Members:</b> member-one, member-two, member-three, member-four, member-five</p>
-            <p><b>Team 2: team-name</b></p>
-            <p><b>Members:</b> member-one, member-two, member-three, member-four, member-five</p>
+            <p><b>Team 1: {{ overview_fields.TEAM_NAME_1 }}</b></p>
+            <p><b>Members:</b> {{ overview_fields.TEAM_MEMBERS_1 }}</p>
+            <p><b>Team 2: {{ overview_fields.TEAM_NAME_2 }}</b></p>
+            <p><b>Members:</b> {{ overview_fields.TEAM_MEMBERS_2 }}</p>
             <br/>
             <hr class="shadow--primary"/>
             <br/>
