@@ -1,0 +1,26 @@
+footer {
+    height: 10%;
+
+    display: flex;
+    flex-direction: row;
+
+    box-shadow: 0 -8px 20px rgba(0, 0, 0, 0.15);
+
+    font-size: 0.75em;
+}
+
+.footer__credits {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+}
+
+.footer__credits__item {
+    --outline: auto;
+    flex: 1;
+
+    display: flex;
+
+    justify-content: center;
+    align-items: center;
+}
