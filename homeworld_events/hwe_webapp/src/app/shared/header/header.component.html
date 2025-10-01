@@ -7,19 +7,19 @@
     </div>
     <nav class="header__nav">
         <div class="header__nav__item">
-            <a [routerLink]="['/overview']" class="font--secondary">Overview</a>
+            <a [routerLink]="['/overview']" routerLinkActive="active" class="font--secondary">Overview</a>
         </div>
         <div class="header__nav__item">
             <a class="font--secondary">Rules</a>
         </div>
         <div class="header__nav__item">
-            <a class="font--secondary">Board</a>
+            <a [routerLink]="['/board']" routerLinkActive="active" class="font--secondary">Board</a>
         </div>
         <div class="header__nav__item">
             <a class="font--secondary">Tiles</a>
         </div>
         <div class="header__nav__item">
-            <a [routerLink]="['/links']" class="font--secondary">External Links</a>
+            <a [routerLink]="['/links']" routerLinkActive="active" class="font--secondary">External Links</a>
         </div>
     </nav>
 </header>

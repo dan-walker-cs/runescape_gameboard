@@ -4,7 +4,11 @@ html, body {
     padding: 0;
     margin: 0;
 
-    font-family: "Inter", sans-serif;
+    font-family: "Michroma", sans-serif;
+    font-weight: 400;
+    font-style: normal;
+    font-size: 1em;
+    color: black;
 }
 
 .background--primary {
@@ -34,4 +38,18 @@ html, body {
 .shadow--primary {
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1),
     0 8px 16px rgba(0, 0, 0, 0.15);
+}
+
+.tile-modal-container {
+    max-height: none !important;
+    overflow: visible !important;
+
+    width: fit-content;
+    max-width: 90vh;
+}
+
+/* Better text fit for TileModal */
+.cdk-overlay-pane.tile-modal-container .mat-mdc-dialog-content {
+  max-height: none !important;
+  overflow: visible !important;
 }
