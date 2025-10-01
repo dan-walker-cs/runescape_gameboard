@@ -28,11 +28,20 @@
         - When a tile is completed, the tile is highlighted green
         - When a tile is completed, the user who completed the tile is displayed
         - When a tile is completed, it can no longer be marked as reserved & any reservation info is cleared
+    - Support multiple users with live, stateful updates; concurrent & asynchronous operations retain data integrity
 - Provide read-only tileset
 
-# Version Descriptions
+# Version Descriptions / Development Roadmap
 - v0.1: HTML & CSS templating
-- v0.2: Angular integration & routing
-- v0.3: Basic frontend logic for components **<-- Current**
-- v0.4: Angular services & dependency injection
-- v0.5: ?Backend work begins?
+- v0.2: Angular integration, routing, components, & basic game-tile functionality
+- v0.3: Angular services, dependency injection, and refactoring **<-- Current**
+- v0.4: SpringBoot (backend) boilerplate and integration
+- v0.5: ?MySQL? (database) creation and integration
+- v0.6: Alpha interactive Gameboard implementation
+- v1.0: Alpha single-user compatability release
+- v1.x: Implement Rules webpage & navigation
+- v1.x: Implement Tiles webpage & navigation
+- v1.x: User Acceptance Testing & bugfixes
+- v2.0: Beta single-user compatability release
+- v2.x: Asychronous & concurrent multi-user compatability implementation
+- v3.0: Alpha multi-user compatability release (Event Release)
