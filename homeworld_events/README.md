@@ -16,6 +16,18 @@
 - Display all event overview and rules data
 - Display all team & member data
 - Provide interactive tileset
+    - Tiles show icon related to objective they represent
+    - Tiles are selectable
+        - When a tile is selected, the tile is highlighted yellow
+        - When a tile is selected, a modal window appears to display tile data
+            - Tile data includes objective name, point value, objective description
+    - Tiles can be marked as reserved so users can indicate intent to complete
+        - When a tile is reserved, the tile is highlighted blue
+        - When a tile is reserved, the user reserving the tile is displayed
+    - Tiles can be marked as completed so users can indicate progress on the gameboard
+        - When a tile is completed, the tile is highlighted green
+        - When a tile is completed, the user who completed the tile is displayed
+        - When a tile is completed, it can no longer be marked as reserved & any reservation info is cleared
 - Provide read-only tileset
 
 # Version Descriptions
