@@ -1,0 +1,33 @@
+<!-- Ensure hover hightlighting takes precedence for tiles. -->
+
+<h3 mat-dialog-title>{{ tileData.title }}</h3>
+
+<div mat-dialog-content>
+    <!-- Persistent text -->
+    <p><b>{{ tileData.value }} point(s)</b></p>
+    <p>{{ tileData.desc }}</p>
+
+    <!-- Conditional text -->
+    <p *ngIf="showReservedBy()"><b>Reserved By: {{ reservedByCtrl.value }}</b></p>
+    <p *ngIf="showCompletedBy()"><b>Completed By: {{ completedByCtrl.value }}</b></p>
+
+    <!-- Checkbox & input control for completion -->
+    <mat-checkbox *ngIf="showIsCompleted()" [formControl]="isCompletedCtrl">Mark Complete</mat-checkbox>
+    <mat-form-field *ngIf="showCompletedByInput()">
+        <mat-label>Username</mat-label>
+        <input matInput placeholder="ex. nasty_haze" [formControl]="completedByCtrl" />
+    </mat-form-field>
+
+    <!-- Checkbox & input control for reservation -->
+    <mat-checkbox *ngIf="showIsReserved()" [formControl]="isReservedCtrl">Reserve?</mat-checkbox>
+    <mat-form-field *ngIf="showReservedByInput()">
+        <mat-label>Username</mat-label>
+        <input matInput placeholder="ex. nasty_haze" [formControl]="reservedByCtrl" />
+    </mat-form-field>
+</div>
+
+<div mat-dialog-actions>
+    <button *ngIf="!this.isEdit" mat-button (click)="onEdit()">Edit</button>
+    <button *ngIf="this.isEdit" mat-button (click)="onSave()">Save</button>
+    <button mat-button (click)="onClose()">Close</button>
+</div>

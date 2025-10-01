@@ -1,0 +1,60 @@
+.game-tile {
+    --outline: auto; /*debug*/
+    --background-color: greenyellow; /*debug*/
+
+    width: 8em;
+    aspect-ratio: 100 / 86.6;
+    position: relative;
+
+    display: flex;
+    flex-direction: column;
+
+    justify-content: center;
+    align-items: center;
+
+    fill: #ffffff;
+
+    stroke: #333;
+    stroke-width: 3;
+    stroke-linejoin: round;
+
+    cursor: pointer;
+    transition: fill 500ms, stroke 500ms;
+}
+
+.game-tile:hover { 
+    stroke: #ffcc00 !important; 
+    fill: #ffe9ae ; /*acceptance test this w/ & w/out !important*/
+}
+
+:host(.active) .game-tile {
+    stroke: #ffcc00 !important; 
+    fill: #ffe9ae ; /*acceptance test this w/ & w/out !important*/
+}
+
+:host(.complete) .game-tile {
+    stroke: #468328; 
+    fill: #89ff7b;
+}
+
+:host(.reserve) .game-tile {
+    stroke: #287783; 
+    fill: #7bdcff;
+}
+
+.game-tile__icon {
+    position: absolute;
+    inset: 0;
+
+    display: flex;
+
+    justify-content: center;
+    align-items: center;
+
+    pointer-events: none;
+}
+
+.game-tile__icon img {
+    width: 60%;
+    height: auto;
+}
