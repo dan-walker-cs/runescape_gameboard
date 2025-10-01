@@ -10,9 +10,10 @@ export class ModalService {
   openTileModal(tile: Tile) {
     return this.dialog
     .open(TileModal, { 
-        data: tile, 
-        panelClass: 'tile-modal-container' }
-    )
+            data: tile, 
+            panelClass: 'tile-modal-container' ,
+            autoFocus: false
+        })
     .afterClosed();
   }
 }

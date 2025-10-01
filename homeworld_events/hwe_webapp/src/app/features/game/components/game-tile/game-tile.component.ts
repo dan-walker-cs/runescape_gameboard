@@ -1,8 +1,9 @@
-import { Component, HostBinding } from '@angular/core';
-import { MatDialog, MatDialogModule } from '@angular/material/dialog';
+import { Component, computed, HostBinding, inject, Input, Signal } from '@angular/core';
+import { MatDialogModule } from '@angular/material/dialog';
 import { CommonModule } from '@angular/common';
-import { TileModal } from '../tile-modal/tile-modal.component';
 import { Tile } from '../../models/tile.model';
+import { TileStore } from '../../data/tile-store.service';
+import { ModalService } from '../../../../core/services/modal.service';
 
 
 @Component({
@@ -13,51 +14,35 @@ import { Tile } from '../../models/tile.model';
   styleUrl: './game-tile.component.css'
 })
 export class GameTile {
-  @HostBinding('class.active') isActive: boolean = false;
-  // TODO: replace with backend persisted state once SB setup complete
-  @HostBinding('class.complete') isCompleted: boolean = false;
-  // TODO: replace with backend persisted state once SB setup complete
-  @HostBinding('class.reserve') isReserved: boolean = false;
+  private readonly tileStore = inject(TileStore);
+  private readonly tileModals = inject(ModalService);
 
-  // TODO: replace with backend persisted state once SB setup complete
-  reservedBy: string = '';
-  // TODO: replace with backend persisted state once SB setup complete
-  completedBy: string = '';
+  // Retrieve tile based on id input
+  @Input({ required: true }) tileId!: number;
+  tile: Signal<Tile | undefined> = computed(() => this.tileStore.getTileById(this.tileId)());
 
-  constructor(public tileModal: MatDialog) {}
+  // Retrieve tile fields required for binding
+  @HostBinding('class.active') get isActive() { return !!this.tile()?.isActive };
+  @HostBinding('class.complete') get isCompleted() { return !!this.tile()?.isCompleted };
+  @HostBinding('class.reserve') get isReserved() { return !!this.tile()?.isReserved };
 
   onTileSelect() {
-    this.isActive = true;
-    // TODO: Move to a declaration file & ensure isComplete has a default false value
-    const tile: Tile = {
-      id: 1,
-      title: 'Sample Objective',
-      desc: 'Go touch grass',
-      value: 1,
-      isReserved: this.isReserved,
-      reservedBy: this.reservedBy,
-      isCompleted: this.isCompleted,
-      completedBy: this.completedBy
-    };
+    // Create a clean snapshot of the current value & activate if exists
+    const t = this.tile();
+    if (!t) return;
+    this.tileStore.setActive(t.id, true);
 
-    this.tileModal
-      .open(TileModal, { data: tile, panelClass: 'tile-modal-container' })
-      .afterClosed()
-      .subscribe((result?: { isReserved: boolean; reservedBy: string; isCompleted: boolean; completedBy: string }) => {
-        // TODO: Refactor
-        if (result) {
-          if (result.isCompleted) {
-            this.isReserved = false;
-            this.reservedBy = '';
-          } else {
-            this.isReserved = result.isReserved;
-            this.reservedBy = this.isReserved ? result.reservedBy : '';
-          }
+    // Subscribe to modal changes & update the store to reflect
+    this.tileModals.openTileModal(t).subscribe((result?: Partial<Tile>) => {
+      if (result)
+        this.tileStore.updateFromModal(t.id, {
+          isReserved: result.isReserved,
+          reservedBy: result.reservedBy ?? null,
+          isCompleted: result.isCompleted,
+          completedBy: result.completedBy ?? null
+        });
 
-          this.isCompleted = result.isCompleted;
-          this.completedBy = this.isCompleted ? result.completedBy : '';
-        }
-        this.isActive = false;
-      });
-    }
+      this.tileStore.setActive(t.id, false);
+    });
+  }
 }

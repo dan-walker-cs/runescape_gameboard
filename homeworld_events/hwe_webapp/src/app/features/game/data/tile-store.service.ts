@@ -1,4 +1,4 @@
-import { Injectable, signal, computed } from '@angular/core';
+import { Injectable, signal, computed, Signal } from '@angular/core';
 import { Tile } from '../models/tile.model';
 
 @Injectable({ providedIn: 'root' })
@@ -9,12 +9,16 @@ export class TileStore {
     // Signal: Angular's reactive state primitive
     private _tiles = signal<Tile[]>([
         { id: 1, title: 'Sample Objective', desc: 'Go touch grass', value: 1, isReserved: false, isCompleted: false, isActive: false },
-        { id: 2, title: 'Second Objective', desc: 'Drink water', value: 1, isReserved: false, isCompleted: false, isActive: false },
+        { id: 2, title: 'Another Objective', desc: 'Drink water', value: 1, isReserved: false, isCompleted: false, isActive: false },
     ]);
 
     // Public, immutable store for use outside the service
     // Computed: Creates a derrived signal. Whenever the dependency signal changes, the computation is automatically re-run.
     readonly tiles = computed(() => this._tiles());
+
+    getTileById(id: number): Signal<Tile | undefined> {
+        return computed(() => this._tiles().find(t => t.id === id));
+    }
 
     setActive(id: number, active: boolean) {
         this._mutate(id, t => ({ ...t, isActive: active }));
@@ -53,9 +57,19 @@ export class TileStore {
      */
     private _mutate(id: number, fn: (t: Tile) => Tile) {
         this._tiles.update(list => 
-            list.map(t => 
-                t.id === id ? fn(t): t
-            )
+            list.map(t => t.id === id ? this._normalize(fn(t)): t)
         );
+    }
+
+    /**
+     * Applies domain logic to mutated tiles.
+     * Domain Logic: Tile Completion data overrides Tile Reservation data.
+     * @param mutatedTile 
+     * @returns normalizedTile
+     */
+    private _normalize(mutatedTile: Tile): Tile {
+        return mutatedTile.isCompleted
+            ? { ...mutatedTile, isReserved: false, reservedBy: null }
+            : mutatedTile;
     }
 }
