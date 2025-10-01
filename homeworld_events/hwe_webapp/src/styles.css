@@ -40,14 +40,6 @@ html, body {
     0 8px 16px rgba(0, 0, 0, 0.15);
 }
 
-.tile-modal-container {
-    max-height: none !important;
-    overflow: visible !important;
-
-    width: fit-content;
-    max-width: 90vh;
-}
-
 /* Better text fit for TileModal */
 .cdk-overlay-pane.tile-modal-container .mat-mdc-dialog-content {
   max-height: none !important;
