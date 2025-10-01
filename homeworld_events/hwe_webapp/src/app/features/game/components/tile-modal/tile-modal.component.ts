@@ -6,17 +6,7 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { ReactiveFormsModule, FormControl } from '@angular/forms';
 import { NgIf } from "@angular/common";
-
-export type TileData = { 
-  id: number;
-  title: string;
-  desc: string;
-  value: number;
-  isReserved: boolean,
-  reservedBy: string | undefined,
-  isComplete: boolean,
-  completedBy: string | undefined
-};
+import { Tile } from '../../models/tile.model';
 
 @Component({
   selector: 'app-tile-modal',
@@ -33,11 +23,11 @@ export class TileModal {
   completedByCtrl: FormControl<string>;
   isEdit: boolean = false;
 
-  constructor(public tileModal: MatDialogRef<TileModal>, @Inject(MAT_DIALOG_DATA) public tileData: TileData) {
-    this.isReservedCtrl = new FormControl<boolean>(tileData?.isReserved ?? false, { nonNullable: true });
-    this.reservedByCtrl = new FormControl<string>(tileData?.reservedBy ?? '', { nonNullable: true });
-    this.isCompletedCtrl = new FormControl<boolean>(tileData?.isComplete ?? false, { nonNullable: true });
-    this.completedByCtrl = new FormControl<string>(tileData?.completedBy ?? '', { nonNullable: true });
+  constructor(public tileModal: MatDialogRef<TileModal>, @Inject(MAT_DIALOG_DATA) public tile: Tile) {
+    this.isReservedCtrl = new FormControl<boolean>(tile?.isReserved ?? false, { nonNullable: true });
+    this.reservedByCtrl = new FormControl<string>(tile?.reservedBy ?? '', { nonNullable: true });
+    this.isCompletedCtrl = new FormControl<boolean>(tile?.isCompleted ?? false, { nonNullable: true });
+    this.completedByCtrl = new FormControl<string>(tile?.completedBy ?? '', { nonNullable: true });
   }
 
   onEdit() {
@@ -49,7 +39,7 @@ export class TileModal {
     this.tileModal.close({ 
       isReserved: this.isReservedCtrl.value,
       reservedBy: this.reservedByCtrl.value,
-      isComplete: this.isCompletedCtrl.value,
+      isCompleted: this.isCompletedCtrl.value,
       completedBy: this.completedByCtrl.value
     });
   }
