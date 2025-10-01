@@ -1,16 +1,16 @@
 # runescape_gameboard
 
 # Tech Stack
-HTML/CSS > Typescript > Java 17 > MySQL(?)
-CSS Framework: none
-Frontend Framework: Angular 17
-Backend Framework: Spring/SpringBoot
+- HTML/CSS > Typescript > Java 17 > MySQL(?)
+- CSS Framework: none
+- Frontend Framework: Angular 17
+- Backend Framework: Spring/SpringBoot
 
 # Git Practices
 - Contributors should follow the Git naming conventions below to have their PRs approved
-Primary Branch: main
-Release Branches: vx.x (i.e. v0.1)
-Feature Branches: feature/vx.x/feature_name (i.e. feature/v0.1/overview_template)
+- Primary Branch: main
+- Release Branches: vx.x (i.e. v0.1)
+- Feature Branches: feature/vx.x/feature_name (i.e. feature/v0.1/overview_template)
 
 # General Requirements
 - Display all event overview and rules data
