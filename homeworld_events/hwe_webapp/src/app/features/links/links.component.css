@@ -1,5 +1,11 @@
+:host {
+    display: contents; /*ignore wrapper element from router-outlet*/
+}
+
 main {
-    height: 80%;
+    --outline: auto; /*debug*/
+    --background-color: rgb(43, 0, 255); /*debug*/
+    min-height: 0;
     width: 75em;
     flex: 1;
 
@@ -10,7 +16,7 @@ main {
 }
 
 .main__hero {
-    --outline:auto;
+    --outline:auto; /*debug*/
     width: 50%;
     margin-top: 2em;
 
