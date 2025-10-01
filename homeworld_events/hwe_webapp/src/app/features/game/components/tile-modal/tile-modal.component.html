@@ -1,11 +1,9 @@
-<!-- Ensure hover hightlighting takes precedence for tiles. -->
-
-<h3 mat-dialog-title>{{ tileData.title }}</h3>
+<h3 mat-dialog-title>{{ tile.title }}</h3>
 
 <div mat-dialog-content>
     <!-- Persistent text -->
-    <p><b>{{ tileData.value }} point(s)</b></p>
-    <p>{{ tileData.desc }}</p>
+    <p><b>{{ tile.value }} point(s)</b></p>
+    <p>{{ tile.desc }}</p>
 
     <!-- Conditional text -->
     <p *ngIf="showReservedBy()"><b>Reserved By: {{ reservedByCtrl.value }}</b></p>

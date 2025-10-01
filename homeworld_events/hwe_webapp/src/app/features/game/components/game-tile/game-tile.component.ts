@@ -1,7 +1,8 @@
 import { Component, HostBinding } from '@angular/core';
 import { MatDialog, MatDialogModule } from '@angular/material/dialog';
 import { CommonModule } from '@angular/common';
-import { TileData, TileModal } from '../tile-modal/tile-modal.component';
+import { TileModal } from '../tile-modal/tile-modal.component';
+import { Tile } from '../../models/tile.model';
 
 
 @Component({
@@ -14,7 +15,7 @@ import { TileData, TileModal } from '../tile-modal/tile-modal.component';
 export class GameTile {
   @HostBinding('class.active') isActive: boolean = false;
   // TODO: replace with backend persisted state once SB setup complete
-  @HostBinding('class.complete') isComplete: boolean = false;
+  @HostBinding('class.complete') isCompleted: boolean = false;
   // TODO: replace with backend persisted state once SB setup complete
   @HostBinding('class.reserve') isReserved: boolean = false;
 
@@ -28,24 +29,24 @@ export class GameTile {
   onTileSelect() {
     this.isActive = true;
     // TODO: Move to a declaration file & ensure isComplete has a default false value
-    const tileData: TileData = {
+    const tile: Tile = {
       id: 1,
       title: 'Sample Objective',
       desc: 'Go touch grass',
       value: 1,
       isReserved: this.isReserved,
       reservedBy: this.reservedBy,
-      isComplete: this.isComplete,
+      isCompleted: this.isCompleted,
       completedBy: this.completedBy
     };
 
     this.tileModal
-      .open(TileModal, { data: tileData, panelClass: 'tile-modal-container' })
+      .open(TileModal, { data: tile, panelClass: 'tile-modal-container' })
       .afterClosed()
-      .subscribe((result?: { isReserved: boolean; reservedBy: string; isComplete: boolean; completedBy: string }) => {
+      .subscribe((result?: { isReserved: boolean; reservedBy: string; isCompleted: boolean; completedBy: string }) => {
         // TODO: Refactor
         if (result) {
-          if (result.isComplete) {
+          if (result.isCompleted) {
             this.isReserved = false;
             this.reservedBy = '';
           } else {
@@ -53,8 +54,8 @@ export class GameTile {
             this.reservedBy = this.isReserved ? result.reservedBy : '';
           }
 
-          this.isComplete = result.isComplete;
-          this.completedBy = this.isComplete ? result.completedBy : '';
+          this.isCompleted = result.isCompleted;
+          this.completedBy = this.isCompleted ? result.completedBy : '';
         }
         this.isActive = false;
       });
