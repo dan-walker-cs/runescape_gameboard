@@ -17,6 +17,7 @@ public class TileMapper {
      */
     public TileResponse toResponse(Tile tileEntity) {
         return TileResponse.builder()
+            .id(tileEntity.getId())
             .title(tileEntity.getTitle())
             .description(tileEntity.getDescription())
             .weight(tileEntity.getWeight())

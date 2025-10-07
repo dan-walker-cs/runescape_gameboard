@@ -1,17 +1,17 @@
 import { Injectable, inject } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
-import { Tile } from '../../features/game/models/tile.model';
-import { TileModal } from '../../features/game/components/tile-modal/tile-modal.component';
+import { TileModel } from '../../features/game/models/tile.model';
+import { TileDialog } from '../../features/game/components/tile-dialog/tile-dialog.component';
 
 @Injectable({ providedIn: 'root' })
-export class ModalService {
+export class DialogService {
   private readonly dialog = inject(MatDialog);
 
-  openTileModal(tile: Tile) {
+  openTileDialog(tile: TileModel) {
     return this.dialog
-    .open(TileModal, { 
+    .open(TileDialog, { 
             data: tile, 
-            panelClass: 'tile-modal-container' ,
+            panelClass: 'tile-dialog-container' ,
             autoFocus: false
         })
     .afterClosed();

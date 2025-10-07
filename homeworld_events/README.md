@@ -19,7 +19,7 @@
     - Tiles show icon related to objective they represent
     - Tiles are selectable
         - When a tile is selected, the tile is highlighted yellow
-        - When a tile is selected, a modal window appears to display tile data
+        - When a tile is selected, a dialog window appears to display tile data
             - Tile data includes objective name, point value, objective description
     - Tiles can be marked as reserved so users can indicate intent to complete
         - When a tile is reserved, the tile is highlighted blue

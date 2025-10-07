@@ -1,5 +1,5 @@
 import { Injectable, signal, computed, Signal } from '@angular/core';
-import { Tile } from '../models/tile.model';
+import { TileModel } from '../models/tile.model';
 
 @Injectable({ providedIn: 'root' })
 export class TileStore {
@@ -7,7 +7,7 @@ export class TileStore {
 
     // Private, mutable store for use within this service
     // Signal: Angular's reactive state primitive
-    private _tiles = signal<Tile[]>([
+    private _tiles = signal<TileModel[]>([
         { id: 1, title: 'Sample Objective', desc: 'Go touch grass', value: 1, isReserved: false, isCompleted: false, isActive: false },
         { id: 2, title: 'Another Objective', desc: 'Drink water', value: 1, isReserved: false, isCompleted: false, isActive: false },
     ]);
@@ -16,7 +16,7 @@ export class TileStore {
     // Computed: Creates a derrived signal. Whenever the dependency signal changes, the computation is automatically re-run.
     readonly tiles = computed(() => this._tiles());
 
-    getTileById(id: number): Signal<Tile | undefined> {
+    getTileById(id: number): Signal<TileModel | undefined> {
         return computed(() => this._tiles().find(t => t.id === id));
     }
 
@@ -42,7 +42,7 @@ export class TileStore {
         this._mutate(id, t => ({ ...t, isCompleted: !!completedBy, completedBy }));
     }
 
-    updateFromModal(id: number, patch: Partial<Pick<Tile, 'isReserved'|'reservedBy'|'isCompleted'|'completedBy'>>) {
+    updateFromDialog(id: number, patch: Partial<Pick<TileModel, 'isReserved'|'reservedBy'|'isCompleted'|'completedBy'>>) {
         // Pick<Tile,..>: Creates a new type using field declarations from Tile. New type includes only provided fields.
         // Partial: Wraps Pick to make all fields optional.
         this._mutate(id, t => ({ ...t, ...patch }));
@@ -55,7 +55,7 @@ export class TileStore {
      * @param id
      * @param fn
      */
-    private _mutate(id: number, fn: (t: Tile) => Tile) {
+    private _mutate(id: number, fn: (t: TileModel) => TileModel) {
         this._tiles.update(list => 
             list.map(t => t.id === id ? this._normalize(fn(t)): t)
         );
@@ -67,7 +67,7 @@ export class TileStore {
      * @param mutatedTile 
      * @returns normalizedTile
      */
-    private _normalize(mutatedTile: Tile): Tile {
+    private _normalize(mutatedTile: TileModel): TileModel {
         return mutatedTile.isCompleted
             ? { ...mutatedTile, isReserved: false, reservedBy: null }
             : mutatedTile;

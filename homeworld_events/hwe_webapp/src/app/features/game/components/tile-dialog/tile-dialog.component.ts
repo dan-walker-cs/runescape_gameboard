@@ -6,24 +6,24 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { ReactiveFormsModule, FormControl } from '@angular/forms';
 import { NgIf } from "@angular/common";
-import { Tile } from '../../models/tile.model';
+import { TileModel } from '../../models/tile.model';
 
 @Component({
-  selector: 'app-tile-modal',
+  selector: 'app-tile-dialog',
   standalone: true,
   imports: [MatDialogModule, MatButtonModule, MatCheckboxModule, MatFormFieldModule, 
     MatInputModule, ReactiveFormsModule, NgIf],
-  templateUrl: './tile-modal.component.html',
-  styleUrl: './tile-modal.component.css'
+  templateUrl: './tile-dialog.component.html',
+  styleUrl: './tile-dialog.component.css'
 })
-export class TileModal {
+export class TileDialog {
   isReservedCtrl: FormControl<boolean>;
   reservedByCtrl: FormControl<string>;
   isCompletedCtrl: FormControl<boolean>;
   completedByCtrl: FormControl<string>;
   isEdit: boolean = false;
 
-  constructor(public tileModal: MatDialogRef<TileModal>, @Inject(MAT_DIALOG_DATA) public tile: Tile) {
+  constructor(public tileDialog: MatDialogRef<TileDialog>, @Inject(MAT_DIALOG_DATA) public tile: TileModel) {
     this.isReservedCtrl = new FormControl<boolean>(tile?.isReserved ?? false, { nonNullable: true });
     this.reservedByCtrl = new FormControl<string>(tile?.reservedBy ?? '', { nonNullable: true });
     this.isCompletedCtrl = new FormControl<boolean>(tile?.isCompleted ?? false, { nonNullable: true });
@@ -36,7 +36,7 @@ export class TileModal {
 
   onSave() {
     this.isEdit = false;
-    this.tileModal.close({ 
+    this.tileDialog.close({ 
       isReserved: this.isReservedCtrl.value,
       reservedBy: this.reservedByCtrl.value,
       isCompleted: this.isCompletedCtrl.value,
@@ -46,7 +46,7 @@ export class TileModal {
 
   onClose() {
     this.isEdit = false;
-    this.tileModal.close();
+    this.tileDialog.close();
   }
 
   showIsReserved() {

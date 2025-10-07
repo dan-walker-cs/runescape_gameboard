@@ -15,6 +15,7 @@ import lombok.Builder;
  */
 @Builder
 public record TileResponse (
+    Long id,
     String title,
     String description,
     int weight,

@@ -1,4 +1,4 @@
-export interface Tile {
+export interface TileModel {
   id: number;
   title: string;
   desc: string;
