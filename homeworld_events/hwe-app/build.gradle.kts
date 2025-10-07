@@ -5,8 +5,8 @@ plugins {
 }
 
 group = "com.nastyhaze.homeworld"
-version = "0.0.1-SNAPSHOT"
-description = "Demo project for Spring Boot"
+version = "0.4"
+description = "Web API for HomeWorld clan events in Oldschool Runescape."
 
 java {
 	toolchain {
