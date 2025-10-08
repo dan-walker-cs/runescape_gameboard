@@ -4,5 +4,6 @@ import lombok.Builder;
 
 @Builder
 public record PlayerResponse (
+    Long id,
     String displayName
 ) {}

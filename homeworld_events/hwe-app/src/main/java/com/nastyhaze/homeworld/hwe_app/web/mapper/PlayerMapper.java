@@ -17,6 +17,7 @@ public class PlayerMapper {
      */
     public PlayerResponse toResponse(Player playerEntity) {
         return PlayerResponse.builder()
+            .id(playerEntity.getId())
             .displayName(playerEntity.getDisplayName())
             .build();
     }
