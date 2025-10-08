@@ -35,13 +35,16 @@
 - v0.1: HTML & CSS templating
 - v0.2: Angular integration, routing, components, & basic game-tile functionality
 - v0.3: Angular services, dependency injection, and refactoring
-- v0.4: SpringBoot (backend) boilerplate and integration **<-- Current**
-- v0.5: ?MySQL? (database) creation and integration
-- v0.6: Alpha interactive Gameboard implementation
-- v1.0: Alpha single-user compatability release
-- v1.x: Implement Rules webpage & navigation
-- v1.x: Implement Tiles webpage & navigation
-- v1.x: User Acceptance Testing & bugfixes
-- v2.0: Beta single-user compatability release
+- v0.4: SpringBoot (backend) boilerplate and integration
+- v0.5: MySQL database creation and integration **<-- Current**
+- v0.6: Tile Update database persistence, tile event enums, basic refactoring
+- v0.7: Event, RelTileEvent w/ grid pos, RelPlayerEvent w/ scoring & team
+- v0.8: Alpha interactive Gameboard implementation: grid, team coloring, tile validity
+- v0.9: AWS Infrastructure, CI/CD, remote compatability
+- v1.0: Alpha single-user compatability release (self)
+- v1.1: Implement Rules webpage & navigation
+- v1.2: Implement Tiles webpage & navigation
+- v1.3: User Acceptance Testing & bugfixes
+- v2.0: Beta single-user compatability release (other)
 - v2.x: Asychronous & concurrent multi-user compatability implementation
 - v3.0: Alpha multi-user compatability release (Event Release)
