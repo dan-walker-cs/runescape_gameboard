@@ -1,4 +1,4 @@
-<!-- Creates hex shape template -->
+<!-- Hex shape template -->
 <svg width="0" height="0" style="position:absolute">
   <defs>
     <polygon id="hex-shape"
@@ -13,7 +13,7 @@
         <use href="#hex-shape" class="stroke" />
     </svg>
     <div class="tile__icon">
-        <img [src]="tile()?.iconPath" /> <!-- TODO: Create default iconPath for errors -->
+        <img [src]="tile()?.iconPath" />
     </div>
     <ng-content></ng-content>
 </div>
