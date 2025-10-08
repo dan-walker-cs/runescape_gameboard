@@ -1,4 +1,4 @@
-.game-tile {
+.tile {
     --outline: auto; /*debug*/
     --background-color: greenyellow; /*debug*/
 
@@ -22,27 +22,27 @@
     transition: fill 500ms, stroke 500ms;
 }
 
-.game-tile:hover { 
+.tile:hover { 
     stroke: #ffcc00 !important; 
     fill: #ffe9ae ; /*acceptance test this w/ & w/out !important*/
 }
 
-:host(.active) .game-tile {
+:host(.active) .tile {
     stroke: #ffcc00 !important; 
     fill: #ffe9ae ; /*acceptance test this w/ & w/out !important*/
 }
 
-:host(.complete) .game-tile {
+:host(.complete) .tile {
     stroke: #468328; 
     fill: #89ff7b;
 }
 
-:host(.reserve) .game-tile {
+:host(.reserve) .tile {
     stroke: #287783; 
     fill: #7bdcff;
 }
 
-.game-tile__icon {
+.tile__icon {
     position: absolute;
     inset: 0;
 
@@ -54,7 +54,7 @@
     pointer-events: none;
 }
 
-.game-tile__icon img {
+.tile__icon img {
     width: 60%;
     height: auto;
 }

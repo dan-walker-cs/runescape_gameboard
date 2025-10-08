@@ -8,6 +8,6 @@ import { OVERVIEW_FIELDS } from './overview.constants';
   templateUrl: './overview.component.html',
   styleUrls: ['./overview.component.css']
 })
-export class Overview {
+export class OverviewComponent {
   readonly overview_fields = OVERVIEW_FIELDS;
 }

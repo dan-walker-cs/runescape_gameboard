@@ -40,8 +40,8 @@ html, body {
     0 8px 16px rgba(0, 0, 0, 0.15);
 }
 
-/* Better text fit for TileModal */
-.cdk-overlay-pane.tile-modal-container .mat-mdc-dialog-content {
+/* Better text fit for TileDialog */
+.cdk-overlay-pane.tile-dialog-container .mat-mdc-dialog-content {
   max-height: none !important;
   overflow: visible !important;
 }

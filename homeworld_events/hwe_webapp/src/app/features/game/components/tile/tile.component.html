@@ -7,13 +7,13 @@
 </svg>
 
 <!-- Display -->
-<div class="game-tile" (click)="onTileSelect()">
+<div class="tile" (click)="onTileSelect()">
     <svg viewBox="0 0 100 86.6" class="hex">
         <use href="#hex-shape" class="fill" />
         <use href="#hex-shape" class="stroke" />
     </svg>
-    <div class="game-tile__icon">
-        <img src="assets/icons/sample_tile_icon.png"/>
+    <div class="tile__icon">
+        <img [src]="tile()?.iconPath" /> <!-- TODO: Create default iconPath for errors -->
     </div>
     <ng-content></ng-content>
 </div>
