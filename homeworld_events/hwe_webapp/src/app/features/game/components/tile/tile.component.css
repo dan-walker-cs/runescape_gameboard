@@ -2,7 +2,7 @@
     --outline: auto; /*debug*/
     --background-color: greenyellow; /*debug*/
 
-    width: 8em;
+    width: 4em;
     aspect-ratio: 100 / 86.6;
     position: relative;
 
@@ -55,6 +55,6 @@
 }
 
 .tile__icon img {
-    width: 60%;
+    width: 50%;
     height: auto;
 }

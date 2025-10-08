@@ -1,3 +1,5 @@
+-- Basic table setup
+
 CREATE TABLE IF NOT EXISTS player (
   id            BIGINT AUTO_INCREMENT PRIMARY KEY,
   display_name  VARCHAR(64) NOT NULL UNIQUE,
