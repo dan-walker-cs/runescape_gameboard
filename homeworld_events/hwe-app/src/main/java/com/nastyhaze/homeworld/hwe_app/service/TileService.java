@@ -57,9 +57,9 @@ public class TileService {
             .orElseThrow(); // TODO: Create custom exception class for TileReadException
 
         target.setReserved(tileRequest.isReserved());
-        target.setReservedBy(tileRequest.isReserved() ? playerService.getByDisplayName(tileRequest.reservedBy()) : null);
+        target.setReservedBy(tileRequest.isReserved() ? playerService.findByDisplayName(tileRequest.reservedBy()) : null);
         target.setCompleted(tileRequest.isCompleted());
-        target.setCompletedBy(tileRequest.isCompleted() ? playerService.getByDisplayName(tileRequest.completedBy()) : null);
+        target.setCompletedBy(tileRequest.isCompleted() ? playerService.findByDisplayName(tileRequest.completedBy()) : null);
 
         Tile updated = tileRepository.save(target);
 

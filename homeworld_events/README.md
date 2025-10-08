@@ -1,7 +1,7 @@
 # runescape_gameboard
 
 # Tech Stack
-- HTML/CSS > Typescript > Java 17 > MySQL(?)
+- HTML/CSS > Typescript > Java 17 > MySQL 8
 - CSS Framework: none
 - Frontend Framework: Angular 17
 - Backend Framework: Spring/SpringBoot

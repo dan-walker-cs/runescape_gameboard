@@ -11,9 +11,9 @@ import org.springframework.stereotype.Component;
 public class TileMapper {
 
     /**
-     *
+     * Maps a Tile entity object to a TileResponse object.
      * @param tileEntity
-     * @return
+     * @return TileResponse
      */
     public TileResponse toResponse(Tile tileEntity) {
         return TileResponse.builder()
