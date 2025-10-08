@@ -2,13 +2,13 @@ package com.nastyhaze.homeworld.hwe_app.web.controller;
 
 import com.nastyhaze.homeworld.hwe_app.service.TileService;
 import com.nastyhaze.homeworld.hwe_app.web.event.TileEvent;
+import com.nastyhaze.homeworld.hwe_app.web.request.TileRequest;
 import com.nastyhaze.homeworld.hwe_app.web.response.TileResponse;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.MediaType;
 import org.springframework.http.codec.ServerSentEvent;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 import reactor.core.scheduler.Schedulers;
@@ -29,6 +29,7 @@ public class TileController {
 
     /**
      * One-shot snapshot (JSON). Runs on boundedElastic since it’s blocking.
+     * @return Mono<List<TileResponse>>
      */
     @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
     public Mono<List<TileResponse>> list() {
@@ -38,9 +39,12 @@ public class TileController {
 
     /**
      * Live stream of tile updates via SSE.
+     * @return Flux<ServerSentEvent<TileResponse>>
      */
     @GetMapping(value = "/stream", produces = MediaType.TEXT_EVENT_STREAM_VALUE)
     public Flux<ServerSentEvent<TileResponse>> stream() {
+        // TODO: Move logic from Controller to Service
+
         // Initial snapshot (so new subscribers get current state)
         Flux<ServerSentEvent<TileResponse>> initial =
             Mono.fromCallable(tileService::findAllTiles)
@@ -65,5 +69,17 @@ public class TileController {
                     .build());
 
         return Flux.merge(initial, updates, heartbeats);
+    }
+
+    /**
+     * Update a single Tile
+     * @param id
+     * @param tileRequest
+     * @return Mono<TileResponse>
+     */
+    @PatchMapping(value = "/{id}/update", consumes = MediaType.APPLICATION_JSON_VALUE)
+    public Mono<TileResponse> update(@PathVariable Long id, @RequestBody @Valid TileRequest tileRequest) {
+        return Mono.fromCallable(() -> tileService.updateTile(id, tileRequest))
+            .subscribeOn(Schedulers.boundedElastic());
     }
 }

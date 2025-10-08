@@ -4,6 +4,7 @@ import lombok.Builder;
 
 /**
  * Response object containing Tile entity fields for display via UI.
+ * @param id
  * @param title
  * @param description
  * @param weight

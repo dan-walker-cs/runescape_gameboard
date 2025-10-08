@@ -4,6 +4,8 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.*;
 import org.hibernate.proxy.HibernateProxy;
+import org.springframework.data.annotation.CreatedDate;
+import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import java.time.Instant;
@@ -29,10 +31,12 @@ public class AuditEntity {
     @Column(name = "active", nullable = false)
     private boolean active = true;
 
+    @CreatedDate
     @JsonIgnore
     @Column(name = "created_dt", nullable = false)
-    private final Instant createdDt = Instant.now();
+    private Instant createdDt = Instant.now();
 
+    @LastModifiedDate
     @JsonIgnore
     @Column(name = "updated_dt", nullable = false)
     private Instant updatedDt;
