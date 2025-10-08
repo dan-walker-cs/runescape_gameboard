@@ -1,0 +1,16 @@
+import { HttpClient } from "@angular/common/http";
+import { inject, Injectable, OnDestroy } from "@angular/core";
+import { PlayerResponse } from "./response/player-response";
+import { Observable } from "rxjs";
+
+@Injectable({ providedIn: 'root' })
+export class PlayerApiService {
+
+    private http = inject(HttpClient);
+
+    // -- Readings Endpoints --
+    // Retrieve initial state
+    getPlayersBlocking(): Observable<PlayerResponse[]> {
+        return this.http.get<PlayerResponse[]>('/api/players');
+    }
+}

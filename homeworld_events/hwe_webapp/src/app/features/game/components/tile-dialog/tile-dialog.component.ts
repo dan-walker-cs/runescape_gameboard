@@ -1,22 +1,28 @@
-import { Component, Inject } from '@angular/core';
+import { Component, inject, Inject } from '@angular/core';
 import { MatDialogModule, MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatButtonModule } from '@angular/material/button';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { ReactiveFormsModule, FormControl } from '@angular/forms';
-import { NgIf } from "@angular/common";
+import { NgFor, NgIf } from "@angular/common";
 import { TileModel } from '../../models/tile.model';
+import { PlayerStore } from '../../data/player-store.service';
+import { MatOptionModule } from '@angular/material/core';
+import { MatSelectModule } from '@angular/material/select';
+import { isNullorBlankString } from '../../../../shared/util/common-utils';
 
 @Component({
   selector: 'app-tile-dialog',
   standalone: true,
   imports: [MatDialogModule, MatButtonModule, MatCheckboxModule, MatFormFieldModule, 
-    MatInputModule, ReactiveFormsModule, NgIf],
+    MatInputModule, MatOptionModule, MatSelectModule, ReactiveFormsModule, NgIf, NgFor],
   templateUrl: './tile-dialog.component.html',
   styleUrl: './tile-dialog.component.css'
 })
 export class TileDialogComponent {
+  readonly playerStore = inject(PlayerStore);
+
   isReservedCtrl: FormControl<boolean>;
   reservedByCtrl: FormControl<string>;
   isCompletedCtrl: FormControl<boolean>;
@@ -30,12 +36,18 @@ export class TileDialogComponent {
     this.completedByCtrl = new FormControl<string>(tile?.completedBy ?? '', { nonNullable: true });
   }
 
-  onEdit() {
+  onEdit(): void {
     this.isEdit = true;
   }
 
-  onSave() {
+  disableSave(): boolean {
+    return (this.isReservedCtrl.value && isNullorBlankString(this.reservedByCtrl.value)) ||
+      (this.isCompletedCtrl.value && isNullorBlankString(this.completedByCtrl.value));
+  }
+
+  onSave(): void {
     this.isEdit = false;
+
     this.tileDialog.close({ 
       isReserved: this.isReservedCtrl.value,
       reservedBy: this.reservedByCtrl.value,
@@ -44,32 +56,32 @@ export class TileDialogComponent {
     });
   }
 
-  onClose() {
+  onClose(): void {
     this.isEdit = false;
     this.tileDialog.close();
   }
 
-  showIsReserved() {
+  showIsReserved(): boolean {
     return this.isEdit && !this.isCompletedCtrl.value;
   }
 
-  showReservedBy() {
+  showReservedBy(): boolean {
     return this.isReservedCtrl.value && this.reservedByCtrl.value !== '' && !this.isCompletedCtrl.value;
   }
 
-  showReservedByInput() {
+  showReservedByInput(): boolean {
     return this.isEdit && this.isReservedCtrl.value && !this.isCompletedCtrl.value;
   }
 
-  showIsCompleted() {
+  showIsCompleted(): boolean {
     return this.isEdit;
   }
 
-  showCompletedBy() {
+  showCompletedBy(): boolean {
     return this.isCompletedCtrl.value && this.completedByCtrl.value !== '';
   }
 
-  showCompletedByInput() {
+  showCompletedByInput(): boolean {
     return this.isEdit && this.isCompletedCtrl.value;
   }
 }

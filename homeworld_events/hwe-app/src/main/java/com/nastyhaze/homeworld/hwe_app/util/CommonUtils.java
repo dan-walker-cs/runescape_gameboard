@@ -8,6 +8,7 @@ import java.util.Objects;
 public class CommonUtils {
 
     /**
+     * Utility method for String validation.
      * Returns true: String contains a null value or only whitespace.
      * Returns false: String contains valid data.
      * @param str

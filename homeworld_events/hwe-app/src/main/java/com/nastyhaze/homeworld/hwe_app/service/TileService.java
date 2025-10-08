@@ -49,7 +49,6 @@ public class TileService {
      */
     @Transactional
     public TileResponse updateTile(Long tileId, TileRequest tileRequest) {
-        System.out.println("Calling update on tile wtih ID: " + tileId);
         // Throw an Exception if the Request object is invalid
         validateRequest(tileRequest);
 
