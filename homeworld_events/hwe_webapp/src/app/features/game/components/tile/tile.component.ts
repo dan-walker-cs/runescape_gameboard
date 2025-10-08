@@ -1,25 +1,25 @@
 import { Component, computed, HostBinding, inject, Input, Signal } from '@angular/core';
 import { MatDialogModule } from '@angular/material/dialog';
 import { CommonModule } from '@angular/common';
-import { Tile } from '../../models/tile.model';
+import { TileModel } from '../../models/tile.model';
 import { TileStore } from '../../data/tile-store.service';
-import { ModalService } from '../../../../core/services/modal.service';
+import { DialogService } from '../../../../core/services/dialog.service';
 
 
 @Component({
-  selector: 'app-game-tile',
+  selector: 'app-tile',
   standalone: true,
   imports: [CommonModule, MatDialogModule],
-  templateUrl: './game-tile.component.html',
-  styleUrl: './game-tile.component.css'
+  templateUrl: './tile.component.html',
+  styleUrl: './tile.component.css'
 })
-export class GameTile {
+export class TileComponent {
   private readonly tileStore = inject(TileStore);
-  private readonly tileModals = inject(ModalService);
+  private readonly tileDialogs = inject(DialogService);
 
   // Retrieve tile based on id input
   @Input({ required: true }) tileId!: number;
-  tile: Signal<Tile | undefined> = computed(() => this.tileStore.getTileById(this.tileId)());
+  tile: Signal<TileModel | undefined> = computed(() => this.tileStore.getTileById(this.tileId)());
 
   // Retrieve tile fields required for binding
   @HostBinding('class.active') get isActive() { return !!this.tile()?.isActive };
@@ -32,10 +32,10 @@ export class GameTile {
     if (!t) return;
     this.tileStore.setActive(t.id, true);
 
-    // Subscribe to modal changes & update the store to reflect
-    this.tileModals.openTileModal(t).subscribe((result?: Partial<Tile>) => {
+    // Subscribe to dialog changes & update the store to reflect
+    this.tileDialogs.openTileDialog(t).subscribe((result?: Partial<TileModel>) => {
       if (result)
-        this.tileStore.updateFromModal(t.id, {
+        this.tileStore.updateFromDialog(t.id, {
           isReserved: result.isReserved,
           reservedBy: result.reservedBy ?? null,
           isCompleted: result.isCompleted,

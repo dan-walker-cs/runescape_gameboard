@@ -2,7 +2,7 @@
     display: contents; /*ignore wrapper element from router-outlet*/
 }
 
-.game-board {
+.board {
     --outline: auto; /*debug*/
     --background-color: rgb(0, 0, 0); /*debug*/
     min-height: 0;
