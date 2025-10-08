@@ -27,7 +27,7 @@
     fill: #ffe9ae ; /*acceptance test this w/ & w/out !important*/
 }
 
-:host(.active) .tile {
+:host(.select) .tile {
     stroke: #ffcc00 !important; 
     fill: #ffe9ae ; /*acceptance test this w/ & w/out !important*/
 }

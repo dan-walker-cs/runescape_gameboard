@@ -2,7 +2,7 @@ export interface TileModel {
   id: number;
   title: string;
   desc: string;
-  value: number;
+  weight: number;
   isReserved: boolean;
   reservedBy?: string | null;
   isCompleted: boolean;
@@ -10,5 +10,5 @@ export interface TileModel {
   iconPath: string;
   
   // UI-only state
-  isActive?: boolean;
+  isSelected?: boolean;
 }

@@ -2,6 +2,7 @@ import { Injectable, signal, computed, Signal } from '@angular/core';
 import { TileModel } from '../models/tile.model';
 import { TileResponse } from './response/tile-response';
 import { TileApiService } from './tile-api.service';
+import { TileRequest } from './request/tile-request';
 
 @Injectable({ providedIn: 'root' })
 export class TileStore {
@@ -16,6 +17,8 @@ export class TileStore {
     constructor(private tileApi: TileApiService) {}
 
     // To be called by dependents in OnInit
+    // TODO: Potentially avoid double-subscriptions & 
+    //  enforce getTilesStreaming() is only called once getTilesBlocking() returns
     init() {
         this.tileApi.getTilesBlocking().subscribe({
             next: (snapshot) => this._tiles.set(snapshot.map(tileResponse => this._adaptResponseToModel(tileResponse))),
@@ -23,7 +26,7 @@ export class TileStore {
         });
 
         this.tileApi.getTilesStreaming().subscribe({
-            next: (tileResponse) => this._update(tileResponse),
+            next: (tileResponse) => this._updateLocalState(tileResponse),
             error: (e) => console.error('[TileStore] stream error', e),
         });
     }
@@ -35,57 +38,51 @@ export class TileStore {
     }
 
     // -- Local UI Mutations --
-    // Sets the Tile as active in UI; used for CSS styles only
-    setActive(id: number, active: boolean) {
-        this._mutate(id, t => ({ ...t, isActive: active }));
+    // Sets the Tile as "selected" in UI; used for CSS styles only
+    setSelected(id: number, selected: boolean) {
+        this._mutate(id, t => ({ ...t, isSelected: selected }));
     }
 
-    // Updates a Pick of Tile fields from the TileDialog
+    // Completes local mutation, then requests persistent update
     updateFromDialog(id: number, patch: Partial<Pick<TileModel, 'isReserved'|'reservedBy'|'isCompleted'|'completedBy'>>) {
-        // Pick<Tile,..>: Creates a new type using field declarations from Tile. New type includes only provided fields.
-        // Partial: Wraps Pick to make all fields optional.
         this._mutate(id, t => ({ ...t, ...patch }));
+
+        const targetTile = this._tiles().find(tile => tile.id ===id);
+        if (targetTile) this._updatePersistentState(targetTile);
     }
 
     // -- Helpers --
     /**
-     * Updates the private signal in-palce with incoming TileResponse data.
-     * @param tileResponse 
+     * Updates UI from Backend
+     * @param tileResponse
      */
-    private _update(tileResponse:TileResponse) {
-        const updatedTile = this._adaptResponseToModel(tileResponse);
+    private _updateLocalState(tileResponse:TileResponse) {
+        let updatedTile = this._adaptResponseToModel(tileResponse);
+        updatedTile = this._normalize(updatedTile);
 
         this._tiles.update( list =>
             list.map(tile => 
                 tile.id === updatedTile.id
-                    ? this._normalize(updatedTile)
+                    ? updatedTile
                     : tile
             )
         );
     }
 
     /**
-     * Converts backend Response object format to frontend Model object format.
-     * @param tileResponse 
-     * @returns TileModel
+     * Updates backend from UI
+     * @param tileModel
      */
-    private _adaptResponseToModel(tileResponse:TileResponse): TileModel {
-        return {
-            id: tileResponse.id,
-            title: tileResponse.title,
-            desc: tileResponse.description,
-            value: tileResponse.weight,
-            isReserved: tileResponse.isReserved,
-            reservedBy: tileResponse.reservedBy,
-            isCompleted: tileResponse.isCompleted,
-            completedBy: tileResponse.completedBy,
-            iconPath: tileResponse.iconPath,
-            isActive: false
-        };
+    private _updatePersistentState(tileModel: TileModel) {
+        let tileUpdateRequest = this._adaptModelToRequest(tileModel);
+        this.tileApi.update(tileModel.id, tileUpdateRequest).subscribe({
+            next: response => this._updateLocalState(response),
+            error: e => console.error('[TileStore] update failed', e)
+        });
     }
 
     /**
-     * Generic update helper. 
+     * Updates UI from UI
      * Iterates through the tile array & updates the tile with @param id.
      * Updates only the field(s) specified by the provided function @param fn.
      * @param id
@@ -106,6 +103,40 @@ export class TileStore {
     private _normalize(mutatedTile: TileModel): TileModel {
         return mutatedTile.isCompleted
             ? { ...mutatedTile, isReserved: false, reservedBy: null }
-            : mutatedTile;
+            : { ...mutatedTile, isCompleted: false, completedBy: null };
+    }
+
+    /**
+     * Converts backend Response object format to frontend Model object format.
+     * @param tileResponse 
+     * @returns TileModel
+     */
+    private _adaptResponseToModel(tileResponse:TileResponse): TileModel {
+        return {
+            id: tileResponse.id,
+            title: tileResponse.title,
+            desc: tileResponse.description,
+            weight: tileResponse.weight,
+            isReserved: tileResponse.isReserved,
+            reservedBy: tileResponse.reservedBy,
+            isCompleted: tileResponse.isCompleted,
+            completedBy: tileResponse.completedBy,
+            iconPath: tileResponse.iconPath,
+            isSelected: false
+        };
+    }
+
+    /**
+     * Converts frontend Model object format to backend Request object format.
+     * @param tileModel
+     * @returns TileRequest
+     */
+    private _adaptModelToRequest(tileModel: TileModel): TileRequest {
+        return {
+            isReserved: tileModel.isReserved,
+            reservedBy: tileModel.reservedBy ?? null,
+            isCompleted: tileModel.isCompleted,
+            completedBy: tileModel.completedBy ?? null
+        };
     }
 }

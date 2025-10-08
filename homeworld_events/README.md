@@ -36,8 +36,8 @@
 - v0.2: Angular integration, routing, components, & basic game-tile functionality
 - v0.3: Angular services, dependency injection, and refactoring
 - v0.4: SpringBoot (backend) boilerplate and integration
-- v0.5: MySQL database creation and integration **<-- Current**
-- v0.6: Tile Update database persistence, tile event enums, basic refactoring
+- v0.5: MySQL database creation and integration
+- v0.6: Tile Update database persistence, player validation, tile event enums, basic refactoring **<-- Current**
 - v0.7: Event, RelTileEvent w/ grid pos, RelPlayerEvent w/ scoring & team
 - v0.8: Alpha interactive Gameboard implementation: grid, team coloring, tile validity
 - v0.9: AWS Infrastructure, CI/CD, remote compatability
