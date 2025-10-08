@@ -13,19 +13,33 @@
     <mat-checkbox *ngIf="showIsCompleted()" [formControl]="isCompletedCtrl">Mark Complete</mat-checkbox>
     <mat-form-field *ngIf="showCompletedByInput()">
         <mat-label>Username</mat-label>
-        <input matInput placeholder="ex. nasty_haze" [formControl]="completedByCtrl" />
+        <mat-select [formControl]="completedByCtrl">
+            <mat-option value="">—</mat-option>
+            <mat-option *ngFor="let p of playerStore.players()" [value]="p.displayName">
+                {{ p.displayName }}
+            </mat-option>
+        </mat-select>
     </mat-form-field>
 
     <!-- Checkbox & input control for reservation -->
     <mat-checkbox *ngIf="showIsReserved()" [formControl]="isReservedCtrl">Reserve?</mat-checkbox>
     <mat-form-field *ngIf="showReservedByInput()">
         <mat-label>Username</mat-label>
-        <input matInput placeholder="ex. nasty_haze" [formControl]="reservedByCtrl" />
+        <mat-select [formControl]="reservedByCtrl">
+            <mat-option value="">—</mat-option>
+            <mat-option *ngFor="let p of playerStore.players()" [value]="p.displayName">
+                {{ p.displayName }}
+            </mat-option>
+        </mat-select>
     </mat-form-field>
 </div>
 
 <div mat-dialog-actions>
     <button *ngIf="!this.isEdit" mat-button (click)="onEdit()">Edit</button>
-    <button *ngIf="this.isEdit" mat-button (click)="onSave()">Save</button>
+    <button *ngIf="this.isEdit" mat-button
+        (click)="onSave()"
+        [disabled]="disableSave()">
+        Save
+    </button>
     <button mat-button (click)="onClose()">Close</button>
 </div>
