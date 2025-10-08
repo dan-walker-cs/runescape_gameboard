@@ -16,14 +16,14 @@ import { TileModel } from '../../models/tile.model';
   templateUrl: './tile-dialog.component.html',
   styleUrl: './tile-dialog.component.css'
 })
-export class TileDialog {
+export class TileDialogComponent {
   isReservedCtrl: FormControl<boolean>;
   reservedByCtrl: FormControl<string>;
   isCompletedCtrl: FormControl<boolean>;
   completedByCtrl: FormControl<string>;
   isEdit: boolean = false;
 
-  constructor(public tileDialog: MatDialogRef<TileDialog>, @Inject(MAT_DIALOG_DATA) public tile: TileModel) {
+  constructor(public tileDialog: MatDialogRef<TileDialogComponent>, @Inject(MAT_DIALOG_DATA) public tile: TileModel) {
     this.isReservedCtrl = new FormControl<boolean>(tile?.isReserved ?? false, { nonNullable: true });
     this.reservedByCtrl = new FormControl<string>(tile?.reservedBy ?? '', { nonNullable: true });
     this.isCompletedCtrl = new FormControl<boolean>(tile?.isCompleted ?? false, { nonNullable: true });

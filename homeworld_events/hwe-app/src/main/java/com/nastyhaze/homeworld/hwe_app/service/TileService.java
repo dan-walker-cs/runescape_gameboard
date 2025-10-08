@@ -62,13 +62,13 @@ public class TileService {
         sampleTile2.setIconPath("assets/icons/sample_tile_icon.png");
 
         Tile sampleTile3 = new Tile();
-        sampleTile2.setId(3L);
-        sampleTile2.setTitle("TileSampleEntity3");
-        sampleTile2.setDescription("testDesc3");
-        sampleTile2.setWeight(4);
-        sampleTile2.setReserved(false);
-        sampleTile2.setCompleted(false);
-        sampleTile2.setIconPath("assets/icons/sample_tile_icon.png");
+        sampleTile3.setId(3L);
+        sampleTile3.setTitle("TileSampleEntity3");
+        sampleTile3.setDescription("testDesc3");
+        sampleTile3.setWeight(4);
+        sampleTile3.setReserved(false);
+        sampleTile3.setCompleted(false);
+        sampleTile3.setIconPath("assets/icons/sample_tile_icon.png");
 
         sampleTiles.add(sampleTile1);
         sampleTiles.add(sampleTile2);

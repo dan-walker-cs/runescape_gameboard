@@ -20,11 +20,11 @@ import java.util.List;
  *  API for Tile entity data.
  */
 @RestController
-@RequestMapping("/api/tile")
+@RequestMapping("/api/tiles")
 @RequiredArgsConstructor
 public class TileController {
 
-    private final TileService tileService;  // blocking service
+    private final TileService tileService;
     private final TileEvent tileEvent;
 
     /**

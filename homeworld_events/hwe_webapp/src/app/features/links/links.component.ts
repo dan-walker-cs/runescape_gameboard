@@ -8,6 +8,6 @@ import { URLS } from './links.constants';
   templateUrl: './links.component.html',
   styleUrls: ['./links.component.css']
 })
-export class Links {
+export class LinksComponent {
   readonly urls = URLS;
 }

@@ -1,51 +1,87 @@
 import { Injectable, signal, computed, Signal } from '@angular/core';
 import { TileModel } from '../models/tile.model';
+import { TileResponse } from './response/tile-response';
+import { TileApiService } from './tile-api.service';
 
 @Injectable({ providedIn: 'root' })
 export class TileStore {
-    // TODO: Temp; read from backend later
-
     // Private, mutable store for use within this service
     // Signal: Angular's reactive state primitive
-    private _tiles = signal<TileModel[]>([
-        { id: 1, title: 'Sample Objective', desc: 'Go touch grass', value: 1, isReserved: false, isCompleted: false, isActive: false },
-        { id: 2, title: 'Another Objective', desc: 'Drink water', value: 1, isReserved: false, isCompleted: false, isActive: false },
-    ]);
+    private _tiles = signal<TileModel[]>([]);
 
     // Public, immutable store for use outside the service
     // Computed: Creates a derrived signal. Whenever the dependency signal changes, the computation is automatically re-run.
     readonly tiles = computed(() => this._tiles());
+    
+    constructor(private tileApi: TileApiService) {}
 
+    // To be called by dependents in OnInit
+    init() {
+        this.tileApi.getTilesBlocking().subscribe({
+            next: (snapshot) => this._tiles.set(snapshot.map(tileResponse => this._adaptResponseToModel(tileResponse))),
+            error: (e) => console.error('[TileStore] snapshot failed', e),
+        });
+
+        this.tileApi.getTilesStreaming().subscribe({
+            next: (tileResponse) => this._update(tileResponse),
+            error: (e) => console.error('[TileStore] stream error', e),
+        });
+    }
+
+    // -- Queries --
+    // Fetch a single TileModel
     getTileById(id: number): Signal<TileModel | undefined> {
         return computed(() => this._tiles().find(t => t.id === id));
     }
 
+    // -- Local UI Mutations --
+    // Sets the Tile as active in UI; used for CSS styles only
     setActive(id: number, active: boolean) {
         this._mutate(id, t => ({ ...t, isActive: active }));
     }
 
-    toggleReserved(id: number, reservedBy?: string | null) { // Optional parameter allowing null.
-        this._mutate(id, t => ({
-            ...t,
-            isReserved: !t.isReserved,
-            reservedBy: !t.isReserved ? (reservedBy ?? t.reservedBy ?? null) : null
-            // ??: Nullish Coalescing Operator - use left value if first is non-null, otherwise use right.
-        }));
-    }
-
-    setReserved(id: number, reservedBy: string | null) {
-        this._mutate(id, t => ({ ...t, isReserved: !!reservedBy, reservedBy }));
-        // !!: Double Bang Operator - Converts truthy/falsey values into strict boolean true/false.
-    }
-
-    setCompleted(id: number, completedBy: string | null) {
-        this._mutate(id, t => ({ ...t, isCompleted: !!completedBy, completedBy }));
-    }
-
+    // Updates a Pick of Tile fields from the TileDialog
     updateFromDialog(id: number, patch: Partial<Pick<TileModel, 'isReserved'|'reservedBy'|'isCompleted'|'completedBy'>>) {
         // Pick<Tile,..>: Creates a new type using field declarations from Tile. New type includes only provided fields.
         // Partial: Wraps Pick to make all fields optional.
         this._mutate(id, t => ({ ...t, ...patch }));
+    }
+
+    // -- Helpers --
+    /**
+     * Updates the private signal in-palce with incoming TileResponse data.
+     * @param tileResponse 
+     */
+    private _update(tileResponse:TileResponse) {
+        const updatedTile = this._adaptResponseToModel(tileResponse);
+
+        this._tiles.update( list =>
+            list.map(tile => 
+                tile.id === updatedTile.id
+                    ? this._normalize(updatedTile)
+                    : tile
+            )
+        );
+    }
+
+    /**
+     * Converts backend Response object format to frontend Model object format.
+     * @param tileResponse 
+     * @returns TileModel
+     */
+    private _adaptResponseToModel(tileResponse:TileResponse): TileModel {
+        return {
+            id: tileResponse.id,
+            title: tileResponse.title,
+            desc: tileResponse.description,
+            value: tileResponse.weight,
+            isReserved: tileResponse.isReserved,
+            reservedBy: tileResponse.reservedBy,
+            isCompleted: tileResponse.isCompleted,
+            completedBy: tileResponse.completedBy,
+            iconPath: tileResponse.iconPath,
+            isActive: false
+        };
     }
 
     /**

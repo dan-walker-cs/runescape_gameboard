@@ -7,7 +7,7 @@ public class TeamGen {
 
     public static record Gamer(
         String name,
-        int weight
+        double weight
     ){}
 
     public static void main(String[] args) {
@@ -20,7 +20,7 @@ public class TeamGen {
                 new Gamer("Taxol", 3),
                 new Gamer("DoubleUQ", 3),
                 new Gamer("TheATFisgay", 2),
-                new Gamer("Runite Egg", 1),
+                new Gamer("Runite Egg", 1.5),
                 new Gamer("Slorko", 1),
                 new Gamer("AddyAddicted", 1)
             )
@@ -28,7 +28,7 @@ public class TeamGen {
 
         List<SplitResult> results = generateConstrainedSplits(gamers)
             .stream()
-            .filter(r -> r.diff == 1)
+            .filter(r -> r.diff < 1)
             .toList();
 
 //        List<SplitResult> results = generateSplits(gamers)
@@ -39,13 +39,13 @@ public class TeamGen {
         for (int i = 0; i < results.size(); i++) {
             SplitResult r = results.get(i);
             System.out.printf(
-                "Option %d: \nSet1: %s (w=%d), \nSet2: %s (w=%d) → diff=%d%n",
+                "Option %d: \nSet1: %s (w=%f), \nSet2: %s (w=%f) → diff=%f%n",
                 i, names(r.set1()), r.weight1(), names(r.set2()), r.weight2(), r.diff()
             );
         }
     }
 
-    public static record SplitResult(List<Gamer> set1, List<Gamer> set2, int weight1, int weight2, int diff) {}
+    public static record SplitResult(List<Gamer> set1, List<Gamer> set2, double weight1, double weight2, double diff) {}
 
     private static String names(List<Gamer> Gamers) {
         return Gamers.stream().map(Gamer::name).toList().toString();
@@ -82,8 +82,8 @@ public class TeamGen {
             used[fiveB] = true;
             for (int i = 0; i < Gamers.size(); i++) if (!used[i]) set2.add(Gamers.get(i));
 
-            int w1 = set1.stream().mapToInt(Gamer::weight).sum();
-            int w2 = set2.stream().mapToInt(Gamer::weight).sum();
+            double w1 = set1.stream().mapToDouble(Gamer::weight).sum();
+            double w2 = set2.stream().mapToDouble(Gamer::weight).sum();
             out.add(new SplitResult(set1, set2, w1, w2, Math.abs(w1 - w2)));
 
             int i = k - 1;
@@ -109,8 +109,8 @@ public class TeamGen {
             }
             set2.removeAll(set1);
 
-            int w1 = set1.stream().mapToInt(Gamer::weight).sum();
-            int w2 = set2.stream().mapToInt(Gamer::weight).sum();
+            double w1 = set1.stream().mapToDouble(Gamer::weight).sum();
+            double w2 = set2.stream().mapToDouble(Gamer::weight).sum();
             results.add(new SplitResult(set1, set2, w1, w2, Math.abs(w1 - w2)));
 
             int i = k - 1;

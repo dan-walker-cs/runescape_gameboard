@@ -13,7 +13,7 @@
         <use href="#hex-shape" class="stroke" />
     </svg>
     <div class="tile__icon">
-        <img src="assets/icons/sample_tile_icon.png"/>
+        <img [src]="tile()?.iconPath" /> <!-- TODO: Create default iconPath for errors -->
     </div>
     <ng-content></ng-content>
 </div>
