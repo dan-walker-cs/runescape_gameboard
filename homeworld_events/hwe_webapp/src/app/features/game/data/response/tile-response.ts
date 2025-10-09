@@ -1,3 +1,6 @@
+/**
+ * Tile Response object for backend GET requests.
+ */
 export interface TileResponse {
   id: number;
   title: string;

@@ -13,7 +13,6 @@ import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 import reactor.core.scheduler.Schedulers;
 
-import java.time.Duration;
 import java.util.List;
 
 /**
@@ -25,7 +24,6 @@ import java.util.List;
 public class TileController {
 
     private final TileService tileService;
-    private final TileEvent tileEvent;
 
     /**
      * One-shot snapshot (JSON). Runs on boundedElastic since it’s blocking.
@@ -43,36 +41,11 @@ public class TileController {
      */
     @GetMapping(value = "/stream", produces = MediaType.TEXT_EVENT_STREAM_VALUE)
     public Flux<ServerSentEvent<TileResponse>> stream() {
-        // TODO: Move logic from Controller to Service
-
-        // Initial snapshot (so new subscribers get current state)
-        Flux<ServerSentEvent<TileResponse>> initial =
-            Mono.fromCallable(tileService::findAllTiles)
-                .subscribeOn(Schedulers.boundedElastic())
-                .flatMapMany(Flux::fromIterable)
-                .map(response -> ServerSentEvent.builder(response)
-                    .event("tile-snapshot") // TODO: Move tile event type into an ENUM
-                    .build());
-
-        // Live updates from the sink
-        Flux<ServerSentEvent<TileResponse>> updates =
-            tileEvent.stream()
-                .map(response -> ServerSentEvent.builder(response)
-                    .event("tile-update") // TODO: Move tile event type into an ENUM
-                    .build());
-
-        // Keepalive heartbeats so intermediaries don’t close idle connections
-        Flux<ServerSentEvent<TileResponse>> heartbeats =
-            Flux.interval(Duration.ofSeconds(15))
-                .map(i -> ServerSentEvent.<TileResponse>builder()
-                    .comment("keepalive") // TODO: Move tile event type into an ENUM
-                    .build());
-
-        return Flux.merge(initial, updates, heartbeats);
+        return tileService.stream();
     }
 
     /**
-     * Update a single Tile
+     * Update a single Tile.
      * @param id
      * @param tileRequest
      * @return Mono<TileResponse>

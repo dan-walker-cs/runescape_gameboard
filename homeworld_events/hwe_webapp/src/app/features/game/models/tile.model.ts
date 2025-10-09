@@ -1,3 +1,6 @@
+/**
+ * Frontend Data Store Tile model-object.
+ */
 export interface TileModel {
   id: number;
   title: string;

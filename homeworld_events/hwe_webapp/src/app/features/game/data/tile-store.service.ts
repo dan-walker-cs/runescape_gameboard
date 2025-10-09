@@ -16,9 +16,9 @@ export class TileStore {
     
     constructor(private tileApi: TileApiService) {}
 
+    /* TODO: Potentially avoid double-subscriptions & 
+        enforce getTilesStreaming() is only called once getTilesBlocking() returns */
     // To be called by dependents in OnInit
-    // TODO: Potentially avoid double-subscriptions & 
-    //  enforce getTilesStreaming() is only called once getTilesBlocking() returns
     init() {
         this.tileApi.getTilesBlocking().subscribe({
             next: (snapshot) => this._tiles.set(snapshot.map(tileResponse => this._adaptResponseToModel(tileResponse))),
