@@ -36,6 +36,10 @@ CREATE TABLE IF NOT EXISTS rel_event_tile (
     CONSTRAINT fk_rel_event_tile_tile_id FOREIGN KEY (tile_id) REFERENCES tile(id)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
+-- Populate default Event for fail-over
+INSERT INTO event (title,start_dt,end_dt,buy_in,rules_path,active)
+    VALUES ('DEFAULT_EVENT_FALLBACK',now(),now(),'2.47b','assets/templates/error.html',0);
+
 -- Populate tables with Winter 2025 data
 
 INSERT INTO event (title,start_dt,end_dt,buy_in,rules_path)
