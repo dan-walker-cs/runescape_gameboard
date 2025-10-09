@@ -22,15 +22,15 @@ export class TileComponent {
   tile: Signal<TileModel | undefined> = computed(() => this.tileStore.getTileById(this.tileId)());
 
   // Retrieve tile fields required for binding
-  @HostBinding('class.active') get isActive() { return !!this.tile()?.isActive };
+  @HostBinding('class.select') get isSelected() { return !!this.tile()?.isSelected };
   @HostBinding('class.complete') get isCompleted() { return !!this.tile()?.isCompleted };
   @HostBinding('class.reserve') get isReserved() { return !!this.tile()?.isReserved };
 
   onTileSelect() {
-    // Create a clean snapshot of the current value & activate if exists
+    // Create a clean snapshot of the current value & select if exists
     const t = this.tile();
     if (!t) return;
-    this.tileStore.setActive(t.id, true);
+    this.tileStore.setSelected(t.id, true);
 
     // Subscribe to dialog changes & update the store to reflect
     this.tileDialogs.openTileDialog(t).subscribe((result?: Partial<TileModel>) => {
@@ -42,7 +42,8 @@ export class TileComponent {
           completedBy: result.completedBy ?? null
         });
 
-      this.tileStore.setActive(t.id, false);
+      // Unselect Tile on dialog closure
+      this.tileStore.setSelected(t.id, false);
     });
   }
 }
