@@ -14,7 +14,7 @@ export class TileApiService implements OnDestroy {
 
     // -- Readings Endpoints --
     // Retrieve initial state
-    getTilesBlocking(): Observable<TileResponse[]> {
+    getTilesSnapshot(): Observable<TileResponse[]> {
         return this.http.get<TileResponse[]>(endpoints.tiles.snapshot);
     }
 

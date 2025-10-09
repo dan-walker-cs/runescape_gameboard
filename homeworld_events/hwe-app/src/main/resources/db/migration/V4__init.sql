@@ -52,25 +52,25 @@ INSERT INTO event (title,start_dt,end_dt,buy_in,rules_path)
     VALUES ('Winter 2025 HexScape','2025-11-07 10:00:00','2025-11-23 23:59:00','1.5 bonds per Player','assets/templates/2025_winter_rules.html');
 
 INSERT INTO rel_event_player (event_id, player_id, team_name)
-    VALUES (1, 1, 'TEAM_ONE');
+    VALUES (2, 1, 'TEAM_ONE');
 INSERT INTO rel_event_player (event_id, player_id, team_name)
-    VALUES (1, 2, 'TEAM_ONE');
+    VALUES (2, 2, 'TEAM_ONE');
 INSERT INTO rel_event_player (event_id, player_id, team_name)
-    VALUES (1, 3, 'TEAM_ONE');
+    VALUES (2, 3, 'TEAM_ONE');
 INSERT INTO rel_event_player (event_id, player_id, team_name)
-    VALUES (1, 4, 'TEAM_ONE');
+    VALUES (2, 4, 'TEAM_ONE');
 INSERT INTO rel_event_player (event_id, player_id, team_name)
-    VALUES (1, 5, 'TEAM_ONE');
+    VALUES (2, 5, 'TEAM_ONE');
 INSERT INTO rel_event_player (event_id, player_id, team_name)
-    VALUES (1, 6, 'TEAM_TWO');
+    VALUES (2, 6, 'TEAM_TWO');
 INSERT INTO rel_event_player (event_id, player_id, team_name)
-    VALUES (1, 7, 'TEAM_TWO');
+    VALUES (2, 7, 'TEAM_TWO');
 INSERT INTO rel_event_player (event_id, player_id, team_name)
-    VALUES (1, 8, 'TEAM_TWO');
+    VALUES (2, 8, 'TEAM_TWO');
 INSERT INTO rel_event_player (event_id, player_id, team_name)
-    VALUES (1, 9, 'TEAM_TWO');
+    VALUES (2, 9, 'TEAM_TWO');
 INSERT INTO rel_event_player (event_id, player_id, team_name)
-    VALUES (1, 10, 'TEAM_TWO');
+    VALUES (2, 10, 'TEAM_TWO');
 
 INSERT INTO rel_event_tile (event_id, tile_id)
     SELECT 1, id

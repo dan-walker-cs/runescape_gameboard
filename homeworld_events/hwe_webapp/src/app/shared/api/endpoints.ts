@@ -11,4 +11,7 @@ export const endpoints = {
   players: {
     snapshot: `${api}/players`,
   },
+  events: {
+    snapshot: `${api}/events/current`,
+  }
 } as const;

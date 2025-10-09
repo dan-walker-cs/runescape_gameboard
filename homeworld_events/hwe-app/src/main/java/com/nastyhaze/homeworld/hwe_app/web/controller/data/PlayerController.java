@@ -1,6 +1,6 @@
-package com.nastyhaze.homeworld.hwe_app.web.controller;
+package com.nastyhaze.homeworld.hwe_app.web.controller.data;
 
-import com.nastyhaze.homeworld.hwe_app.service.PlayerService;
+import com.nastyhaze.homeworld.hwe_app.service.data.PlayerService;
 import com.nastyhaze.homeworld.hwe_app.web.response.PlayerResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.MediaType;

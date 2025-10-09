@@ -1,6 +1,6 @@
-package com.nastyhaze.homeworld.hwe_app.web.controller;
+package com.nastyhaze.homeworld.hwe_app.web.controller.data;
 
-import com.nastyhaze.homeworld.hwe_app.service.EventService;
+import com.nastyhaze.homeworld.hwe_app.service.data.EventService;
 import com.nastyhaze.homeworld.hwe_app.web.response.EventResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.MediaType;
@@ -11,7 +11,7 @@ import reactor.core.publisher.Mono;
 import reactor.core.scheduler.Schedulers;
 
 /**
- *  API for Event entity & relationship data.
+ *  API for Event entity data.
  */
 @RestController
 @RequestMapping("/api/events")
@@ -22,6 +22,7 @@ public class EventController {
 
     /**
      * Returns the current (active) Event - or the default fallback Event - data.
+     * This is a blocking operation.
      * @return Mono<EventResponse>
      */
     @GetMapping(value = "/current", produces = MediaType.APPLICATION_JSON_VALUE)

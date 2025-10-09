@@ -4,10 +4,10 @@
             <h2>Overview</h2>
         </div>
         <div class="main__section font--primary">
-            <h3>{{ overview_fields.EVENT_TITLE }}</h3>
+            <h3>{{ eventStore.event()?.title }}</h3>
             <hr class="shadow--primary"/>
-            <p><b>Start:</b> {{ overview_fields.START_DT }}</p>
-            <p><b>End:</b> {{ overview_fields.END_DT }}</p>
+            <p><b>Start:</b> {{ eventStore.event()?.startDt | date:'short' }}</p>
+            <p><b>End:</b> {{ eventStore.event()?.endDt | date:'short' }}</p>
             <br/>
             <p><b>Team 1: {{ overview_fields.TEAM_NAME_1 }}</b></p>
             <p><b>Members:</b> {{ overview_fields.TEAM_MEMBERS_1 }}</p>

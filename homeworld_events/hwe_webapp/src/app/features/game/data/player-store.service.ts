@@ -16,9 +16,9 @@ export class PlayerStore {
     constructor(private playerApi: PlayerApiService) {}
 
     // To be called by dependents in OnInit
-    init() {
-        this.playerApi.getPlayersBlocking().subscribe({
-            next: (snapshot) => this._players.set(snapshot.map(playerResponse => this._adaptResponseToModel(playerResponse))),
+    init(): void {
+        this.playerApi.getPlayersSnapshot().subscribe({
+            next: (responseList) => this._players.set(responseList.map(playerResponse => this._adaptResponseToModel(playerResponse))),
             error: (e) => console.error('[PlayerStore] snapshot failed', e),
         });
     }
