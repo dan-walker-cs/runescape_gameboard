@@ -1,6 +1,6 @@
 package com.nastyhaze.homeworld.hwe_app.repository;
 
-import com.nastyhaze.homeworld.hwe_app.domain.Event;
+import com.nastyhaze.homeworld.hwe_app.domain.data.Event;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 

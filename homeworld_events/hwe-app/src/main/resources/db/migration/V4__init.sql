@@ -22,7 +22,10 @@ CREATE TABLE IF NOT EXISTS rel_event_player (
     created_dt    TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
     updated_dt    TIMESTAMP DEFAULT NULL,
     CONSTRAINT fk_rel_event_player_event_id FOREIGN KEY (event_id) REFERENCES event(id),
-    CONSTRAINT fk_rel_event_player_player_id FOREIGN KEY (player_id) REFERENCES player(id)
+    CONSTRAINT fk_rel_event_player_player_id FOREIGN KEY (player_id) REFERENCES player(id),
+    UNIQUE KEY uq_rel_event_player_event_player (event_id, player_id),
+    KEY ix_rel_event (event_id),
+    KEY ix_rel_player (player_id)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 CREATE TABLE IF NOT EXISTS rel_event_tile (
@@ -33,7 +36,10 @@ CREATE TABLE IF NOT EXISTS rel_event_tile (
     created_dt    TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
     updated_dt    TIMESTAMP DEFAULT NULL,
     CONSTRAINT fk_rel_event_tile_event_id FOREIGN KEY (event_id) REFERENCES event(id),
-    CONSTRAINT fk_rel_event_tile_tile_id FOREIGN KEY (tile_id) REFERENCES tile(id)
+    CONSTRAINT fk_rel_event_tile_tile_id FOREIGN KEY (tile_id) REFERENCES tile(id),
+    UNIQUE KEY uq_rel_event_tile_event_tile (event_id, tile_id),
+    KEY ix_rel_event (event_id),
+    KEY ix_rel_tile (tile_id)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 -- Populate default Event for fail-over

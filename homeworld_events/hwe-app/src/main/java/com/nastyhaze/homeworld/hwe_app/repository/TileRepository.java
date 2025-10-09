@@ -1,6 +1,6 @@
 package com.nastyhaze.homeworld.hwe_app.repository;
 
-import com.nastyhaze.homeworld.hwe_app.domain.Tile;
+import com.nastyhaze.homeworld.hwe_app.domain.data.Tile;
 import org.springframework.data.jpa.repository.*;
 import org.springframework.stereotype.Repository;
 

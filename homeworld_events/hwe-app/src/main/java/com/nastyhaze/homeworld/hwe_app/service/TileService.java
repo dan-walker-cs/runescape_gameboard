@@ -2,8 +2,7 @@ package com.nastyhaze.homeworld.hwe_app.service;
 
 import com.nastyhaze.homeworld.hwe_app.constant.CrudOperationType;
 import com.nastyhaze.homeworld.hwe_app.constant.ServerEventType;
-import com.nastyhaze.homeworld.hwe_app.domain.AuditEntity;
-import com.nastyhaze.homeworld.hwe_app.domain.Tile;
+import com.nastyhaze.homeworld.hwe_app.domain.data.Tile;
 import com.nastyhaze.homeworld.hwe_app.exception.TileServiceException;
 import com.nastyhaze.homeworld.hwe_app.repository.TileRepository;
 import com.nastyhaze.homeworld.hwe_app.util.CommonUtils;

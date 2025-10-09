@@ -1,6 +1,6 @@
 package com.nastyhaze.homeworld.hwe_app.web.mapper;
 
-import com.nastyhaze.homeworld.hwe_app.domain.Event;
+import com.nastyhaze.homeworld.hwe_app.domain.data.Event;
 import com.nastyhaze.homeworld.hwe_app.web.response.EventResponse;
 import org.springframework.stereotype.Component;
 

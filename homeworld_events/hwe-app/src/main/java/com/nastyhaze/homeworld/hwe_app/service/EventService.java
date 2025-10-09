@@ -1,7 +1,7 @@
 package com.nastyhaze.homeworld.hwe_app.service;
 
 import com.nastyhaze.homeworld.hwe_app.constant.CommonConstant;
-import com.nastyhaze.homeworld.hwe_app.domain.Event;
+import com.nastyhaze.homeworld.hwe_app.domain.data.Event;
 import com.nastyhaze.homeworld.hwe_app.repository.EventRepository;
 import com.nastyhaze.homeworld.hwe_app.web.mapper.EventMapper;
 import com.nastyhaze.homeworld.hwe_app.web.response.EventResponse;

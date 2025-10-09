@@ -2,7 +2,7 @@ package com.nastyhaze.homeworld.hwe_app.service;
 
 import com.nastyhaze.homeworld.hwe_app.constant.CrudOperationType;
 import com.nastyhaze.homeworld.hwe_app.domain.AuditEntity;
-import com.nastyhaze.homeworld.hwe_app.domain.Player;
+import com.nastyhaze.homeworld.hwe_app.domain.data.Player;
 import com.nastyhaze.homeworld.hwe_app.exception.PlayerServiceException;
 import com.nastyhaze.homeworld.hwe_app.repository.PlayerRepository;
 import com.nastyhaze.homeworld.hwe_app.web.mapper.PlayerMapper;
