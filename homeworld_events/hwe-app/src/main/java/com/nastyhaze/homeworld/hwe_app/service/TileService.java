@@ -57,9 +57,8 @@ public class TileService {
      * @return List<TileResponse>
      */
     public List<TileResponse> findAllTiles() {
-        return tileRepository.findAll()
+        return tileRepository.findAllByActiveTrue()
             .stream()
-            .filter(AuditEntity::isActive) // TODO: Can filter at repository level instead
             .map(tileMapper::toResponse)
             .toList();
     }

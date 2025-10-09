@@ -27,7 +27,7 @@ export class TileComponent {
   @HostBinding('class.reserve') get isReserved() { return !!this.tile()?.isReserved };
 
   onTileSelect() {
-    // Create a clean snapshot of the current value & activate if exists
+    // Create a clean snapshot of the current value & select if exists
     const t = this.tile();
     if (!t) return;
     this.tileStore.setSelected(t.id, true);
@@ -42,6 +42,7 @@ export class TileComponent {
           completedBy: result.completedBy ?? null
         });
 
+      // Unselect Tile on dialog closure
       this.tileStore.setSelected(t.id, false);
     });
   }

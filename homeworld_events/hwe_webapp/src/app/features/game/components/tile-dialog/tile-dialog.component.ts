@@ -21,13 +21,18 @@ import { isNullorBlankString } from '../../../../shared/util/common-utils';
   styleUrl: './tile-dialog.component.css'
 })
 export class TileDialogComponent {
+  // Load-once immutable Player data from backend
   readonly playerStore = inject(PlayerStore);
 
+  // "Edit Mode" flag
+  isEdit: boolean = false;
+
+  /* TODO: Potentially refactor using FormGroup? */
+  // Form controls for tile-dialog
   isReservedCtrl: FormControl<boolean>;
   reservedByCtrl: FormControl<string>;
   isCompletedCtrl: FormControl<boolean>;
   completedByCtrl: FormControl<string>;
-  isEdit: boolean = false;
 
   constructor(public tileDialog: MatDialogRef<TileDialogComponent>, @Inject(MAT_DIALOG_DATA) public tile: TileModel) {
     this.isReservedCtrl = new FormControl<boolean>(tile?.isReserved ?? false, { nonNullable: true });
@@ -36,15 +41,18 @@ export class TileDialogComponent {
     this.completedByCtrl = new FormControl<string>(tile?.completedBy ?? '', { nonNullable: true });
   }
 
+  /** Enter "Edit Mode" */
   onEdit(): void {
     this.isEdit = true;
   }
 
+  /** Conditionally disable the Save button when dialog checkbox selected without Player input. */
   disableSave(): boolean {
     return (this.isReservedCtrl.value && isNullorBlankString(this.reservedByCtrl.value)) ||
       (this.isCompletedCtrl.value && isNullorBlankString(this.completedByCtrl.value));
   }
 
+  /** Executed on Save button click from dialog window. */
   onSave(): void {
     this.isEdit = false;
 
@@ -56,32 +64,39 @@ export class TileDialogComponent {
     });
   }
 
+  /** Executed on Close button click from dialog window. */
   onClose(): void {
     this.isEdit = false;
     this.tileDialog.close();
   }
 
+  /** Conditionally show the isReserved checkbox - when not editing "Completed" values. */
   showIsReserved(): boolean {
     return this.isEdit && !this.isCompletedCtrl.value;
   }
 
-  showReservedBy(): boolean {
-    return this.isReservedCtrl.value && this.reservedByCtrl.value !== '' && !this.isCompletedCtrl.value;
-  }
-
+  /** Conditionally show the reservedBy dropdown after checking the isReserved checkbox. */
   showReservedByInput(): boolean {
     return this.isEdit && this.isReservedCtrl.value && !this.isCompletedCtrl.value;
   }
 
+  /** Conditionally show the "Reserved" values in dialog when a Tile is reserved & validated. */
+  showReservedBy(): boolean {
+    return this.isReservedCtrl.value && this.reservedByCtrl.value !== '' && !this.isCompletedCtrl.value;
+  }
+
+  /** Conditionally show the isCompleted checkbox - when not editing "Reserved" values. */
   showIsCompleted(): boolean {
     return this.isEdit;
   }
 
-  showCompletedBy(): boolean {
-    return this.isCompletedCtrl.value && this.completedByCtrl.value !== '';
-  }
-
+  /** Conditionally show the completedBy dropdown after checking the isCompleted checkbox. */
   showCompletedByInput(): boolean {
     return this.isEdit && this.isCompletedCtrl.value;
+  }
+
+  /** Conditionally show the "Completed" values in dialog when a Tile is completed & validated. */
+  showCompletedBy(): boolean {
+    return this.isCompletedCtrl.value && this.completedByCtrl.value !== '';
   }
 }

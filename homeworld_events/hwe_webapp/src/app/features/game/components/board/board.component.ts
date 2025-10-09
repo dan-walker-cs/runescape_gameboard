@@ -13,7 +13,9 @@ import { PlayerStore } from '../../data/player-store.service';
   styleUrl: './board.component.css'
 })
 export class BoardComponent implements OnInit{
+  // Dynamic immutable Tile data from the backend
   readonly tileStore = inject(TileStore);
+  // Read-once immutable Player data from the backend
   readonly playerStore = inject(PlayerStore);
 
   ngOnInit(): void {

@@ -1,3 +1,5 @@
+// Class for app-wide "Common" Utility operations.
+
 /**
  * Utility method for string validation.
  * Returns true: String contains a null value or only whitespace.
