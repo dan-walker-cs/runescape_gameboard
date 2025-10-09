@@ -1,6 +1,6 @@
 package com.nastyhaze.homeworld.hwe_app.web.mapper;
 
-import com.nastyhaze.homeworld.hwe_app.domain.Tile;
+import com.nastyhaze.homeworld.hwe_app.domain.data.Tile;
 import com.nastyhaze.homeworld.hwe_app.web.response.TileResponse;
 import org.springframework.stereotype.Component;
 

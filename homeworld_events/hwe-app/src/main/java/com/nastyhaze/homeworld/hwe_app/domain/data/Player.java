@@ -1,5 +1,6 @@
-package com.nastyhaze.homeworld.hwe_app.domain;
+package com.nastyhaze.homeworld.hwe_app.domain.data;
 
+import com.nastyhaze.homeworld.hwe_app.domain.AuditEntity;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Table;

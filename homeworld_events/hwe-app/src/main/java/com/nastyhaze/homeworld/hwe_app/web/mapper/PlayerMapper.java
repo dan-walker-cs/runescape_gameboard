@@ -1,6 +1,6 @@
 package com.nastyhaze.homeworld.hwe_app.web.mapper;
 
-import com.nastyhaze.homeworld.hwe_app.domain.Player;
+import com.nastyhaze.homeworld.hwe_app.domain.data.Player;
 import com.nastyhaze.homeworld.hwe_app.web.response.PlayerResponse;
 import org.springframework.stereotype.Component;
 
