@@ -1,0 +1,1 @@
+export const HIGHLANDER_NUM: number = 1;

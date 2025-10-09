@@ -3,7 +3,7 @@ import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { TileResponse } from './response/tile-response';
 import { TileRequest } from './request/tile-request';
-import { ServerEventType } from '../../../shared/events/server-event-type';
+import { ServerEventType } from '../../../shared/constant/server-event-type';
 import { endpoints } from '../../../shared/api/endpoints';
 
 @Injectable({ providedIn: 'root' })

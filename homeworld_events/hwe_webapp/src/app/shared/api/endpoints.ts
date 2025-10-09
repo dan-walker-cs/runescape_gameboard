@@ -13,5 +13,6 @@ export const endpoints = {
   },
   events: {
     snapshot: `${api}/events/current`,
+    playersByTeam: (eventId: number) => `${api}/rel/event/${eventId}/playersByTeam`
   }
 } as const;
