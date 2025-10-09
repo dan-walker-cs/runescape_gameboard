@@ -1,7 +1,9 @@
 package com.nastyhaze.homeworld.hwe_app.service;
 
+import com.nastyhaze.homeworld.hwe_app.constant.CrudOperationType;
 import com.nastyhaze.homeworld.hwe_app.domain.AuditEntity;
 import com.nastyhaze.homeworld.hwe_app.domain.Player;
+import com.nastyhaze.homeworld.hwe_app.exception.PlayerServiceException;
 import com.nastyhaze.homeworld.hwe_app.repository.PlayerRepository;
 import com.nastyhaze.homeworld.hwe_app.web.mapper.PlayerMapper;
 import com.nastyhaze.homeworld.hwe_app.web.response.PlayerResponse;
@@ -40,6 +42,6 @@ public class PlayerService {
      */
     public Player findByDisplayName(String displayName) {
         return playerRepository.findOneByDisplayNameIgnoreCaseAndActiveTrue(displayName)
-            .orElseThrow(); // TODO: Create custom exception class for PlayerReadException
+            .orElseThrow(() -> new PlayerServiceException(displayName, CrudOperationType.READ));
     }
 }
