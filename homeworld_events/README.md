@@ -39,9 +39,9 @@
 - v0.5: MySQL database creation and integration
 - v0.6: Tile Update database persistence, player validation, tile event enums, basic refactoring
 - v0.7: Event, RelTileEvent w/ grid pos, RelPlayerEvent w/ scoring & team, custom backend exceptions
-- v0.8: Alpha interactive Gameboard implementation: hex grid **<-- Current**
-- v0.9: AWS Infrastructure, CI/CD, remote compatability
-- v1.0: Alpha single-user compatability release
+- v0.8: Alpha interactive Gameboard implementation: hex grid
+- v0.9: Networking Issues, duplicate subscriptions, Angular more-understanding better-er... **<-- Current**
+- v1.0: Alpha single-user compatability release: AWS Infrastructure, CI/CD, remote compatability
 - v1.1: User Acceptance Testing & bugfixes
 - v1.2: Tile Completion rework: per-team completion
 - v1.3: Board render rework: ?per-team render OR shared board?
