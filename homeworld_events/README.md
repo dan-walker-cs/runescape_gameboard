@@ -45,7 +45,10 @@
 - v1.1: User Acceptance Testing & bugfixes
 - v1.2: Tile Completion rework: per-team completion
 - v1.3: Board render rework: ?per-team render OR shared board?
-- v2.0: Alpha multi-user compatability release
+- v2.0: Beta single-user compatability release
 - v2.1: User Acceptance Testing & bugfixes
-- v2.2: Replace External Links with Statistics & associate data
-- v3.0: Beta multi-user compatability release (Full Event Release)
+- v2.2: Networking updates for multi-user concurrency & dynamic updates
+- v3.0: Alpha multi-user compatability release
+- v3.1: User Acceptance Testing & bugfixes
+- v3.2: Replace External Links with Statistics & associate data
+- v4.0: Beta multi-user compatability release (Full Event Release)
