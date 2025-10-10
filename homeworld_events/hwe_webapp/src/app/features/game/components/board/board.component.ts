@@ -43,6 +43,7 @@ export class BoardComponent implements OnInit{
         return { x, y: -y };
     }
 
+    // Styling for the Tiles - too much math for my CSS skills
     tileStyle(gt: GridTile): Record<string,string> {
         const { x, y } = this.hexToPixel(gt);
         const bbox = this.getBBoxFromTiles();
@@ -50,29 +51,31 @@ export class BoardComponent implements OnInit{
         const cy = bbox?.cy ?? 0;
 
         return {
-            left:   `${x - cx}px`,
-            top:    `${y - cy}px`,
-            width:  `${this.hexW}px`,
+            left: `${x - cx}px`,
+            top: `${y - cy}px`,
+            width: `${this.hexW}px`,
             height: `${this.hexH}px`,
         };
     }
 
+    // // Styling for the Board - too much math for my CSS skills
     boardStyle(): Record<string,string> {
         const bbox = this.getBBoxFromTiles();
-        if (!bbox) return { width: '100%', height: '100%' }; // or something safe
+        if (!bbox) return { width: '100%', height: '100%' };
 
         return {
             width:  `${Math.ceil(bbox.width)}px`,
             height: `${Math.ceil(bbox.height)}px`,
-            overflow: 'hidden' // crop any tiny overflow
+            overflow: 'hidden'
         };
     }
 
+    // Dynamic padding for the Board's "border-box"
     private getBBoxFromTiles() {
         const tiles = this.gridTiles();
         if (!tiles.length) return null;
 
-        const centers = tiles.map(t => this.hexToPixel(t)); // your flat-top function; returns {x, y}
+        const centers = tiles.map(t => this.hexToPixel(t));
         const xs = centers.map(c => c.x);
         const ys = centers.map(c => c.y);
 
