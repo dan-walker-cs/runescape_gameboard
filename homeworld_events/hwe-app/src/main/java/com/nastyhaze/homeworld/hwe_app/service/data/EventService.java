@@ -1,10 +1,10 @@
-package com.nastyhaze.homeworld.hwe_app.service;
+package com.nastyhaze.homeworld.hwe_app.service.data;
 
 import com.nastyhaze.homeworld.hwe_app.constant.CommonConstant;
 import com.nastyhaze.homeworld.hwe_app.constant.CrudOperationType;
 import com.nastyhaze.homeworld.hwe_app.domain.data.Event;
 import com.nastyhaze.homeworld.hwe_app.exception.EventServiceException;
-import com.nastyhaze.homeworld.hwe_app.repository.EventRepository;
+import com.nastyhaze.homeworld.hwe_app.repository.data.EventRepository;
 import com.nastyhaze.homeworld.hwe_app.web.mapper.EventMapper;
 import com.nastyhaze.homeworld.hwe_app.web.response.EventResponse;
 import lombok.RequiredArgsConstructor;
@@ -14,8 +14,8 @@ import org.springframework.validation.annotation.Validated;
 
 
 /**
- *  Service layer between Event Controller & EventRepository.
- *  Provides logic to retrieve and mutate repository data for the API - both for Event entities and relationships.
+ *  Service layer between Event Controller & Repository.
+ *  Provides logic to retrieve and mutate repository data for the API.
  */
 @Service
 @Validated

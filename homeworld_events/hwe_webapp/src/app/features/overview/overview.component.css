@@ -30,5 +30,11 @@ main {
 }
 
 .main__section {
-    padding: 1em;
+    margin: 2em;
+    padding: 2em;
+
+    display: flex;
+    flex-direction: column;
+
+    border-radius: 1.5em;
 }

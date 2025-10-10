@@ -11,7 +11,7 @@ export class PlayerApiService {
 
     // -- Readings Endpoints --
     // Retrieve initial state
-    getPlayersBlocking(): Observable<PlayerResponse[]> {
+    getPlayersSnapshot(): Observable<PlayerResponse[]> {
         return this.http.get<PlayerResponse[]>(endpoints.players.snapshot);
     }
 }

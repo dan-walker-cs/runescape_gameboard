@@ -3,7 +3,11 @@ import { TileModel } from '../models/tile.model';
 import { TileResponse } from './response/tile-response';
 import { TileApiService } from './tile-api.service';
 import { TileRequest } from './request/tile-request';
+import { Subscription } from 'rxjs';
 
+/**
+ *  Central location to retrieve stateful Tile data on the frontend.
+ */
 @Injectable({ providedIn: 'root' })
 export class TileStore {
     // Private, mutable store for use within this service
@@ -20,8 +24,8 @@ export class TileStore {
         enforce getTilesStreaming() is only called once getTilesBlocking() returns */
     // To be called by dependents in OnInit
     init() {
-        this.tileApi.getTilesBlocking().subscribe({
-            next: (snapshot) => this._tiles.set(snapshot.map(tileResponse => this._adaptResponseToModel(tileResponse))),
+        this.tileApi.getTilesSnapshot().subscribe({
+            next: (responseList) => this._tiles.set(responseList.map(tileResponse => this._adaptResponseToModel(tileResponse))),
             error: (e) => console.error('[TileStore] snapshot failed', e),
         });
 
@@ -90,7 +94,7 @@ export class TileStore {
      */
     private _mutate(id: number, fn: (t: TileModel) => TileModel) {
         this._tiles.update(list => 
-            list.map(t => t.id === id ? this._normalize(fn(t)): t)
+            list.map(oldT => oldT.id === id ? this._normalize(fn(oldT)): oldT)
         );
     }
 

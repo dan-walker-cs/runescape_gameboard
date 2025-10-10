@@ -1,4 +1,4 @@
-package com.nastyhaze.homeworld.hwe_app.repository;
+package com.nastyhaze.homeworld.hwe_app.repository.data;
 
 import com.nastyhaze.homeworld.hwe_app.domain.data.Tile;
 import org.springframework.data.jpa.repository.*;

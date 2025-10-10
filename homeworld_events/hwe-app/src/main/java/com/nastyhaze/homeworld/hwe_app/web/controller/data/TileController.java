@@ -1,6 +1,6 @@
-package com.nastyhaze.homeworld.hwe_app.web.controller;
+package com.nastyhaze.homeworld.hwe_app.web.controller.data;
 
-import com.nastyhaze.homeworld.hwe_app.service.TileService;
+import com.nastyhaze.homeworld.hwe_app.service.data.TileService;
 import com.nastyhaze.homeworld.hwe_app.web.request.TileRequest;
 import com.nastyhaze.homeworld.hwe_app.web.response.TileResponse;
 import jakarta.validation.Valid;

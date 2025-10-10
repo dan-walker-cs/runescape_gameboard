@@ -1,0 +1,54 @@
+main {
+    --outline: auto; /*debug*/
+    --background-color: rgb(43, 0, 255); /*debug*/
+    min-height: 0;
+    width: 75em;
+    flex: 1;
+
+    display: flex;
+    flex-direction: column;
+    align-self: center;
+
+    align-items: center;
+}
+
+.main__hero {
+    --outline:auto; /*debug*/
+    width: 50%;
+    margin-top: 2em;
+
+    display: flex;
+
+    justify-content: center;
+    align-items: center;
+
+    border-radius: 1em;
+}
+
+.main__section {
+    margin: 2em;
+    padding: 2em;
+
+    display: flex;
+    flex-direction: column;
+
+    border-radius: 1.5em;
+}
+
+.main__section__header {
+    width: auto;
+}
+
+.main__section__sub-header {
+    width: auto;
+}
+
+.main__section__body {
+    line-height: 2em;
+    margin-left: 2em;
+}
+
+.main__section__sub-body {
+    width: 70%;
+    margin-left: 3em;
+}

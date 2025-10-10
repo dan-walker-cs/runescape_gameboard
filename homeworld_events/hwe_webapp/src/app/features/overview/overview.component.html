@@ -3,16 +3,16 @@
         <div class="main__hero background--secondary shadow--primary font--secondary">
             <h2>Overview</h2>
         </div>
-        <div class="main__section font--primary">
-            <h3>{{ overview_fields.EVENT_TITLE }}</h3>
+        <div class="main__section background--secondary shadow--primary font--primary">
+            <h3>{{ eventStore.event()?.title }}</h3>
             <hr class="shadow--primary"/>
-            <p><b>Start:</b> {{ overview_fields.START_DT }}</p>
-            <p><b>End:</b> {{ overview_fields.END_DT }}</p>
+            <p><b>Start:</b> {{ eventStore.event()?.startDt | date:'short' }}</p>
+            <p><b>End:</b> {{ eventStore.event()?.endDt | date:'short' }}</p>
             <br/>
-            <p><b>Team 1: {{ overview_fields.TEAM_NAME_1 }}</b></p>
-            <p><b>Members:</b> {{ overview_fields.TEAM_MEMBERS_1 }}</p>
-            <p><b>Team 2: {{ overview_fields.TEAM_NAME_2 }}</b></p>
-            <p><b>Members:</b> {{ overview_fields.TEAM_MEMBERS_2 }}</p>
+            <div class="main__section__teams" *ngFor="let t of eventStore.teams();">
+                <p><b>Team: {{ t.teamName }}</b></p>
+                <p><b>Members: </b>{{ t.players.join(" - ") }}</p>
+            </div>
             <br/>
             <hr class="shadow--primary"/>
             <br/>
