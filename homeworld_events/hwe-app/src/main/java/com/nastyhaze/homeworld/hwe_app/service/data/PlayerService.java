@@ -15,7 +15,7 @@ import org.springframework.validation.annotation.Validated;
 import java.util.List;
 
 /**
- *  Service layer between PlayerController & PlayerRepository.
+ *  Service layer between Player Controller & Repository.
  *  Provides logic to retrieve and mutate repository data for the API.
  */
 @Service
@@ -27,6 +27,10 @@ public class PlayerService {
     private final PlayerRepository playerRepository;
     private final PlayerMapper playerMapper;
 
+    /**
+     * Returns a list of all active Players.
+     * @return List<PlayerResponse>
+     */
     public List<PlayerResponse> findAllPlayers() {
         return playerRepository.findAll()
             .stream()

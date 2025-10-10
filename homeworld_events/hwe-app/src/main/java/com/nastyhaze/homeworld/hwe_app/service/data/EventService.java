@@ -14,7 +14,7 @@ import org.springframework.validation.annotation.Validated;
 
 
 /**
- *  Service layer between Event Controller & EventRepository.
+ *  Service layer between Event Controller & Repository.
  *  Provides logic to retrieve and mutate repository data for the API.
  */
 @Service

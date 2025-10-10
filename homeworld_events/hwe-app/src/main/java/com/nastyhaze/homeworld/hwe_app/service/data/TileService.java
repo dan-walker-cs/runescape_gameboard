@@ -23,7 +23,7 @@ import java.time.Duration;
 import java.util.List;
 
 /**
- *  Service layer between TileController & TileRepository.
+ *  Service layer between Tile Controller & Repository.
  *  Provides logic to retrieve and mutate repository data for the API.
  *  This layer is BLOCKING & NON-REACTIVE.
  */
