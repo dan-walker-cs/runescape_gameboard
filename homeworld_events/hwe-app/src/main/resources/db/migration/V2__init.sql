@@ -4,6 +4,8 @@ SET @icon_path_prefix = 'assets/icons/';
 SET @icon_path_postfix = '_tile_icon.png';
 
 INSERT INTO tile (`title`, `description`, `weight`, `icon_path`)
+    VALUES ('Start',"Good Luck!",0, '');
+INSERT INTO tile (`title`, `description`, `weight`, `icon_path`)
     VALUES ('Oh Brother: Guthan',"Collect any piece of Guthan's barrows set",1,
     CONCAT(@icon_path_prefix, 'guthan', @icon_path_postfix));
 INSERT INTO tile (`title`, `description`, `weight`, `icon_path`)

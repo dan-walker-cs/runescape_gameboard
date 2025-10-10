@@ -3,17 +3,16 @@ import { EventStore } from '../game/data/event-store.service';
 import { DatePipe, NgFor } from '@angular/common'; 
 
 @Component({
-  selector: 'app-overview',
-  standalone: true,
-  imports: [DatePipe, NgFor],
-  templateUrl: './overview.component.html',
-  styleUrls: ['./overview.component.css']
+    selector: 'app-overview',
+    standalone: true,
+    imports: [DatePipe, NgFor],
+    templateUrl: './overview.component.html',
+    styleUrls: ['./overview.component.css']
 })
-export class OverviewComponent implements OnInit 
-{
-  readonly eventStore = inject(EventStore);
+export class OverviewComponent implements OnInit {
+    readonly eventStore = inject(EventStore);
 
-  ngOnInit(): void {
-    this.eventStore.init();
-  }
+    ngOnInit(): void {
+        this.eventStore.init();
+    }
 }

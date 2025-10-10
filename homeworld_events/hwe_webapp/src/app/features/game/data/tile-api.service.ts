@@ -28,7 +28,7 @@ export class TileApiService implements OnDestroy {
             const onError    = (err: any) => subscriber.error?.(err);
 
             this.eventSource.addEventListener(ServerEventType.TILE_SNAPSHOT, onSnapshot);
-            this.eventSource.addEventListener(ServerEventType.TILE_UDPATE, onUpdate);
+            this.eventSource.addEventListener(ServerEventType.TILE_UPDATE, onUpdate);
             this.eventSource.onerror = onError; // EventSource auto-retries; can ignore or log, if needed
 
             return () => this.close();

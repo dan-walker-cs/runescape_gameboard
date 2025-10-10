@@ -1,35 +1,35 @@
+/* Make the tile component fill its parent wrapper */
+:host {
+    display: block;
+    width: 100%;
+    height: 100%;
+}
+
+/* The click target */
 .tile {
-    --outline: auto; /*debug*/
-    --background-color: greenyellow; /*debug*/
-
-    width: 4em;
-    aspect-ratio: 100 / 86.6;
     position: relative;
+    width: 100%;
+    height: 100%;
 
-    display: flex;
-    flex-direction: column;
-
-    justify-content: center;
-    align-items: center;
-
-    fill: #ffffff;
-
-    stroke: #333;
+    stroke: #333; 
     stroke-width: 3;
     stroke-linejoin: round;
 
+    fill: #e6f3ff;
+
     cursor: pointer;
+    clip-path: polygon(25% 0, 75% 0, 100% 50%, 75% 100%, 25% 100%, 0 50%);
     transition: fill 500ms, stroke 500ms;
 }
 
 .tile:hover { 
     stroke: #ffcc00 !important; 
-    fill: #ffe9ae ; /*acceptance test this w/ & w/out !important*/
+    fill: #ffe9ae !important;
 }
 
 :host(.select) .tile {
     stroke: #ffcc00 !important; 
-    fill: #ffe9ae ; /*acceptance test this w/ & w/out !important*/
+    fill: #ffe9ae !important;
 }
 
 :host(.complete) .tile {
@@ -42,19 +42,31 @@
     fill: #7bdcff;
 }
 
-.tile__icon {
+/* SVG fills the box defined by the board’s wrapper (width/height) */
+.hex {
     position: absolute;
     inset: 0;
+    width: 100%;
+    height: 100%;
+    display: block;
+}
 
+/* Icon centered within the hex */
+.tile__icon {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    width: 60%;
+    height: 60%;
     display: flex;
-
-    justify-content: center;
     align-items: center;
-
+    justify-content: center;
     pointer-events: none;
 }
 
 .tile__icon img {
-    width: 50%;
-    height: auto;
+    max-width: 100%;
+    max-height: 100%;
+    object-fit: contain;
 }

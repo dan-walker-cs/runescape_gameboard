@@ -2,15 +2,16 @@
     display: contents; /*ignore wrapper element from router-outlet*/
 }
 
-.board {
-    --outline: auto; /*debug*/
-    --background-color: rgb(0, 0, 0); /*debug*/
-    min-height: 0;
-    flex: 1;
+.board { 
+    position: relative;
+}
 
-    display: flex;
-    flex-direction: column;
-    align-self: stretch;
+.board__origin {
+    position: absolute; left: 50%; top: 50%;
+    transform: translate(-50%, -50%); /* place by center */
+}
 
-    align-items: center;
+.hex-wrap {
+    position: absolute;
+    transform: translate(-50%, -50%); /* place by center */
 }

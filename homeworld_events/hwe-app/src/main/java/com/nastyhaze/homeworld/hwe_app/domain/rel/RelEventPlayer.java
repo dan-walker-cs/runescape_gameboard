@@ -12,14 +12,16 @@ import lombok.ToString;
 @Table(name = "rel_event_player")
 @Getter
 @Setter
-@ToString(exclude = {"event", "player"})
+@ToString
 public class RelEventPlayer extends AuditEntity {
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "event_id", nullable = false)
+    @ToString.Exclude
     private Event event;
 
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "player_id", nullable = false)
+    @ToString.Exclude
     private Player player;
 
     @Column(name = "team_name", length = 64, nullable = false)

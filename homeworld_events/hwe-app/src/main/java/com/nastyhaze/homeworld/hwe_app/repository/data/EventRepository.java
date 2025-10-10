@@ -13,7 +13,7 @@ import java.util.Optional;
 public interface EventRepository extends JpaRepository<Event, Long> {
 
     /**
-     * Only 1 event should ever be active in the repository.
+     * Only 1 Event should ever be active in the repository.
      * @return List<Event>
      */
     Optional<Event> findByActiveTrue();

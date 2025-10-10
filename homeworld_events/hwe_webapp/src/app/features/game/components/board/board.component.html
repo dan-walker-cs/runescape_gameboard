@@ -1,4 +1,9 @@
-<!-- TODO: Implement the Board as a hex-grid & have each tile know its coordinates. -->
-<main class="board">
-        <app-tile *ngFor="let t of tileStore.tiles(); trackBy: trackById" [tileId]="t.id"></app-tile>
+<main class="board" [ngStyle]="boardStyle()">
+    <div class="board__origin">
+        <div class="hex-wrap" 
+        *ngFor="let gridTile of gridTiles();"
+        [ngStyle]="tileStyle(gridTile)">
+            <app-tile [tileId]="gridTile.tileId"></app-tile>
+        </div>
+    </div>
 </main>
