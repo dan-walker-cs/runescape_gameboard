@@ -45,3 +45,32 @@ html, body {
   max-height: none !important;
   overflow: visible !important;
 }
+
+/* External styling for rules templating fetch */
+.rules-template .main__section {
+    margin: 2em;
+    padding: 2em;
+
+    display: flex;
+    flex-direction: column;
+
+    border-radius: 1.5em;
+}
+
+.rules-template .main__section__header {
+    width: auto;
+}
+
+.rules-template .main__section__sub-header {
+    width: auto;
+}
+
+.rules-template .main__section__body {
+    line-height: 2em;
+    margin-left: 2em;
+}
+
+.rules-template .main__section__sub-body {
+    width: 70%;
+    margin-left: 3em;
+}

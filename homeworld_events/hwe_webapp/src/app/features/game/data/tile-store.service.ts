@@ -20,8 +20,8 @@ export class TileStore {
         enforce getTilesStreaming() is only called once getTilesBlocking() returns */
     // To be called by dependents in OnInit
     init() {
-        this.tileApi.getTilesBlocking().subscribe({
-            next: (snapshot) => this._tiles.set(snapshot.map(tileResponse => this._adaptResponseToModel(tileResponse))),
+        this.tileApi.getTilesSnapshot().subscribe({
+            next: (responseList) => this._tiles.set(responseList.map(tileResponse => this._adaptResponseToModel(tileResponse))),
             error: (e) => console.error('[TileStore] snapshot failed', e),
         });
 

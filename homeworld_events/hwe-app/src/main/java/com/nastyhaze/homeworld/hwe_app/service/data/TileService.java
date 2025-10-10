@@ -1,10 +1,10 @@
-package com.nastyhaze.homeworld.hwe_app.service;
+package com.nastyhaze.homeworld.hwe_app.service.data;
 
 import com.nastyhaze.homeworld.hwe_app.constant.CrudOperationType;
 import com.nastyhaze.homeworld.hwe_app.constant.ServerEventType;
 import com.nastyhaze.homeworld.hwe_app.domain.data.Tile;
 import com.nastyhaze.homeworld.hwe_app.exception.TileServiceException;
-import com.nastyhaze.homeworld.hwe_app.repository.TileRepository;
+import com.nastyhaze.homeworld.hwe_app.repository.data.TileRepository;
 import com.nastyhaze.homeworld.hwe_app.util.CommonUtils;
 import com.nastyhaze.homeworld.hwe_app.web.event.TileEvent;
 import com.nastyhaze.homeworld.hwe_app.web.mapper.TileMapper;
