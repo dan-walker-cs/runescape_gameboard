@@ -15,7 +15,7 @@ import reactor.core.scheduler.Schedulers;
  *  API for Board entity data.
  */
 @RestController
-@RequestMapping("/api/board")
+@RequestMapping("/api/boards")
 @RequiredArgsConstructor
 public class BoardController {
 

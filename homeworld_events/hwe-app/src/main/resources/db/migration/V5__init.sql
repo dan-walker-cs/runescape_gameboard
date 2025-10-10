@@ -29,12 +29,8 @@ CREATE TABLE IF NOT EXISTS rel_board_tile (
 
 -- Insert Winter 2025 board
 INSERT INTO board (event_id, width_q, height_r)
-    VALUES (2, 32, 24);
+    VALUES (2, 16, 8);
 
--- Insert start tile
-INSERT INTO rel_board_tile (board_id, tile_id, q_coord, r_coord)
-    VALUES (1, 1, 0, 0);
-
--- Insert remaining tiles
+-- Insert Tiles
 INSERT INTO rel_board_tile (board_id, tile_id, q_coord, r_coord)
     SELECT 1, id, 1, 1 from tile;

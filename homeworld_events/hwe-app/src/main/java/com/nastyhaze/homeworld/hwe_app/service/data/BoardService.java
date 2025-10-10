@@ -31,6 +31,6 @@ public class BoardService {
     public BoardResponse getBoardByEvent(Long eventId) {
         return boardRepository.findByEventIdAndActiveTrue(eventId)
             .map(boardMapper::toResponse)
-            .orElseThrow(() -> new BoardServiceException(CrudOperationType.READ));
+            .orElseThrow(() -> new BoardServiceException(CrudOperationType.READ, eventId));
     }
 }

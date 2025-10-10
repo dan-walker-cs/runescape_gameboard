@@ -3,7 +3,11 @@ import { TileModel } from '../models/tile.model';
 import { TileResponse } from './response/tile-response';
 import { TileApiService } from './tile-api.service';
 import { TileRequest } from './request/tile-request';
+import { Subscription } from 'rxjs';
 
+/**
+ *  Central location to retrieve stateful Tile data on the frontend.
+ */
 @Injectable({ providedIn: 'root' })
 export class TileStore {
     // Private, mutable store for use within this service
@@ -90,7 +94,7 @@ export class TileStore {
      */
     private _mutate(id: number, fn: (t: TileModel) => TileModel) {
         this._tiles.update(list => 
-            list.map(t => t.id === id ? this._normalize(fn(t)): t)
+            list.map(oldT => oldT.id === id ? this._normalize(fn(oldT)): oldT)
         );
     }
 

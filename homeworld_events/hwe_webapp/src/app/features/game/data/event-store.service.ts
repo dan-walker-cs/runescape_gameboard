@@ -6,6 +6,9 @@ import { EventPlayerTeamResponse } from "./response/event-player-team-response";
 import { TeamModel } from "../models/team.model";
 import { HIGHLANDER_NUM } from "../../../shared/constant/common-constant";
 
+/**
+ *  Central location to retrieve stateful Event data on the frontend.
+ */
 @Injectable({ providedIn: 'root' })
 export class EventStore {
     // Private, mutable store for use within this service
@@ -33,32 +36,32 @@ export class EventStore {
         });
     }
 
-        /**
-         * Converts backend EventResponse object format to frontend EventModel object format.
-         * @param eventResponse 
-         * @returns EventModel
-         */
-        private _adaptEventResponseToModel(eventResponse: EventResponse): EventModel {
-            return {
-                id: eventResponse.id,
-                title: eventResponse.title,
-                startDt: eventResponse.startDt,
-                endDt: eventResponse.endDt,
-                buyIn: eventResponse.buyIn,
-                rulesPath: eventResponse.rulesPath
-            };
-        }
+    /**
+     * Converts backend EventResponse object format to frontend EventModel object format.
+     * @param eventResponse 
+     * @returns EventModel
+     */
+    private _adaptEventResponseToModel(eventResponse: EventResponse): EventModel {
+        return {
+            id: eventResponse.id,
+            title: eventResponse.title,
+            startDt: eventResponse.startDt,
+            endDt: eventResponse.endDt,
+            buyIn: eventResponse.buyIn,
+            rulesPath: eventResponse.rulesPath
+        };
+    }
 
-        /**
-         * Converts backend EventPlayerTeamResponse object format to a list of TeamModel objects.
-         * @param eptResponse 
-         * @returns TeamModel[]
-         */
-        private _adaptTeamResponseToModel(eptResponse: EventPlayerTeamResponse): TeamModel[] {
-            return Object.entries(eptResponse.playerNamesByTeam)
-                .map(([teamName, players]) => ({
-                    teamName,
-                    players: [...players],
-                }));
-        }
+    /**
+     * Converts backend EventPlayerTeamResponse object format to a list of TeamModel objects.
+     * @param eptResponse 
+     * @returns TeamModel[]
+     */
+    private _adaptTeamResponseToModel(eptResponse: EventPlayerTeamResponse): TeamModel[] {
+        return Object.entries(eptResponse.playerNamesByTeam)
+            .map(([teamName, players]) => ({
+                teamName,
+                players: [...players],
+            }));
+    }
 }

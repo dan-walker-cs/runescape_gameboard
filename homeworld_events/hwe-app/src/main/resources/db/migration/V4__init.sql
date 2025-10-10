@@ -50,6 +50,11 @@ INSERT INTO rel_event_player (event_id, player_id, team_name)
 INSERT INTO rel_event_player (event_id, player_id, team_name)
     VALUES (1, 2, 'DEFAULT_TWO');
 
+INSERT INTO rel_event_tile (event_id, tile_id)
+    SELECT 1, id
+    FROM tile
+    WHERE id = 1;
+
 -- Populate tables with Winter 2025 data
 INSERT INTO event (title,start_dt,end_dt,buy_in,rules_path)
     VALUES ('Winter 2025 HexScape','2025-11-07 10:00:00','2025-11-23 23:59:00','1.5 bonds per Player','assets/templates/2025_winter_rules.html');
@@ -75,7 +80,8 @@ INSERT INTO rel_event_player (event_id, player_id, team_name)
 INSERT INTO rel_event_player (event_id, player_id, team_name)
     VALUES (2, 10, 'TEAM_TWO');
 
+-- 2025 Winter Hex
 INSERT INTO rel_event_tile (event_id, tile_id)
-    SELECT 1, id
+    SELECT 2, id
     FROM tile
     WHERE id <= 83;

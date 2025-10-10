@@ -21,4 +21,8 @@ public class BoardServiceException extends RuntimeException {
     public BoardServiceException(Long boardId, CrudOperationType opType) {
         super(String.format("ERROR: Failure with %s operation for Board: %d in the BoardService.", opType, boardId));
     }
+
+    public BoardServiceException(CrudOperationType opType, Long eventId) {
+        super(String.format("ERROR: Failure with %s operation for Event: %d in the BoardService.", opType, eventId));
+    }
 }
