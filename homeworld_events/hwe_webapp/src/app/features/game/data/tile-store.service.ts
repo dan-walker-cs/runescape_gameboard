@@ -29,10 +29,10 @@ export class TileStore {
             error: (e) => console.error('[TileStore] snapshot failed', e),
         });
 
-        this.tileApi.getTilesStreaming().subscribe({
-            next: (tileResponse) => this._updateLocalState(tileResponse),
-            error: (e) => console.error('[TileStore] stream error', e),
-        });
+        // this.tileApi.getTilesStreaming().subscribe({
+        //     next: (tileResponse) => this._updateLocalState(tileResponse),
+        //     error: (e) => console.error('[TileStore] stream error', e),
+        // });
     }
 
     // -- Queries --

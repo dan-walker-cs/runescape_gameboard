@@ -4,7 +4,7 @@ import { EventResponse } from "./response/event-response";
 import { EventApiService } from "./event-api.service";
 import { EventPlayerTeamResponse } from "./response/event-player-team-response";
 import { TeamModel } from "../models/team.model";
-import { HIGHLANDER_NUM } from "../../../shared/constant/common-constant";
+import { map, Observable, shareReplay, switchMap, take, tap } from "rxjs";
 
 /**
  *  Central location to retrieve stateful Event data on the frontend.
@@ -24,16 +24,22 @@ export class EventStore {
     constructor(private eventApi: EventApiService) {}
 
     // To be called by dependents in OnInit
-    init(): void {
-        this.eventApi.getCurrentEventSnapshot().subscribe({
-            next: (eventResponse) => this._event.set(this._adaptEventResponseToModel(eventResponse)),
-            error: (e) => console.error('[EventStore] snapshot failed', e),
-        });
-
-        this.eventApi.getPlayerAndTeamSnapshot(this._event()?.id ?? HIGHLANDER_NUM).subscribe({
-            next: (eptResponse) => this._teams.set(this._adaptTeamResponseToModel(eptResponse)),
-            error: (e) => console.error('[EventStore] snapshot failed', e),
-        });
+    init(): Observable<EventModel> {
+        return this.eventApi.getCurrentEventSnapshot()
+            .pipe(
+                map(eventResponse => this._adaptEventResponseToModel(eventResponse)),
+                tap(eventModel => this._event.set(eventModel)),
+                switchMap(eventModel =>
+                    this.eventApi.getPlayerAndTeamSnapshot(eventModel.id)
+                        .pipe(
+                            map(eptResponse => this._adaptTeamResponseToModel(eptResponse)),
+                            tap(teamModelList => this._teams.set(teamModelList)),
+                            map(() => eventModel)
+                        )
+                ),
+                take(1),
+                shareReplay(1)
+            );
     }
 
     /**
