@@ -1,9 +1,10 @@
-:host {
-    display: contents; /*ignore wrapper element from router-outlet*/
-}
-
 .board { 
     position: relative;
+    height: 100%;
+    width: 100%;
+
+    padding: 5em;
+    overflow: hidden;
 }
 
 .board__origin {

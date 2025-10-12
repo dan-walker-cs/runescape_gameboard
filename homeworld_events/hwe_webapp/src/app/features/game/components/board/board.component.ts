@@ -72,7 +72,7 @@ export class BoardComponent implements OnInit{
         };
     }
 
-    // // Styling for the Board - too much math for my CSS skills
+    // Styling for the Board - too much math for my raw CSS skills
     boardStyle(): Record<string,string> {
         const bbox = this.getBBoxFromTiles();
         if (!bbox) return { width: '100%', height: '100%' };
