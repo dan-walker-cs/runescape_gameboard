@@ -1,10 +1,12 @@
-import { Component, inject, OnInit, Signal } from '@angular/core';
+import { Component, DestroyRef, inject, Injector, OnInit, Signal } from '@angular/core';
 import { TileComponent } from "../tile/tile.component";
 import { TileStore } from '../../data/tile-store.service';
 import { NgFor, NgStyle } from '@angular/common';
 import { PlayerStore } from '../../data/player-store.service';
 import { BoardStore } from '../../data/board-store.service';
 import { GridTile } from '../../models/grid-tile';
+import { firstValueFrom } from 'rxjs';
+import { takeUntilDestroyed, toObservable } from '@angular/core/rxjs-interop';
 
 @Component({
     selector: 'app-board',
@@ -16,14 +18,27 @@ import { GridTile } from '../../models/grid-tile';
 export class BoardComponent implements OnInit{
     // Dynamic immutable data from the backend
     readonly tileStore = inject(TileStore);
-    readonly boardStore = inject(BoardStore);
     // Read-once immutable data from the backend
+    readonly boardStore = inject(BoardStore);
     readonly playerStore = inject(PlayerStore);
 
-    ngOnInit(): void {
-        this.boardStore.init();
-        this.tileStore.init();
-        this.playerStore.init();
+    // TODO: is this a code-smell?
+    private injector   = inject(Injector);
+    private destroyRef = inject(DestroyRef);
+
+
+    async ngOnInit(): Promise<void> {
+        // Load snapshots
+        await Promise.all([
+            firstValueFrom(this.boardStore.init()),
+            firstValueFrom(this.playerStore.init()),
+            firstValueFrom(this.tileStore.init()),
+        ]);
+
+        // Subscribe to Tile updates
+        toObservable(this.tileStore.tiles, { injector: this.injector })
+            .pipe(takeUntilDestroyed(this.destroyRef))
+            .subscribe();
     }
 
     // Hex Dimensions

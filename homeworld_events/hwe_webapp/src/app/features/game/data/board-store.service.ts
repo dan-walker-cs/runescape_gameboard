@@ -3,9 +3,8 @@ import { EventStore } from "./event-store.service";
 import { BoardModel } from "../models/board.model";
 import { BoardResponse } from "./response/board-response";
 import { BoardApiService } from "./board-api.service";
-import { HIGHLANDER_NUM } from "../../../shared/constant/common-constant";
 import { BoardTileResponse } from "./response/board-tile-response";
-import { map, switchMap, tap } from "rxjs";
+import { map, Observable, shareReplay, switchMap, take, tap } from "rxjs";
 
 /**
  *  Central location to retrieve stateful Tile data on the frontend.
@@ -17,24 +16,41 @@ export class BoardStore {
     // Private, mutable store for use within this service
     // Signal: Angular's reactive state primitive
     private _board = signal<BoardModel | null>(null);
-
     // Public, immutable store for use outside the service
     // Computed: Creates a derrived signal. Whenever the dependency signal changes, the computation is automatically re-run.
     readonly board = computed(() => this._board());
 
+    // Memo
+    private init$?: Observable<BoardModel>
+
     constructor(private boardApi: BoardApiService) {}
 
     // To be called by dependents in OnInit
-    init(): void {
-        this.boardApi.getEventBoardSnapshot(this.eventStore.event()?.id ?? HIGHLANDER_NUM)
-            .pipe(      // Pipe ensures the snapshot is received & modified before subscription logic executes
-                map(boardResponse => this._adaptBoardResponseToModel(boardResponse)),
-                tap(boardModel => this._board.set(boardModel)),
-                switchMap(boardModel => this.boardApi.getGridTilesByBoard(boardModel.id))
-            ).subscribe({
-                next: boardTileResponse => this.setGridTileList(boardTileResponse),
-                error: e => console.error('[BoardStore] init failed', e)
-            });
+    init(): Observable<BoardModel> {
+        // Subscribe once, then cache
+        if (!this.init$) {
+            // Wait for EventStore to initialize
+            this.init$ = this.eventStore.init()
+                .pipe(
+                    // Load the Board
+                    switchMap(eventModel => this.boardApi.getEventBoardSnapshot(eventModel.id)),
+                    map(boardResponse => this._adaptBoardResponseToModel(boardResponse)),
+                    tap(boardModel => this._board.set(boardModel)),
+
+                    // Load GridTiles
+                    switchMap(boardModel =>
+                        this.boardApi.getGridTilesByBoard(boardModel.id)
+                            .pipe(
+                                tap(boardTileResponse => this.setGridTileList(boardTileResponse)),
+                                map(() => boardModel)
+                            )
+                    ),
+                    take(1),
+                    shareReplay(1)
+                )
+        }
+
+        return this.init$;
     }
 
     /**

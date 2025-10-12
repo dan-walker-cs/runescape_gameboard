@@ -21,25 +21,34 @@ export class EventStore {
     readonly event = computed(() => this._event());  
     readonly teams = computed(() => this._teams());
 
+    // Memo
+    private init$?: Observable<EventModel>;
+
     constructor(private eventApi: EventApiService) {}
+
 
     // To be called by dependents in OnInit
     init(): Observable<EventModel> {
-        return this.eventApi.getCurrentEventSnapshot()
-            .pipe(
-                map(eventResponse => this._adaptEventResponseToModel(eventResponse)),
-                tap(eventModel => this._event.set(eventModel)),
-                switchMap(eventModel =>
-                    this.eventApi.getPlayerAndTeamSnapshot(eventModel.id)
-                        .pipe(
-                            map(eptResponse => this._adaptTeamResponseToModel(eptResponse)),
-                            tap(teamModelList => this._teams.set(teamModelList)),
-                            map(() => eventModel)
-                        )
-                ),
-                take(1),
-                shareReplay(1)
-            );
+        if (!this.init$) {
+            this.init$ = this.eventApi.getCurrentEventSnapshot()
+                .pipe(
+                    map(eventResponse => this._adaptEventResponseToModel(eventResponse)),
+                    tap(eventModel => this._event.set(eventModel)),
+
+                    switchMap(eventModel =>
+                        this.eventApi.getPlayerAndTeamSnapshot(eventModel.id)
+                            .pipe(
+                                map(eptResponse => this._adaptTeamResponseToModel(eptResponse)),
+                                tap(teamModelList => this._teams.set(teamModelList)),
+                                map(() => eventModel)
+                            )
+                    ),
+                    take(1),
+                    shareReplay(1)
+                );
+            }
+
+        return this.init$;
     }
 
     /**

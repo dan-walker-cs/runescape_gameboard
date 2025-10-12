@@ -24,13 +24,13 @@ export class RulesComponent implements OnInit, OnDestroy {
         const eventModel = await firstValueFrom(this.eventStore.init());
 
         this.http.get(eventModel.rulesPath, { responseType: 'text' })
-        .pipe(
-            takeUntil(this.destroy$),
-            catchError(() => of(ERROR_HTML))
-        )
-        .subscribe(rulesTemplateRaw => {
-            this.rulesTemplateClean = this.sanitize.bypassSecurityTrustHtml(rulesTemplateRaw);
-        });
+            .pipe(
+                takeUntil(this.destroy$),
+                catchError(() => of(ERROR_HTML))
+            )
+            .subscribe(rulesTemplateRaw => {
+                this.rulesTemplateClean = this.sanitize.bypassSecurityTrustHtml(rulesTemplateRaw);
+            });
     }
 
     ngOnDestroy(): void {
