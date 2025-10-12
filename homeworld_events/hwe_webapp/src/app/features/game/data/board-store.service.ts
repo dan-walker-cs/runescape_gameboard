@@ -11,6 +11,8 @@ import { map, Observable, shareReplay, switchMap, take, tap } from "rxjs";
  */
 @Injectable({ providedIn: 'root' })
 export class BoardStore {
+    private boardApi = inject(BoardApiService);
+
     readonly eventStore = inject(EventStore);
     
     // Private, mutable store for use within this service
@@ -23,7 +25,6 @@ export class BoardStore {
     // Memo
     private init$?: Observable<BoardModel>
 
-    constructor(private boardApi: BoardApiService) {}
 
     // To be called by dependents in OnInit
     init(): Observable<BoardModel> {

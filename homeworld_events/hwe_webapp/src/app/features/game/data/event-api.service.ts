@@ -7,9 +7,9 @@ import { EventPlayerTeamResponse } from "./response/event-player-team-response";
 
 @Injectable({ providedIn: 'root' })
 export class EventApiService {
-
     private http = inject(HttpClient);
 
+    
     // -- Readings Endpoints --
     // Retrieve initial state
     getCurrentEventSnapshot(): Observable<EventResponse> {

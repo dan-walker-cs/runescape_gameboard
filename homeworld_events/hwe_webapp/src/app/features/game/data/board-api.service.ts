@@ -7,9 +7,9 @@ import { BoardTileResponse } from "./response/board-tile-response";
 
 @Injectable({ providedIn: 'root' })
 export class BoardApiService {
-
     private http = inject(HttpClient);
 
+    
     // -- Readings Endpoints --
     // Retrieve initial state
     getEventBoardSnapshot(eventId: number): Observable<BoardResponse> {

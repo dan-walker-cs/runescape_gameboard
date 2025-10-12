@@ -1,4 +1,4 @@
-import { computed, Injectable, signal } from "@angular/core";
+import { computed, inject, Injectable, signal } from "@angular/core";
 import { EventModel } from "../models/event.model";
 import { EventResponse } from "./response/event-response";
 import { EventApiService } from "./event-api.service";
@@ -11,6 +11,8 @@ import { map, Observable, shareReplay, switchMap, take, tap } from "rxjs";
  */
 @Injectable({ providedIn: 'root' })
 export class EventStore {
+    private eventApi = inject(EventApiService);
+    
     // Private, mutable store for use within this service
     // Signal: Angular's reactive state primitive
     private _event = signal<EventModel | null>(null);
@@ -23,8 +25,6 @@ export class EventStore {
 
     // Memo
     private init$?: Observable<EventModel>;
-
-    constructor(private eventApi: EventApiService) {}
 
 
     // To be called by dependents in OnInit

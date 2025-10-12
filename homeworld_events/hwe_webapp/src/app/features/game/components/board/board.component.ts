@@ -1,4 +1,4 @@
-import { Component, DestroyRef, inject, Injector, OnInit, Signal } from '@angular/core';
+import { Component, DestroyRef, inject, Injector, OnInit } from '@angular/core';
 import { TileComponent } from "../tile/tile.component";
 import { TileStore } from '../../data/tile-store.service';
 import { NgFor, NgStyle } from '@angular/common';
@@ -15,16 +15,15 @@ import { takeUntilDestroyed, toObservable } from '@angular/core/rxjs-interop';
     templateUrl: './board.component.html',
     styleUrl: './board.component.css'
 })
-export class BoardComponent implements OnInit{
+export class BoardComponent implements OnInit{  
+    private injector   = inject(Injector);
+    private destroyRef = inject(DestroyRef);
+
     // Dynamic immutable data from the backend
-    readonly tileStore = inject(TileStore);
+    readonly tileStore = inject(TileStore); 
     // Read-once immutable data from the backend
     readonly boardStore = inject(BoardStore);
     readonly playerStore = inject(PlayerStore);
-
-    // TODO: is this a code-smell?
-    private injector   = inject(Injector);
-    private destroyRef = inject(DestroyRef);
 
 
     async ngOnInit(): Promise<void> {

@@ -1,4 +1,4 @@
-import { computed, Injectable, signal } from "@angular/core";
+import { computed, inject, Injectable, signal } from "@angular/core";
 import { PlayerApiService } from "./player-api.service";
 import { PlayerResponse } from "./response/player-response";
 import { PlayerModel } from "../models/player.model";
@@ -9,6 +9,8 @@ import { map, Observable, shareReplay, take, tap } from "rxjs";
  */
 @Injectable({ providedIn: 'root' })
 export class PlayerStore {
+    private playerApi = inject(PlayerApiService);
+
     // Private, mutable store for use within this service
     // Signal: Angular's reactive state primitive
     private _players = signal<PlayerModel[]>([]);
@@ -18,8 +20,7 @@ export class PlayerStore {
 
     // Memo
     private init$?: Observable<PlayerModel[]>;
-    
-    constructor(private playerApi: PlayerApiService) {}
+
 
     // To be called by dependents in OnInit
     init(): Observable<PlayerModel[]> {

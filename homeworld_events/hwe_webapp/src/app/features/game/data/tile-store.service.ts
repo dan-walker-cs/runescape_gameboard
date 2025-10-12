@@ -1,4 +1,4 @@
-import { Injectable, signal, computed, Signal } from '@angular/core';
+import { Injectable, signal, computed, Signal, inject } from '@angular/core';
 import { TileModel } from '../models/tile.model';
 import { TileResponse } from './response/tile-response';
 import { TileApiService } from './tile-api.service';
@@ -10,6 +10,8 @@ import { catchError, EMPTY, map, Observable, shareReplay, Subscription, take, ta
  */
 @Injectable({ providedIn: 'root' })
 export class TileStore {
+    private tileApi = inject(TileApiService);
+
     // Private, mutable store for use within this service
     // Signal: Angular's reactive state primitive
     private _tiles = signal<TileModel[]>([]);
@@ -20,8 +22,7 @@ export class TileStore {
     // Memo
     private snapshotInit$?: Observable<TileModel[]>;
     private streamInit$?: Subscription;
-    
-    constructor(private tileApi: TileApiService) {}
+
 
     // To be called by dependents in OnInit
     init(): Observable<TileModel[]> {
