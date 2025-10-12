@@ -1,4 +1,4 @@
-import { Component, DestroyRef, inject, Injector, OnInit } from '@angular/core';
+import { Component, DestroyRef, inject, Injector, OnInit, signal } from '@angular/core';
 import { TileComponent } from "../tile/tile.component";
 import { TileStore } from '../../data/tile-store.service';
 import { NgFor, NgStyle } from '@angular/common';
@@ -7,6 +7,9 @@ import { BoardStore } from '../../data/board-store.service';
 import { GridTile } from '../../models/grid-tile';
 import { firstValueFrom } from 'rxjs';
 import { takeUntilDestroyed, toObservable } from '@angular/core/rxjs-interop';
+import { EventStore } from '../../data/event-store.service';
+import { P } from '@angular/cdk/keycodes';
+import { TeamModel } from '../../models/team.model';
 
 @Component({
     selector: 'app-board',
@@ -22,13 +25,16 @@ export class BoardComponent implements OnInit{
     // Dynamic immutable data from the backend
     readonly tileStore = inject(TileStore); 
     // Read-once immutable data from the backend
+    readonly eventStore = inject(EventStore);
     readonly boardStore = inject(BoardStore);
     readonly playerStore = inject(PlayerStore);
 
+    selectedTeam = signal<string | null>(null);
 
     async ngOnInit(): Promise<void> {
         // Load snapshots
         await Promise.all([
+            firstValueFrom(this.eventStore.init()),
             firstValueFrom(this.boardStore.init()),
             firstValueFrom(this.playerStore.init()),
             firstValueFrom(this.tileStore.init()),
@@ -38,6 +44,16 @@ export class BoardComponent implements OnInit{
         toObservable(this.tileStore.tiles, { injector: this.injector })
             .pipe(takeUntilDestroyed(this.destroyRef))
             .subscribe();
+    }
+
+    // Determines number of Team tabs to render for the Board & provides their headers
+    getTeamNames(): string[] {
+        return this.eventStore.teams()
+            .map(teamModel => teamModel.teamName);
+    }
+
+    selectTeam(teamName: string): void {
+            this.selectedTeam.set(teamName);
     }
 
     // Hex Dimensions
@@ -80,7 +96,7 @@ export class BoardComponent implements OnInit{
         return {
             width:  `${Math.ceil(bbox.width)}px`,
             height: `${Math.ceil(bbox.height)}px`,
-            overflow: 'hidden'
+            // overflow: 'hidden' // TODO: This is overflowing. I really just want to extend board to fill app__main..
         };
     }
 

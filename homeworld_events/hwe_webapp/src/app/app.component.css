@@ -2,15 +2,20 @@
     min-height: 100vh;
     display: flex;
     flex-direction: column;
+
+    background-color: rgb(255, 255, 255);
 }
 
 .app__main {
-    --min-height: 0;
     height: 100%;
+    width: 80%; /* Go to 60%? */
+    align-self: center;
     flex: 1 1 auto;
 
     display: flex;
     flex-direction: column;
 
-    align-items:center
+    align-items:center;
+
+    background-color: rgb(146, 146, 146);
 }
