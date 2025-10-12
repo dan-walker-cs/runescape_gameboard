@@ -1,0 +1,14 @@
+=============
+Tile Updates
+=============
+Frontend
+- If a Tile's weight = 0, hide checkboxes & save button
+- Determine how to mark connected Warp Tiles without using fill-color directly.
+    - Outlines? Icons?
+    - Use frontend to store warp tile information. No real need for reusability.
+
+Backend
+- Could render N tabs on the Board page - 1/team
+    - Tab Name = team name
+    - Only display players from the dropdown belonging to that team
+    - Players could switch views to see other teams' progress

@@ -4,7 +4,7 @@ import { CommonModule } from '@angular/common';
 import { TileModel } from '../../models/tile.model';
 import { TileStore } from '../../data/tile-store.service';
 import { DialogService } from '../../../../core/services/dialog.service';
-
+import { L1_WARP_TILE_IDS, L2_WARP_TILE_IDS, L3_WARP_TILE_IDS } from './tile.constants';
 
 @Component({
   selector: 'app-tile',
@@ -26,7 +26,7 @@ export class TileComponent {
     @HostBinding('class.complete') get isCompleted() { return !!this.tile()?.isCompleted };
     @HostBinding('class.reserve') get isReserved() { return !!this.tile()?.isReserved };
 
-    onTileSelect() {
+    onSelectTile() {
         // Create a clean snapshot of the current value & select if exists
         const t = this.tile();
         if (!t) return;
@@ -45,5 +45,53 @@ export class TileComponent {
             // Unselect Tile on dialog closure
             this.tileStore.setSelected(t.id, false);
         });
+    }
+
+    // Returns whether a Tile is assocaited with an Objective - currently used to disable checkboxes.
+    isNonObjectiveTile(tileModel: TileModel): boolean {
+        return tileModel.weight === 0;
+    } // TODO: this goes in tile-dialog
+
+    getVariableTileStyles(tileModel?: TileModel): Record<string, boolean> {
+        return { ...this.warpClasses(tileModel?.id), ...this.difficultyClasses(tileModel?.weight) };
+    }
+
+    // Defines Warp Tile style classes
+    private warpClasses(id?: number) {
+        const lvl = this.determineWarpLevel(id);
+        return {
+            'warp--l1': lvl === 1,
+            'warp--l2': lvl === 2,
+            'warp--l3': lvl === 3,
+        };
+    }
+
+    // Defines Objective Tile style classes based on difficulty / point value
+    private difficultyClasses(weight?: number) {
+        const lvl = this.determineDifficultyLevel(weight);
+        return {
+            'diff--none': lvl === 0,
+            'diff--easy': lvl === 1,
+            'diff--med': lvl === 2,
+            'diff--hard': lvl === 3,
+        };
+    }
+
+    // Determines whether a Tile needs additional "Warp" styling
+    private determineDifficultyLevel(weight?: number): 0|1|2|3 {
+        if (!weight) return 0;
+        if (weight === 3) return 3;
+        if (weight === 2) return 2;
+        if (weight === 1) return 1;
+        return 0;
+    }
+
+    // Determines whether a Tile needs additional "Warp" styling
+    private determineWarpLevel(id?: number): 0|1|2|3 {
+        if (!id) return 0;
+        if (L3_WARP_TILE_IDS.has(id)) return 3;
+        if (L2_WARP_TILE_IDS.has(id)) return 2;
+        if (L1_WARP_TILE_IDS.has(id)) return 1;
+        return 0;
     }
 }
