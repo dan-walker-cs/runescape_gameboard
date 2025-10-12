@@ -8,9 +8,10 @@ import { endpoints } from '../../../shared/api/endpoints';
 
 @Injectable({ providedIn: 'root' })
 export class TileApiService implements OnDestroy {
-
+    private http = inject(HttpClient);  
+    
     private eventSource?: EventSource;
-    private http = inject(HttpClient);
+    
 
     // -- Readings Endpoints --
     // Retrieve initial state

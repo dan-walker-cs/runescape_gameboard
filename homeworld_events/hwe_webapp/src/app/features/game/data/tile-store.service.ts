@@ -1,38 +1,59 @@
-import { Injectable, signal, computed, Signal } from '@angular/core';
+import { Injectable, signal, computed, Signal, inject } from '@angular/core';
 import { TileModel } from '../models/tile.model';
 import { TileResponse } from './response/tile-response';
 import { TileApiService } from './tile-api.service';
 import { TileRequest } from './request/tile-request';
-import { Subscription } from 'rxjs';
+import { catchError, EMPTY, map, Observable, shareReplay, Subscription, take, tap } from 'rxjs';
 
 /**
  *  Central location to retrieve stateful Tile data on the frontend.
  */
 @Injectable({ providedIn: 'root' })
 export class TileStore {
+    private tileApi = inject(TileApiService);
+
     // Private, mutable store for use within this service
     // Signal: Angular's reactive state primitive
     private _tiles = signal<TileModel[]>([]);
-
     // Public, immutable store for use outside the service
     // Computed: Creates a derrived signal. Whenever the dependency signal changes, the computation is automatically re-run.
     readonly tiles = computed(() => this._tiles());
-    
-    constructor(private tileApi: TileApiService) {}
 
-    /* TODO: Potentially avoid double-subscriptions & 
-        enforce getTilesStreaming() is only called once getTilesBlocking() returns */
+    // Memo
+    private snapshotInit$?: Observable<TileModel[]>;
+    private streamInit$?: Subscription;
+
+
     // To be called by dependents in OnInit
-    init() {
-        this.tileApi.getTilesSnapshot().subscribe({
-            next: (responseList) => this._tiles.set(responseList.map(tileResponse => this._adaptResponseToModel(tileResponse))),
-            error: (e) => console.error('[TileStore] snapshot failed', e),
-        });
+    init(): Observable<TileModel[]> {
+        if (!this.snapshotInit$) {
+            this.snapshotInit$ =  this.tileApi.getTilesSnapshot()
+                .pipe(
+                    map(tileResponseList => 
+                        tileResponseList.map(tileResponse => 
+                            this._adaptResponseToModel(tileResponse))
+                    ),
+                    tap(tileModelList => this._tiles.set(tileModelList)),
+                    tap(() => this.startStream()),
 
-        this.tileApi.getTilesStreaming().subscribe({
-            next: (tileResponse) => this._updateLocalState(tileResponse),
-            error: (e) => console.error('[TileStore] stream error', e),
-        });
+                    take(1),
+                    shareReplay(1)
+                )
+        }
+
+        return this.snapshotInit$;
+    }
+
+    // Logic to stream Tile updates from backend
+    private startStream(): void {
+        if (!this.streamInit$) {
+            this.streamInit$ = this.tileApi.getTilesStreaming()
+                .pipe(
+                    tap(tileResponse => this._updateLocalState(tileResponse)),
+                    catchError(e => {console.error('[TileStore] stream error', e); return EMPTY })
+                )
+                .subscribe();
+        }
     }
 
     // -- Queries --
