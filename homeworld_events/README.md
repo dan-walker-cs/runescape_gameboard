@@ -41,14 +41,15 @@
 - v0.7: Event, RelTileEvent w/ grid pos, RelPlayerEvent w/ scoring & team, custom backend exceptions
 - v0.8: Alpha interactive Gameboard implementation: hex grid
 - v0.9: Networking Issues, duplicate subscriptions, Angular more-understanding better-er...
-- v1.0: Alpha single-user compatability release: AWS Infrastructure, CI/CD, remote compatability **<-- Current**
-- v1.1: User Acceptance Testing & bugfixes
-- v1.2: Tile Completion rework: per-team completion
-- v1.3: Board render rework: ?per-team render OR shared board?
+- v1.0: Alpha single-user compatability release: AWS Infrastructure, CI/CD, remote compatability
+- v1.1: Tile Completion rework: per-team completion     **<-- Current**
+- v1.2: Board render rework: ?per-team render OR shared board?
+- v1.3: Objectives rework: Just a read-only version of the board
+- v1.4: Replace External Links with Statistics - Points per team, points per player (dynamic DESC ordering)
+- v1.5: Hot Reload of Board state - triggered by SSEs?
 - v2.0: Beta single-user compatability release
 - v2.1: User Acceptance Testing & bugfixes
 - v2.2: Networking updates for multi-user concurrency & dynamic updates
 - v3.0: Alpha multi-user compatability release
 - v3.1: User Acceptance Testing & bugfixes
-- v3.2: Replace External Links with Statistics & associate data
 - v4.0: Beta multi-user compatability release (Full Event Release)
