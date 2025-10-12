@@ -1,6 +1,7 @@
 import { Component, inject } from '@angular/core';
 import { TileStore } from '../game/data/tile-store.service';
 import { NgFor } from '@angular/common';
+import { firstValueFrom } from 'rxjs';
 
 @Component({
     selector: 'app-objectives',
@@ -13,7 +14,7 @@ export class ObjectivesComponent {
     // Dynamic immutable Tile data from the backend
     readonly tileStore = inject(TileStore);
 
-    ngOnInit(): void {
-        this.tileStore.init();
+    async ngOnInit(): Promise<void> {
+        await firstValueFrom(this.tileStore.init());
     }
 }

@@ -5,7 +5,7 @@ plugins {
 }
 
 group = "com.nastyhaze.homeworld"
-version = "0.4"
+version = "1.0"
 description = "Web API for HomeWorld clan events in Oldschool Runescape."
 
 java {
