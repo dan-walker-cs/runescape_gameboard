@@ -11,7 +11,7 @@ import { firstValueFrom } from 'rxjs';
     styleUrls: ['./overview.component.css']
 })
 export class OverviewComponent implements OnInit {
-
+    // Dynamic immutable Event data from the backend
     readonly eventStore = inject(EventStore); 
 
     async ngOnInit(): Promise<void> {
