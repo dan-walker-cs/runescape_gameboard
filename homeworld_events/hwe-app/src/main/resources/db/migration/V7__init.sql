@@ -34,8 +34,12 @@ CREATE TABLE IF NOT EXISTS rel_team_tile (
     active        BOOLEAN NOT NULL DEFAULT TRUE,
     created_dt    TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
     updated_dt    TIMESTAMP DEFAULT NULL,
+    CONSTRAINT fk_rel_team_tile_team_id FOREIGN KEY (team_id) REFERENCES team(id),
+    CONSTRAINT fk_rel_team_tile_tile_id FOREIGN KEY (tile_id) REFERENCES tile(id),
     CONSTRAINT fk_rel_team_tile_reserved_by FOREIGN KEY (reserved_by) REFERENCES player(id),
     CONSTRAINT fk_rel_team_tile_completed_by FOREIGN KEY (completed_by) REFERENCES player(id),
+    KEY ix_rel_team_tile_team_id (team_id),
+    KEY ix_rel_team_tile_tile_id (tile_id),
     KEY ix_rel_team_tile_reserved_by (reserved_by),
     KEY ix_rel_team_tile_completed_by (completed_by)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;

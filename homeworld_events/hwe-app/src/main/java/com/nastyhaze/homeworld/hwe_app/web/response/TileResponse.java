@@ -8,21 +8,11 @@ import lombok.Builder;
  * @param title
  * @param description
  * @param weight
- * @param isReserved
- * @param reservedBy
- * @param isCompleted
- * @param completedBy
- * @param iconPath
  */
 @Builder
 public record TileResponse (
     Long id,
     String title,
     String description,
-    int weight,
-    boolean isReserved,
-    String reservedBy,
-    boolean isCompleted,
-    String completedBy,
-    String iconPath
+    int weight
 ) {}

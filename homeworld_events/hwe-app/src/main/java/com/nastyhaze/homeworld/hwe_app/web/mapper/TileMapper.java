@@ -21,11 +21,6 @@ public class TileMapper {
             .title(tileEntity.getTitle())
             .description(tileEntity.getDescription())
             .weight(tileEntity.getWeight())
-            .isReserved(tileEntity.isReserved())
-            .reservedBy(tileEntity.isReserved() ? tileEntity.getReservedBy().getDisplayName() : null)
-            .isCompleted(tileEntity.isCompleted())
-            .completedBy(tileEntity.isCompleted() ? tileEntity.getCompletedBy().getDisplayName() : null)
-            .iconPath(tileEntity.getIconPath())
             .build();
     }
 }
