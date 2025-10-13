@@ -8,8 +8,6 @@ import { GridTile } from '../../models/grid-tile';
 import { firstValueFrom } from 'rxjs';
 import { takeUntilDestroyed, toObservable } from '@angular/core/rxjs-interop';
 import { EventStore } from '../../data/event-store.service';
-import { P } from '@angular/cdk/keycodes';
-import { TeamModel } from '../../models/team.model';
 
 @Component({
     selector: 'app-board',
