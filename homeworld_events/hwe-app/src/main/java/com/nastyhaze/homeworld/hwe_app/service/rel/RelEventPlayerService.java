@@ -2,7 +2,7 @@ package com.nastyhaze.homeworld.hwe_app.service.rel;
 
 import com.nastyhaze.homeworld.hwe_app.constant.CrudOperationType;
 import com.nastyhaze.homeworld.hwe_app.domain.rel.RelEventPlayer;
-import com.nastyhaze.homeworld.hwe_app.exception.RelEventPlayerServiceException;
+import com.nastyhaze.homeworld.hwe_app.exception.CrudServiceException;
 import com.nastyhaze.homeworld.hwe_app.repository.rel.RelEventPlayerRepository;
 import com.nastyhaze.homeworld.hwe_app.web.mapper.RelEventPlayerMapper;
 import com.nastyhaze.homeworld.hwe_app.web.response.EventPlayerTeamResponse;
@@ -15,7 +15,7 @@ import java.util.List;
 
 /**
  *  Service layer between RelEventPlayer Controller & EventRepository.
- *  Provides logic to retrieve and mutate repository Event & Player relationship data for the UI.
+ *  Provides logic to retrieve and mutate repository Event-Player relationship data for the UI.
  */
 @Service
 @Validated
@@ -34,7 +34,7 @@ public class RelEventPlayerService {
      */
     public EventPlayerTeamResponse getEventPlayerTeamsByEvent(Long eventId) {
         List<RelEventPlayer> relEventPlayerList = eventPlayerRepository.findAllByActiveTrueAndEventId(eventId);
-        if (relEventPlayerList.isEmpty()) throw new RelEventPlayerServiceException(CrudOperationType.READ); // TODO: or more resilience, provideDefault() like in EventService - cba atm
+        if (relEventPlayerList.isEmpty()) throw new CrudServiceException(this.getClass().getName(), CrudOperationType.READ, eventId);
 
         return eventPlayerMapper.toEventPlayerTeamResponse(relEventPlayerList);
     }
