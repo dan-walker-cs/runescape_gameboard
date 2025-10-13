@@ -1,6 +1,6 @@
 package com.nastyhaze.homeworld.hwe_app.web.response;
 
-import com.nastyhaze.homeworld.hwe_app.service.dto.GridTile;
+import com.nastyhaze.homeworld.hwe_app.service.dto.GridTileDTO;
 import lombok.Builder;
 
 import java.util.List;
@@ -13,5 +13,5 @@ import java.util.List;
 @Builder
 public record BoardTileResponse(
     Long boardId,
-    List<GridTile> gridTileList
+    List<GridTileDTO> gridTileList
 ) {}

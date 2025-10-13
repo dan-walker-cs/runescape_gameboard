@@ -3,7 +3,7 @@ package com.nastyhaze.homeworld.hwe_app.service.data;
 import com.nastyhaze.homeworld.hwe_app.constant.CrudOperationType;
 import com.nastyhaze.homeworld.hwe_app.domain.AuditEntity;
 import com.nastyhaze.homeworld.hwe_app.domain.data.Player;
-import com.nastyhaze.homeworld.hwe_app.exception.PlayerServiceException;
+import com.nastyhaze.homeworld.hwe_app.exception.CrudServiceException;
 import com.nastyhaze.homeworld.hwe_app.repository.data.PlayerRepository;
 import com.nastyhaze.homeworld.hwe_app.web.mapper.PlayerMapper;
 import com.nastyhaze.homeworld.hwe_app.web.response.PlayerResponse;
@@ -34,7 +34,7 @@ public class PlayerService {
     public List<PlayerResponse> findAllPlayers() {
         return playerRepository.findAll()
             .stream()
-            .filter(AuditEntity::isActive) // TODO: Can filter at repository level instead
+            .filter(AuditEntity::isActive)
             .map(playerMapper::toResponse)
             .toList();
     }
@@ -46,6 +46,6 @@ public class PlayerService {
      */
     public Player findByDisplayName(String displayName) {
         return playerRepository.findOneByDisplayNameIgnoreCaseAndActiveTrue(displayName)
-            .orElseThrow(() -> new PlayerServiceException(displayName, CrudOperationType.READ));
+            .orElseThrow(() -> new CrudServiceException(this.getClass().getName(), CrudOperationType.READ));
     }
 }

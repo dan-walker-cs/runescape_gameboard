@@ -24,7 +24,7 @@ public class PlayerController {
 
     /**
      * One-shot snapshot (JSON). Runs on boundedElastic since it’s blocking.
-     * @return Mono<List<TileResponse>>
+     * @return Mono<List<PlayerResponse>>
      */
     @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
     public Mono<List<PlayerResponse>> list() {
