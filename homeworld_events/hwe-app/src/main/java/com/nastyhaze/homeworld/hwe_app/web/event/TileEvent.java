@@ -17,7 +17,6 @@ public class TileEvent {
     private final ConcurrentHashMap<Long, Sinks.Many<TeamTileResponse>> sinks = new ConcurrentHashMap<>();
 
     private Sinks.Many<TeamTileResponse> sink(Long teamId) {
-        //return sinks.computeIfAbsent(teamId, id -> Sinks.many().multicast().onBackpressureBuffer());
         return sinks.computeIfAbsent(teamId, id -> Sinks.many().replay().latest());
     }
 
