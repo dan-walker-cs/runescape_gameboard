@@ -61,8 +61,6 @@ export class BoardComponent implements OnInit{
 
         // Set Default team
         this.selectedTeam.set(this.teamStore.teams().at(0)?.id ?? null);
-        console.log('BOARD-COMPONENT INIT - this.selectedTeam: ', this.selectedTeam());
-        console.log('BOARD-COMPONENT INIT - this.selectedTeamId: ', this.selectedTeamId());
 
         // Subscribe to Tile updates
         toObservable(this.tileStore.tiles, { injector: this.injector })
@@ -70,24 +68,38 @@ export class BoardComponent implements OnInit{
             .subscribe();
     }
 
-    // Determines number of Team tabs to render for the Board & provides their data
+    //  -- Board Data Logic --
+    /**
+     * Returns the Teams state from store.
+     * Currently used to dynamically populate board__team-nav & generate Board states.
+     * @returns TeamModel[]
+     */
     getTeams(): TeamModel[] {
         return this.teamStore.teams();
     }
 
-    // Fires when a Team selection is made on the Board Nav
+    /**
+     * Fires when a Team selection is made via board__team-nav.
+     * Sets the current Team selection for live Tile update streaming.
+     * @param teamId 
+     */
     async selectTeam(teamId: number): Promise<void> {
         await firstValueFrom(this.tileStore.loadSnapshotByTeam(teamId));
         this.selectedTeam.set(teamId);
-        //this.tileStore.startStreamFor(teamId);
     }
 
-    // Rturns the target Tile data associated with the selected
+    /**
+     * Returns data for the generated Tile based on the currently selected Team.
+     * TODO: Currently being over-executed.
+     * @param tileId 
+     * @returns TileModel | null
+     */
     getTileByTeam(tileId: number): TileModel | null {
-        //console.log('BOARD-COMPONENT - getTileByTeam Model: ', this.tilesBySelectedTeam().get(tileId)); /** DEBUG */
         return this.tilesBySelectedTeam().get(tileId) ?? null;
     }
 
+
+    //  -- Board Display Logic --
     // Hex Dimensions
     private readonly RADIUS = 32;
     get hexW(): number { return 2 * this.RADIUS }

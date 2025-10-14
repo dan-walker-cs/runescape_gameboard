@@ -36,23 +36,8 @@ export class TileStore {
     // To be called by dependents in OnInit
     init(): Observable<TileModel[]> {
         if (!this.snapshotInit$) {
-            // Set Default selectedTeam
-            this.teamStore.init().pipe(
-                take(1)
-            ).subscribe(teams => {
-                if (this.selectedTeamId() == null && teams.length) {
-                    this.selectTeam(teams[0].id);
-                }
-            });
-            console.log('TILE-STORE INIT - this.selectedTeam: ', this.selectedTeamId()); /** DEBUG */
-
-            // Convert Selected Team info to Observable
-            const selectedTeamId = toObservable(this.selectedTeamId, { injector: this.injector })
-                .pipe(
-                    filter((teamId): teamId is number => teamId != null)
-                );
-
-            selectedTeamId.pipe(take(1)).subscribe(v => console.log('TILE-STORE INIT - const selectedTeamId: ', v)); /** DEBUG */
+            this.setDefaultSelectedTeam();
+            const selectedTeamId = this.convertSelectedTeamToObservable();
 
             // Get snapshot state
             this.snapshotInit$ = selectedTeamId.pipe(
@@ -78,25 +63,19 @@ export class TileStore {
 
     // API Toggle by Team data
     selectTeam(teamId: number): void {
-        console.log('TILE-STORE selectTeam BEFORE - this.selectedTeamId(): ', this.selectedTeamId()); /** DEBUG */
         if (this.selectedTeamId() === teamId) return;
         this.selectedTeamId.set(teamId);
-        console.log('TILE-STORE selectTeam AFTER - this.selectedTeamId(): ', this.selectedTeamId()); /** DEBUG */
     }
 
     // API execute by Team data
     loadSnapshotByTeam(teamId: number): Observable<TileModel[]> {
         console.log('TILE-STORE loadSnapshotByTeam - teamId: ', teamId); /** DEBUG */
+
         return this.tileApi.getTilesSnapshotByTeam(teamId).pipe(
             map(tileResponseList => tileResponseList.map(tileResponse => this._adaptResponseToModel(tileResponse))),
                 tap(tileModelList => this._tiles.set(tileModelList))
         );
     }
-
-    //** TEMP DEBUG */
-    // getSelectedTeam(): number {
-    //     return this.selectedTeamId();
-    // }
 
     // -- Queries --
     // Fetch a single TileModel
@@ -119,6 +98,30 @@ export class TileStore {
     }
 
     // -- Helpers --
+    /**
+     * Converts the default TeamStore state result to an Observable for downstream operations.
+     * @returns Observable<number>
+     */
+    private convertSelectedTeamToObservable(): Observable<number> {
+        return toObservable(this.selectedTeamId, { injector: this.injector })
+            .pipe(
+                filter((teamId): teamId is number => teamId != null)
+            );
+    }
+
+    /**
+     * Waits for the TeamStore to initialize, then takes the first result to populate the default State.
+     */
+    private setDefaultSelectedTeam(): void {
+        this.teamStore.init().pipe(
+            take(1)
+        ).subscribe(teams => {
+            if (this.selectedTeamId() == null && teams.length) {
+                this.selectTeam(teams[0].id);
+            }
+        });
+    }
+
     /**
      * Updates UI from Backend
      * @param tileResponse

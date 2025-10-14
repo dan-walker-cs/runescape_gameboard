@@ -27,7 +27,11 @@ export class TileComponent {
     @HostBinding('class.complete') get isCompleted() { return !!this.tile()?.isCompleted };
     @HostBinding('class.reserve') get isReserved() { return !!this.tile()?.isReserved };
 
-    onSelectTile() {
+    /**
+     * Executes on click event for a Tile.
+     * Lets the TileStore know this Tile is currently selected & opens a Tile Dialog component.
+     */
+    onSelectTile(): void {
         // Create a clean snapshot of the current value & select if exists
         const t = this.tile();
         if (!t) return;
@@ -48,17 +52,21 @@ export class TileComponent {
         });
     }
 
-    // Returns whether a Tile is assocaited with an Objective - currently used to disable checkboxes.
-    isNonObjectiveTile(tileModel: TileModel): boolean {
-        return tileModel.weight === 0;
-    } // TODO: this goes in tile-dialog
-
+    /**
+     * Merges the dynamic CSS class data for Wrap Tiles & Objective Tile difficulty - returning them to the DOM.
+     * @param tileModel 
+     * @returns Record<string, boolean>
+     */
     getVariableTileStyles(tileModel?: TileModel): Record<string, boolean> {
         return { ...this.warpClasses(tileModel?.tileId), ...this.difficultyClasses(tileModel?.weight) };
     }
 
-    // Defines Warp Tile style classes
-    private warpClasses(id?: number) {
+    /**
+     * Defines Warp Tile CSS class data based on ids from the Tile constants file.
+     * @param id 
+     * @returns Record<string, boolean>
+     */
+    private warpClasses(id?: number): Record<string, boolean> {
         const lvl = this.determineWarpLevel(id);
         return {
             'warp--l1': lvl === 1,
@@ -67,8 +75,12 @@ export class TileComponent {
         };
     }
 
-    // Defines Objective Tile style classes based on difficulty / point value
-    private difficultyClasses(weight?: number) {
+    /**
+     * Defines Objective Tile Difficulty class data based on a Tile's 'weight'.
+     * @param id 
+     * @returns Record<string, boolean>
+     */
+    private difficultyClasses(weight?: number): Record<string, boolean> {
         const lvl = this.determineDifficultyLevel(weight);
         return {
             'diff--none': lvl === 0,
@@ -78,7 +90,11 @@ export class TileComponent {
         };
     }
 
-    // Determines whether a Tile needs additional "Warp" styling
+    /**
+     *  Determine whether a Tile needs additional "Difficulty" styling.
+     * @param weight
+     * @returns 0|1|2|3
+     */
     private determineDifficultyLevel(weight?: number): 0|1|2|3 {
         if (!weight) return 0;
         if (weight === 3) return 3;
@@ -87,7 +103,11 @@ export class TileComponent {
         return 0;
     }
 
-    // Determines whether a Tile needs additional "Warp" styling
+    /**
+     * Determines whether a Tile needs additional "Warp" styling.
+     * @param id 
+     * @returns 0|1|2|3
+     */
     private determineWarpLevel(id?: number): 0|1|2|3 {
         if (!id) return 0;
         if (L3_WARP_TILE_IDS.has(id)) return 3;

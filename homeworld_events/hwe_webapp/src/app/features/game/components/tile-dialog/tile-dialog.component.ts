@@ -75,6 +75,8 @@ export class TileDialogComponent {
         this.tileDialog.close();
     }
 
+
+
     /** Conditionally show the isReserved checkbox - when not editing "Completed" values. */
     showIsReserved(): boolean {
         return this.isEdit && !this.isCompletedCtrl.value;
