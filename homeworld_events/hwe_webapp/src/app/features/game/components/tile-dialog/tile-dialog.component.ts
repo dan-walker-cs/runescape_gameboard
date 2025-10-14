@@ -51,7 +51,12 @@ export class TileDialogComponent {
         this.isEdit = true;
     }
 
-  /** Conditionally disable the Save button when dialog checkbox selected without Player input. */
+    /** Conditionally disable the Edit button when interacting with a non-Obejctive Tile. */
+    disableEdit(tileModel: TileModel): boolean {
+        return this.isNonObjectiveTile(tileModel);
+    }
+
+    /** Conditionally disable the Save button when dialog checkbox selected without Player input. */
     disableSave(): boolean {
         return (this.isReservedCtrl.value && isNullorBlankString(this.reservedByCtrl.value)) ||
             (this.isCompletedCtrl.value && isNullorBlankString(this.completedByCtrl.value));
@@ -75,7 +80,15 @@ export class TileDialogComponent {
         this.tileDialog.close();
     }
 
-
+    /**
+     * Returns true if a Tile is associated with an Objective.
+     * Currently used to show/hide Completion/Reservation checkboxes.
+     * @param tileModel 
+     * @returns boolean
+     */
+    isNonObjectiveTile(tileModel: TileModel): boolean {
+        return tileModel.weight === 0;
+    }
 
     /** Conditionally show the isReserved checkbox - when not editing "Completed" values. */
     showIsReserved(): boolean {

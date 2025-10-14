@@ -35,7 +35,10 @@
 </div>
 
 <div mat-dialog-actions>
-    <button *ngIf="!this.isEdit" mat-button (click)="onEdit()">Edit</button>
+    <button *ngIf="!this.isEdit" mat-button 
+        (click)="onEdit()"
+        [disabled]="disableEdit(tile)">
+        Edit</button>
     <button *ngIf="this.isEdit" mat-button
         (click)="onSave()"
         [disabled]="disableSave()">
