@@ -83,8 +83,11 @@ public class RelTeamTileService {
         target.setCompletedBy(tileUpdateRequest.isCompleted() ? playerService.findByDisplayName(tileUpdateRequest.completedBy()) : null);
 
         RelTeamTile updated = teamTileRepository.save(target);
+        TeamTileResponse response = teamTileMapper.toResponse(updated);
 
-        return teamTileMapper.toResponse(updated);
+        tileEvent.emit(response);
+
+        return response;
     }
 
     /**
