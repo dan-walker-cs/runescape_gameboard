@@ -16,7 +16,6 @@ import lombok.*;
 @ToString
 @RequiredArgsConstructor
 public class Player extends AuditEntity {
-
     @Column(name = "display_name", nullable = false, length = 64)
     private String displayName;
 }

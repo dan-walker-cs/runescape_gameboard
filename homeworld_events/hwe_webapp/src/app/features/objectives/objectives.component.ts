@@ -1,7 +1,7 @@
 import { Component, inject } from '@angular/core';
-import { TileStore } from '../game/data/tile-store.service';
 import { NgFor } from '@angular/common';
 import { firstValueFrom } from 'rxjs';
+import { TileStore } from '../game/data/store/tile-store.service';
 
 @Component({
     selector: 'app-objectives',

@@ -15,27 +15,30 @@
         <mat-label>Username</mat-label>
         <mat-select [formControl]="completedByCtrl">
             <mat-option value="">—</mat-option>
-            <mat-option *ngFor="let p of playerStore.players()" [value]="p.displayName">
-                {{ p.displayName }}
+            <mat-option *ngFor="let p of currentTeam?.playerNames" [value]="p">
+                {{ p }}
             </mat-option>
         </mat-select>
     </mat-form-field>
 
     <!-- Checkbox & input control for reservation -->
-    <mat-checkbox *ngIf="showIsReserved()" [formControl]="isReservedCtrl">Reserve?</mat-checkbox>
+    <mat-checkbox *ngIf="showIsReserved()"[formControl]="isReservedCtrl">Reserve?</mat-checkbox>
     <mat-form-field *ngIf="showReservedByInput()">
         <mat-label>Username</mat-label>
         <mat-select [formControl]="reservedByCtrl">
             <mat-option value="">—</mat-option>
-            <mat-option *ngFor="let p of playerStore.players()" [value]="p.displayName">
-                {{ p.displayName }}
+            <mat-option *ngFor="let p of currentTeam?.playerNames" [value]="p">
+                {{ p }}
             </mat-option>
         </mat-select>
     </mat-form-field>
 </div>
 
 <div mat-dialog-actions>
-    <button *ngIf="!this.isEdit" mat-button (click)="onEdit()">Edit</button>
+    <button *ngIf="!this.isEdit" mat-button 
+        (click)="onEdit()"
+        [disabled]="disableEdit(tile)">
+        Edit</button>
     <button *ngIf="this.isEdit" mat-button
         (click)="onSave()"
         [disabled]="disableSave()">

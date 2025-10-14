@@ -1,9 +1,22 @@
 <main class="board" [ngStyle]="boardStyle()">
+
+    <div class="board__team-nav">
+        <div class="board__team-nav__tab background--secondary shadow--secondary"
+            *ngFor="let team of getTeams()"
+            (click)="selectTeam(team.id)"
+            [attr.aria-selected]="team.id === selectedTeam()">
+            <a>{{ team.name }}</a>
+        </div>
+    </div>
+
     <div class="board__origin">
         <div class="hex-wrap" 
         *ngFor="let gridTile of gridTiles();"
         [ngStyle]="tileStyle(gridTile)">
-            <app-tile [tileId]="gridTile.tileId"></app-tile>
+            <app-tile 
+                [tileId]="gridTile.tileId"
+                [tileData]="getTileByTeam(gridTile.tileId)"></app-tile>
         </div>
     </div>
+
 </main>

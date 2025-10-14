@@ -1,0 +1,27 @@
+=============
+Tile Updates
+=============
+Frontend
+- Each team tab needs its own endpoint
+- Endpoint / API audit
+    - Come up with only necessary endpoints
+
+Backend
+- Could render N tabs on the Board page - 1/team
+    - Tab Name = team name
+    - Only display players from the dropdown belonging to that team
+    - Players could switch views to see other teams' progress
+    - Data Requirements:
+        - tile
+            - remove is_reserved, reserved_by, is_completed, completed_by
+        - rel_event_player
+            - remove team_name
+        - team
+            - id, event_id, name + audit
+        - rel_team_player
+            - id, team_id, player_id + audit
+        - rel_team_tile
+            - id, team_id, tile_id, is_reserved, reserved_by, is_completed, completed_by + audit
+        - getTilesByTeam
+        - Downside: Not dynamic, tiles will have to be inserted into the DB per team per event (not a big deal)
+            - If I build an event-maker type interface eventually, this can be done through UI - like everything else config-wise

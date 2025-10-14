@@ -10,7 +10,6 @@ header {
 }
 
 .brand__image {
-    --outline: auto;
     width: 10%;
 
     display: flex;
@@ -26,7 +25,6 @@ header {
 }
 
 .brand__name {
-    --outline: auto;
     width: 20%;
 
     display: flex;
@@ -45,7 +43,6 @@ header {
 }
 
 nav {
-    --outline: auto;
     width: 70%;
 
     display: flex;
@@ -53,7 +50,6 @@ nav {
 }
 
 .header__nav__item {
-    --outline: auto;
     flex: 1;
 
     display: flex;

@@ -1,7 +1,7 @@
 package com.nastyhaze.homeworld.hwe_app.service.data;
 
 import com.nastyhaze.homeworld.hwe_app.constant.CrudOperationType;
-import com.nastyhaze.homeworld.hwe_app.exception.BoardServiceException;
+import com.nastyhaze.homeworld.hwe_app.exception.CrudServiceException;
 import com.nastyhaze.homeworld.hwe_app.repository.data.BoardRepository;
 import com.nastyhaze.homeworld.hwe_app.web.mapper.BoardMapper;
 import com.nastyhaze.homeworld.hwe_app.web.response.BoardResponse;
@@ -31,6 +31,6 @@ public class BoardService {
     public BoardResponse getBoardByEvent(Long eventId) {
         return boardRepository.findByEventIdAndActiveTrue(eventId)
             .map(boardMapper::toResponse)
-            .orElseThrow(() -> new BoardServiceException(CrudOperationType.READ, eventId));
+            .orElseThrow(() -> new CrudServiceException(this.getClass().getName(), CrudOperationType.READ, eventId));
     }
 }

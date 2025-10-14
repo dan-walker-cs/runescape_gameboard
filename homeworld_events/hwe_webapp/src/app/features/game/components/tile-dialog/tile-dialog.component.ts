@@ -7,10 +7,11 @@ import { MatInputModule } from '@angular/material/input';
 import { ReactiveFormsModule, FormControl } from '@angular/forms';
 import { NgFor, NgIf } from "@angular/common";
 import { TileModel } from '../../models/tile.model';
-import { PlayerStore } from '../../data/player-store.service';
 import { MatOptionModule } from '@angular/material/core';
 import { MatSelectModule } from '@angular/material/select';
 import { isNullorBlankString } from '../../../../shared/util/common-utils';
+import { TeamStore } from '../../data/store/team-store.service';
+import { TeamModel } from '../../models/team.model';
 
 @Component({
   selector: 'app-tile-dialog',
@@ -22,7 +23,7 @@ import { isNullorBlankString } from '../../../../shared/util/common-utils';
 })
 export class TileDialogComponent {
     // Load-once immutable Player data from backend
-    readonly playerStore = inject(PlayerStore);
+    readonly teamStore = inject(TeamStore);
 
     // "Edit Mode" flag
     isEdit: boolean = false;
@@ -34,11 +35,15 @@ export class TileDialogComponent {
     isCompletedCtrl: FormControl<boolean>;
     completedByCtrl: FormControl<string>;
 
+    currentTeam: TeamModel | undefined;
+
     constructor(public tileDialog: MatDialogRef<TileDialogComponent>, @Inject(MAT_DIALOG_DATA) public tile: TileModel) {
         this.isReservedCtrl = new FormControl<boolean>(tile?.isReserved ?? false, { nonNullable: true });
         this.reservedByCtrl = new FormControl<string>(tile?.reservedBy ?? '', { nonNullable: true });
         this.isCompletedCtrl = new FormControl<boolean>(tile?.isCompleted ?? false, { nonNullable: true });
         this.completedByCtrl = new FormControl<string>(tile?.completedBy ?? '', { nonNullable: true });
+
+        this.currentTeam = this.teamStore.teams().find(team => team.id === tile.teamId);
     }
 
     /** Enter "Edit Mode" */
@@ -46,7 +51,12 @@ export class TileDialogComponent {
         this.isEdit = true;
     }
 
-  /** Conditionally disable the Save button when dialog checkbox selected without Player input. */
+    /** Conditionally disable the Edit button when interacting with a non-Obejctive Tile. */
+    disableEdit(tileModel: TileModel): boolean {
+        return this.isNonObjectiveTile(tileModel);
+    }
+
+    /** Conditionally disable the Save button when dialog checkbox selected without Player input. */
     disableSave(): boolean {
         return (this.isReservedCtrl.value && isNullorBlankString(this.reservedByCtrl.value)) ||
             (this.isCompletedCtrl.value && isNullorBlankString(this.completedByCtrl.value));
@@ -70,6 +80,16 @@ export class TileDialogComponent {
         this.tileDialog.close();
     }
 
+    /**
+     * Returns true if a Tile is associated with an Objective.
+     * Currently used to show/hide Completion/Reservation checkboxes.
+     * @param tileModel 
+     * @returns boolean
+     */
+    isNonObjectiveTile(tileModel: TileModel): boolean {
+        return tileModel.weight === 0;
+    }
+
     /** Conditionally show the isReserved checkbox - when not editing "Completed" values. */
     showIsReserved(): boolean {
         return this.isEdit && !this.isCompletedCtrl.value;
@@ -87,7 +107,7 @@ export class TileDialogComponent {
 
     /** Conditionally show the isCompleted checkbox - when not editing "Reserved" values. */
     showIsCompleted(): boolean {
-        return this.isEdit;
+        return this.isEdit && !this.isReservedCtrl.value;
     }
 
     /** Conditionally show the completedBy dropdown after checking the isCompleted checkbox. */

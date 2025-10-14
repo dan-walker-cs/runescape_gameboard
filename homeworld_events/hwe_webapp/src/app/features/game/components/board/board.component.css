@@ -1,17 +1,66 @@
-:host {
-    display: contents; /*ignore wrapper element from router-outlet*/
-}
-
 .board { 
     position: relative;
+    height: 100%;
+    width: 100%;
+
+    padding: 2em;
+    /* overflow: hidden; */
+
+    display: flex;
+    flex-direction: column;
 }
 
 .board__origin {
-    position: absolute; left: 50%; top: 50%;
+    position: absolute; 
+    left: 50%; 
+    top: 60%;
     transform: translate(-50%, -50%); /* place by center */
 }
 
 .hex-wrap {
     position: absolute;
     transform: translate(-50%, -50%); /* place by center */
+}
+
+.board__team-nav {
+    align-self:flex-start;
+
+    display: flex;
+    flex-direction: column;
+}
+
+.board__team-nav__tab {
+    margin: 1em 0;
+    padding: 1.5em;
+
+    border-radius: 1.5em;
+
+    font-size: 0.75em;
+
+    transition: transform .25s ease, filter .25s ease, text-shadow .25s ease;
+    transform-origin: left center;
+}
+
+.board__team-nav__tab a {
+    display: inline-block;
+    line-height: 1.2;
+    transition: transform .25s ease, filter .25s ease, text-shadow .25s ease;
+    transform-origin: left center;
+}
+
+/* Create a host binding for .board__team-nav__tab:active */
+.board__team-nav__tab:active,
+.board__team-nav__tab:hover,
+.board__team-nav__tab[aria-selected="true"] {
+    transform: scale(1.1);
+    cursor: pointer;
+    filter: invert(1);
+    text-shadow:
+        2px 2px 4px rgba(0,0,0,.5),
+        -2px -2px 4px rgba(255,255,255,.5);
+}
+
+.board__team-nav__tab :active {
+    transform: scale(1.1);
+    filter: invert(1);
 }

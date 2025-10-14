@@ -12,7 +12,8 @@ export class DialogService {
     .open(TileDialogComponent, { 
             data: tile, 
             panelClass: 'tile-dialog-container' ,
-            autoFocus: false
+            autoFocus: false,
+            position: { top: '10em', right: '20em' }
         })
     .afterClosed();
   }

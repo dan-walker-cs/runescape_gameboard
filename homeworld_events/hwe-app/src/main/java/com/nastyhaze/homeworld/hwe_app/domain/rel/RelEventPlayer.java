@@ -8,6 +8,9 @@ import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
 
+/**
+ *  Entity representing Event-Player associations.
+ */
 @Entity
 @Table(name = "rel_event_player")
 @Getter
@@ -23,9 +26,6 @@ public class RelEventPlayer extends AuditEntity {
     @JoinColumn(name = "player_id", nullable = false)
     @ToString.Exclude
     private Player player;
-
-    @Column(name = "team_name", length = 64, nullable = false)
-    private String teamName;
 
     @Column(name = "score", nullable = false)
     private int score = 0;
