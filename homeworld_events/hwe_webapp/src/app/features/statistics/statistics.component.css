@@ -31,3 +31,12 @@ main {
 
     border-radius: 1.5em;
 }
+
+.statistics-table {
+    padding: 1em;
+}
+
+.statistics-table td {
+    padding: 0.5em;
+    padding-right: 3em;
+}

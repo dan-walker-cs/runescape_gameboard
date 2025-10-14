@@ -1,14 +1,17 @@
-import { computed, inject, Injectable, signal } from "@angular/core";
+import { computed, inject, Injectable, Injector, signal } from "@angular/core";
+import { filter, map, Observable, shareReplay, switchMap, take, tap } from "rxjs";
 import { EventModel } from "../../models/event.model";
-import { EventResponse } from "../response/event-response";
-import { map, Observable, shareReplay, take, tap } from "rxjs";
 import { EventApiService } from "../api/event-api.service";
+import { EventResponse } from "../response/event-response";
+import { PlayerScoreResponse } from "../response/player-score-response";
+import { toObservable } from "@angular/core/rxjs-interop";
 
 /**
  *  Central location to retrieve stateful Event data on the frontend.
  */
 @Injectable({ providedIn: 'root' })
 export class EventStore {
+    private injector = inject(Injector);
     private eventApi = inject(EventApiService);
     
     // Private, mutable store for use within this service
@@ -36,6 +39,20 @@ export class EventStore {
             }
 
         return this.init$;
+    }
+
+    /**
+     * Provides data from the getCurrentEventScores() endpoint to subscribers.
+     * @returns Observable<PlayerScoreResponse[]>
+     */
+    getPlayerTeamScores(): Observable<PlayerScoreResponse[]> {
+        return toObservable(this.event, {injector: this.injector}).pipe(
+            map(eventModel => eventModel?.id ?? null),
+            filter((eventId): eventId is number => eventId !== null),
+            take(1),
+            switchMap(eventId => this.eventApi.getCurrentEventScores(eventId)),
+            shareReplay(1)
+        );
     }
 
     /**

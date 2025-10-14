@@ -1,9 +1,9 @@
 import { computed, inject, Injectable, signal } from "@angular/core";
 import { map, Observable, shareReplay, switchMap, take, tap } from "rxjs";
 import { TeamApiService } from "../api/team-api.service";
-import { EventStore } from "./event-store.service";
 import { TeamPlayerResponse } from "../response/team-player-response";
 import { TeamModel } from "../../models/team.model";
+import { EventStore } from "./event-store.service";
 
 /**
  *  Central location to retrieve stateful Team data on the frontend.

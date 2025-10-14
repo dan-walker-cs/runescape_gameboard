@@ -1,8 +1,8 @@
 import { Component, inject, OnInit } from '@angular/core';
-import { EventStore } from '../game/data/store/event-store.service';
 import { DatePipe, NgFor } from '@angular/common'; 
 import { firstValueFrom } from 'rxjs';
 import { TeamStore } from '../game/data/store/team-store.service';
+import { EventStore } from '../game/data/store/event-store.service';
 
 @Component({
     selector: 'app-overview',
