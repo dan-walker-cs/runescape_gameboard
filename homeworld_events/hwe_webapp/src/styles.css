@@ -11,6 +11,11 @@ html, body {
     color: black;
 }
 
+/* Remove the box for dynamic content */
+router-outlet {
+    display: content;
+}
+
 .background--primary {
     --background-color: #ffffff;
 }
@@ -46,7 +51,7 @@ html, body {
   overflow: visible !important;
 }
 
-/* External styling for rules templating fetch */
+/* External styling for rules templating fetch -- */
 .rules-template .main__section {
     margin: 2em;
     padding: 2em;
@@ -74,3 +79,4 @@ html, body {
     width: 70%;
     margin-left: 3em;
 }
+/* -- */

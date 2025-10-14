@@ -1,9 +1,8 @@
 package com.nastyhaze.homeworld.hwe_app.service.data;
 
-import com.nastyhaze.homeworld.hwe_app.constant.CommonConstant;
 import com.nastyhaze.homeworld.hwe_app.constant.CrudOperationType;
 import com.nastyhaze.homeworld.hwe_app.domain.data.Event;
-import com.nastyhaze.homeworld.hwe_app.exception.EventServiceException;
+import com.nastyhaze.homeworld.hwe_app.exception.CrudServiceException;
 import com.nastyhaze.homeworld.hwe_app.repository.data.EventRepository;
 import com.nastyhaze.homeworld.hwe_app.web.mapper.EventMapper;
 import com.nastyhaze.homeworld.hwe_app.web.response.EventResponse;
@@ -31,22 +30,9 @@ public class EventService {
      * @return Event
      */
     public EventResponse getCurrentEvent() {
-        Event currentEvent;
-        try {
-            currentEvent = eventRepository.findByActiveTrue().orElseGet(this::provideDefaultEvent);
-        } catch (Exception e) {
-            currentEvent = provideDefaultEvent();
-        }
+        Event currentEvent = eventRepository.findByActiveTrue()
+            .orElseThrow(() -> new CrudServiceException(this.getClass().getName(), CrudOperationType.READ));
 
         return eventMapper.toResponse(currentEvent);
-    }
-
-    /**
-     * Fetches the default fallback Event entity data.
-     * @return Event
-     */
-    private Event provideDefaultEvent() {
-        return eventRepository.findById(CommonConstant.HIGHLANDER_LONG)
-            .orElseThrow(() -> new EventServiceException(CommonConstant.HIGHLANDER_LONG, CrudOperationType.READ));
     }
 }

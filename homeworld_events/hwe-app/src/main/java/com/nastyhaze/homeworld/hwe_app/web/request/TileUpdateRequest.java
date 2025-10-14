@@ -10,7 +10,7 @@ import lombok.Builder;
  * @param completedBy
  */
 @Builder
-public record TileRequest (
+public record TileUpdateRequest (
     boolean isReserved,
     String reservedBy,
     boolean isCompleted,

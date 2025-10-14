@@ -16,7 +16,6 @@ footer {
 }
 
 .footer__credits__item {
-    --outline: auto;
     flex: 1;
 
     display: flex;

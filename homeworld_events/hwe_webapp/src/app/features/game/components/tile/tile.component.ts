@@ -2,9 +2,9 @@ import { Component, computed, HostBinding, inject, Input, Signal } from '@angula
 import { MatDialogModule } from '@angular/material/dialog';
 import { CommonModule } from '@angular/common';
 import { TileModel } from '../../models/tile.model';
-import { TileStore } from '../../data/tile-store.service';
 import { DialogService } from '../../../../core/services/dialog.service';
-
+import { L1_WARP_TILE_IDS, L2_WARP_TILE_IDS, L3_WARP_TILE_IDS } from './tile.constants';
+import { TileStore } from '../../data/store/tile-store.service';
 
 @Component({
   selector: 'app-tile',
@@ -19,6 +19,7 @@ export class TileComponent {
 
     // Retrieve tile based on id input
     @Input({ required: true }) tileId!: number;
+    @Input() tileData: TileModel | null = null;
     tile: Signal<TileModel | undefined> = computed(() => this.tileStore.getTileById(this.tileId)());
 
     // Retrieve tile fields required for binding
@@ -26,16 +27,20 @@ export class TileComponent {
     @HostBinding('class.complete') get isCompleted() { return !!this.tile()?.isCompleted };
     @HostBinding('class.reserve') get isReserved() { return !!this.tile()?.isReserved };
 
-    onTileSelect() {
+    /**
+     * Executes on click event for a Tile.
+     * Lets the TileStore know this Tile is currently selected & opens a Tile Dialog component.
+     */
+    onSelectTile(): void {
         // Create a clean snapshot of the current value & select if exists
         const t = this.tile();
         if (!t) return;
-        this.tileStore.setSelected(t.id, true);
+        this.tileStore.setSelected(t.tileId, true);
 
         // Subscribe to dialog changes & update the store to reflect
         this.tileDialogs.openTileDialog(t).subscribe((result?: Partial<TileModel>) => {
             if (result)
-                this.tileStore.updateFromDialog(t.id, {
+                this.tileStore.updateFromDialog(t.tileId, {
                 isReserved: result.isReserved,
                 reservedBy: result.reservedBy ?? null,
                 isCompleted: result.isCompleted,
@@ -43,7 +48,71 @@ export class TileComponent {
                 });
 
             // Unselect Tile on dialog closure
-            this.tileStore.setSelected(t.id, false);
+            this.tileStore.setSelected(t.tileId, false);
         });
+    }
+
+    /**
+     * Merges the dynamic CSS class data for Wrap Tiles & Objective Tile difficulty - returning them to the DOM.
+     * @param tileModel 
+     * @returns Record<string, boolean>
+     */
+    getVariableTileStyles(tileModel?: TileModel): Record<string, boolean> {
+        return { ...this.warpClasses(tileModel?.tileId), ...this.difficultyClasses(tileModel?.weight) };
+    }
+
+    /**
+     * Defines Warp Tile CSS class data based on ids from the Tile constants file.
+     * @param id 
+     * @returns Record<string, boolean>
+     */
+    private warpClasses(id?: number): Record<string, boolean> {
+        const lvl = this.determineWarpLevel(id);
+        return {
+            'warp--l1': lvl === 1,
+            'warp--l2': lvl === 2,
+            'warp--l3': lvl === 3,
+        };
+    }
+
+    /**
+     * Defines Objective Tile Difficulty class data based on a Tile's 'weight'.
+     * @param id 
+     * @returns Record<string, boolean>
+     */
+    private difficultyClasses(weight?: number): Record<string, boolean> {
+        const lvl = this.determineDifficultyLevel(weight);
+        return {
+            'diff--none': lvl === 0,
+            'diff--easy': lvl === 1,
+            'diff--med': lvl === 2,
+            'diff--hard': lvl === 3,
+        };
+    }
+
+    /**
+     *  Determine whether a Tile needs additional "Difficulty" styling.
+     * @param weight
+     * @returns 0|1|2|3
+     */
+    private determineDifficultyLevel(weight?: number): 0|1|2|3 {
+        if (!weight) return 0;
+        if (weight === 3) return 3;
+        if (weight === 2) return 2;
+        if (weight === 1) return 1;
+        return 0;
+    }
+
+    /**
+     * Determines whether a Tile needs additional "Warp" styling.
+     * @param id 
+     * @returns 0|1|2|3
+     */
+    private determineWarpLevel(id?: number): 0|1|2|3 {
+        if (!id) return 0;
+        if (L3_WARP_TILE_IDS.has(id)) return 3;
+        if (L2_WARP_TILE_IDS.has(id)) return 2;
+        if (L1_WARP_TILE_IDS.has(id)) return 1;
+        return 0;
     }
 }

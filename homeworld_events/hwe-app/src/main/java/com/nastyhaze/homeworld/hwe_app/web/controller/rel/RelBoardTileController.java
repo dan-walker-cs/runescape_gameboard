@@ -29,7 +29,7 @@ public class RelBoardTileController {
      * @param boardId
      * @return Mono<BoardTileResponse>
      */
-    @GetMapping(value = "/board/{boardId}/gridTiles", produces = MediaType.APPLICATION_JSON_VALUE)
+    @GetMapping(value = "/gridTilesByBoard/{boardId}", produces = MediaType.APPLICATION_JSON_VALUE)
     public Mono<BoardTileResponse> getGridTilesByBoard(@PathVariable Long boardId) {
         return Mono.fromCallable(() -> boardTileService.getTilesByBoardId(boardId))
             .subscribeOn(Schedulers.boundedElastic());

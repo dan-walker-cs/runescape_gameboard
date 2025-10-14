@@ -3,8 +3,11 @@ package com.nastyhaze.homeworld.hwe_app.web.response;
 import lombok.Builder;
 
 /**
- *
- * @param id
+ * Response object containing Team-Tile relationship fields for display via UI.
+ * @param relId
+ * @param teamId
+ * @param teamName
+ * @param tileId
  * @param title
  * @param description
  * @param weight
@@ -15,8 +18,11 @@ import lombok.Builder;
  * @param iconPath
  */
 @Builder
-public record TileResponse (
-    Long id,
+public record TeamTileResponse (
+    Long relId,
+    Long teamId,
+    String teamName,
+    Long tileId,
     String title,
     String description,
     int weight,

@@ -255,42 +255,30 @@ UPDATE rel_board_tile
 -- Add missing Warp Tiles
 INSERT INTO tile (title, description, weight, icon_path)
     VALUES ('L1 Warp Tile', 'Good Luck :]', 0, '');
-INSERT INTO rel_event_tile (event_id, tile_id)
-    VALUES (2, 85);
 INSERT INTO rel_board_tile (board_id, tile_id, q_coord, r_coord)
     VALUES (1, 85, 4, -2);
 
 INSERT INTO tile (title, description, weight, icon_path)
     VALUES ('L1 Warp Tile', 'Good Luck :]', 0, '');
-INSERT INTO rel_event_tile (event_id, tile_id)
-    VALUES (2, 86);
 INSERT INTO rel_board_tile (board_id, tile_id, q_coord, r_coord)
     VALUES (1, 86, -4, 2);
 
 INSERT INTO tile (title, description, weight, icon_path)
     VALUES ('L2 Warp Tile', 'Good Luck :]', 0, '');
-INSERT INTO rel_event_tile (event_id, tile_id)
-    VALUES (2, 87);
 INSERT INTO rel_board_tile (board_id, tile_id, q_coord, r_coord)
     VALUES (1, 87, 10, -5);
 
 INSERT INTO tile (title, description, weight, icon_path)
     VALUES ('L2 Warp Tile', 'Good Luck :]', 0, '');
-INSERT INTO rel_event_tile (event_id, tile_id)
-    VALUES (2, 88);
 INSERT INTO rel_board_tile (board_id, tile_id, q_coord, r_coord)
     VALUES (1, 88, -10, 5);
 
 INSERT INTO tile (title, description, weight, icon_path)
     VALUES ('L3 Warp Tile', 'Good Luck :]', 0, '');
-INSERT INTO rel_event_tile (event_id, tile_id)
-    VALUES (2, 89);
 INSERT INTO rel_board_tile (board_id, tile_id, q_coord, r_coord)
     VALUES (1, 89, 13, -6);
 
 INSERT INTO tile (title, description, weight, icon_path)
     VALUES ('L3 Warp Tile', 'Good Luck :]', 0, '');
-INSERT INTO rel_event_tile (event_id, tile_id)
-    VALUES (2, 90);
 INSERT INTO rel_board_tile (board_id, tile_id, q_coord, r_coord)
     VALUES (1, 90, -13, 7);

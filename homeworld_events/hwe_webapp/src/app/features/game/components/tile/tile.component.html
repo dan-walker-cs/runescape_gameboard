@@ -8,13 +8,18 @@
 </svg>
 
 <!-- Display -->
-<div class="tile" (click)="onTileSelect()">
+<div class="tile" 
+    (click)="onSelectTile()"
+    [ngClass]="getVariableTileStyles(tile())">
+
     <svg viewBox="0 0 100 86.6" class="hex">
         <use href="#hex-shape" class="fill" />
         <use href="#hex-shape" class="stroke" />
     </svg>
+
     <div class="tile__icon">
         <img [src]="tile()?.iconPath" />
     </div>
+
     <ng-content></ng-content>
 </div>

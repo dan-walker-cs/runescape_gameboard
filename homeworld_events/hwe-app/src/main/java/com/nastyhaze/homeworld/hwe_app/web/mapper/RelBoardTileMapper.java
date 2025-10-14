@@ -2,7 +2,7 @@ package com.nastyhaze.homeworld.hwe_app.web.mapper;
 
 import com.nastyhaze.homeworld.hwe_app.domain.rel.RelBoardTile;
 import com.nastyhaze.homeworld.hwe_app.exception.MapperSourceException;
-import com.nastyhaze.homeworld.hwe_app.service.dto.GridTile;
+import com.nastyhaze.homeworld.hwe_app.service.dto.GridTileDTO;
 import com.nastyhaze.homeworld.hwe_app.web.response.BoardTileResponse;
 import org.springframework.stereotype.Component;
 
@@ -27,14 +27,14 @@ public class RelBoardTileMapper {
             .getBoard()
             .getId();
 
-        List<GridTile> gridTileList = relEntityList
+        List<GridTileDTO> gridTileDTOList = relEntityList
             .stream()
             .map(this::toGridTile)
             .toList();
 
         return BoardTileResponse.builder()
             .boardId(boardId)
-            .gridTileList(gridTileList)
+            .gridTileList(gridTileDTOList)
             .build();
     }
 
@@ -43,8 +43,8 @@ public class RelBoardTileMapper {
      * @param relEntity
      * @return
      */
-    public GridTile toGridTile(RelBoardTile relEntity) {
-        return GridTile.builder()
+    public GridTileDTO toGridTile(RelBoardTile relEntity) {
+        return GridTileDTO.builder()
             .tileId(relEntity.getTile().getId())
             .qCoord(relEntity.getQCoord())
             .rCoord(relEntity.getRCoord())
