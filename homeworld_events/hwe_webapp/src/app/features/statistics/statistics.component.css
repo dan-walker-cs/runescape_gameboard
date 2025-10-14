@@ -1,0 +1,42 @@
+main {
+    min-height: 0;
+    width: 75em;
+    flex: 1;
+
+    display: flex;
+    flex-direction: column;
+    align-self: center;
+
+    align-items: center;
+}
+
+.main__hero {
+    width: 50%;
+    margin-top: 2em;
+
+    display: flex;
+
+    justify-content: center;
+    align-items: center;
+
+    border-radius: 1em;
+}
+
+.main__section {
+    margin: 2em;
+    padding: 2em;
+
+    display: flex;
+    flex-direction: column;
+
+    border-radius: 1.5em;
+}
+
+.statistics-table {
+    padding: 1em;
+}
+
+.statistics-table td {
+    padding: 0.5em;
+    padding-right: 3em;
+}

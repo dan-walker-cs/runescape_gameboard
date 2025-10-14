@@ -27,6 +27,7 @@ public class TileEvent {
     public void emit(TeamTileResponse event) {
         Sinks.EmitResult temp = sink(event.teamId()).tryEmitNext(event);
         if (temp.isFailure()) System.out.println("Emit failed: " + temp);
+        System.out.println("Emit UPDATE successful.");
     }
 
     /**

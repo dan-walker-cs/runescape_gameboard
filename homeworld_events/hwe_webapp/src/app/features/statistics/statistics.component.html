@@ -1,0 +1,43 @@
+<div class="wrapper">
+    <main class="background--primary">
+        <div class="main__hero background--secondary shadow--primary font--secondary">
+            <h2>Statistics</h2>
+        </div>
+
+        <div class="main__section background--secondary shadow--primary font--primary">
+            <h3>Scores by Team</h3>
+            <table class="statistics-table">
+                <thead class="statistics-table__header">
+                    <tr>
+                    <th>Team</th>
+                    <th>Score</th>
+                    </tr>
+                </thead>
+
+                <tbody>
+                    <tr *ngFor="let teamScore of totalsByTeam();">
+                    <td>{{ teamScore.teamName }}</td>
+                    <td>{{ teamScore.total }}</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <h3>Scores by Player</h3>
+            <table class="statistics-table">
+                <thead class="statistics-table__header">
+                    <tr>
+                    <th>Player</th>
+                    <th>Score</th>
+                    </tr>
+                </thead>
+
+                <tbody>
+                    <tr *ngFor="let playerScore of totalsByPlayer();">
+                    <td>{{ playerScore.playerName }}</td>
+                    <td>{{ playerScore.score }}</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </main>
+</div>

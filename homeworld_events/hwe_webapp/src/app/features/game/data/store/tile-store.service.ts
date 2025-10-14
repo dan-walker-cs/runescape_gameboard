@@ -1,11 +1,13 @@
 import { Injectable, signal, computed, Signal, inject, Injector, DestroyRef } from '@angular/core';
-import { catchError, EMPTY, filter, map, Observable, shareReplay, Subscription, switchMap, take, tap } from 'rxjs';
+import { catchError, EMPTY, filter, firstValueFrom, map, Observable, shareReplay, Subscription, switchMap, take, tap } from 'rxjs';
 import { TileApiService } from '../api/tile-api.service';
 import { TileModel } from '../../models/tile.model';
 import { TeamStore } from './team-store.service';
 import { TileResponse } from '../response/tile-response';
 import { TileUpdateRequest } from '../request/tile-update-request';
 import { takeUntilDestroyed, toObservable } from '@angular/core/rxjs-interop';
+import { EventStore } from './event-store.service';
+import { EventModel } from '../../models/event.model';
 
 /**
  *  Central location to retrieve stateful Tile data on the frontend.
@@ -14,6 +16,7 @@ import { takeUntilDestroyed, toObservable } from '@angular/core/rxjs-interop';
 export class TileStore {
     private tileApi = inject(TileApiService);
     private teamStore = inject(TeamStore);
+    private eventStore = inject(EventStore);
 
     private injector   = inject(Injector);
     private destroyRef = inject(DestroyRef);
@@ -36,6 +39,8 @@ export class TileStore {
     // To be called by dependents in OnInit
     init(): Observable<TileModel[]> {
         if (!this.snapshotInit$) {
+            this.eventStore.init();
+
             this.setDefaultSelectedTeam();
             const selectedTeamId = this.convertSelectedTeamToObservable();
 
@@ -87,7 +92,6 @@ export class TileStore {
     }
 
 
-
     // -- Queries --
     // Fetch a single TileModel
     getTileById(tileId: number): Signal<TileModel | undefined> {
@@ -134,6 +138,22 @@ export class TileStore {
     }
 
     /**
+     * Safely fetch eventId for Tile Updates.
+     * @returns Promise<number>
+     */
+    private async awaitEventId(): Promise<number> {
+        const now = this.eventStore.event()?.id;
+        if (typeof now === 'number') return now;
+
+        return firstValueFrom(toObservable(this.eventStore.event, { injector: this.injector }).pipe(
+            map(e => e?.id ?? null),
+            filter((id): id is number => id !== null),
+            take(1)
+            )
+        );
+    }
+
+    /**
      * Updates UI from Backend
      * @param tileResponse
      */
@@ -154,8 +174,11 @@ export class TileStore {
      * Updates backend from UI
      * @param tileModel
      */
-    private _updatePersistentState(tileModel: TileModel) {
-        let tileUpdateRequest = this._adaptModelToRequest(tileModel);
+    private async _updatePersistentState(tileModel: TileModel) {
+        console.log('TILE-STORE _updatePersistentState() BEFORE eventId'); /** DEBUG */
+        const eventId = await this.awaitEventId();
+        console.log('TILE-STORE _updatePersistentState() AFTER eventId: ', eventId); /** DEBUG */
+        let tileUpdateRequest = this._adaptModelToRequest(eventId, tileModel);
         this.tileApi.update(tileModel.relId, tileUpdateRequest).subscribe({
             next: response => this._updateLocalState(response),
             error: e => console.error('[TileStore] update failed', e)
@@ -212,11 +235,14 @@ export class TileStore {
 
     /**
      * Converts frontend Model object format to backend Request object format.
+     * @param currentEventId
      * @param tileModel
      * @returns TileRequest
      */
-    private _adaptModelToRequest(tileModel: TileModel): TileUpdateRequest {
+    private _adaptModelToRequest(currentEventId: number, tileModel: TileModel): TileUpdateRequest {
+        console.log('TILE-STORE _adaptModelToRequest() currentEventId', currentEventId); /** DEBUG */
         return {
+            eventId: currentEventId,
             isReserved: tileModel.isReserved,
             reservedBy: tileModel.reservedBy ?? null,
             isCompleted: tileModel.isCompleted,

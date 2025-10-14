@@ -1,9 +1,9 @@
 import { Component, inject, OnInit } from "@angular/core";
 import { ERROR_HTML } from "../../shared/constant/common-constant";
-import { EventStore } from "../game/data/store/event-store.service";
 import { DomSanitizer, SafeHtml } from "@angular/platform-browser";
 import { HttpClient } from "@angular/common/http";
 import { catchError, firstValueFrom, of, take } from "rxjs";
+import { EventStore } from "../game/data/store/event-store.service";
 
 @Component({
     selector: 'app-rules',
