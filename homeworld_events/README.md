@@ -44,12 +44,12 @@
 - v1.0: Alpha multi-user compatability release: AWS Infrastructure, CI/CD, remote compatability
 - v1.1: Tile Completion rework: per-team completion & Board render rework: per-team render & Hot-Reloading!
 - v1.2: Objectives rework: Just a read-only version of the board 
-- v1.3: Replace External Links with Statistics - Points per team, points per player (dynamic DESC ordering) **<-- Current**
-- v1.4: Backend logging. Better nginx logging?
+- v1.3: Replace External Links with Statistics - Points per team, points per player (dynamic DESC ordering)
+- v1.4: Backend logging. Better nginx logging?  **<-- Current**
+- v1.5: HTTPS & Security Updates
 - v2.0: Beta multi-user compatability release
 - v2.1: User Acceptance Testing & bugfixes
-- v2.2: HTTPS & Security Updates
-- v3.0: Alpha multi-user compatability release
+- v2.2: Docker & CI/CD automation
+- v3.0: Containerization compatability release
 - v3.1: User Acceptance Testing & bugfixes
-- v3.2: Docker & CI/CD automation
 - v4.0: Full multi-user compatability release (Full Event Release)

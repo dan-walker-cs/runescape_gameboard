@@ -7,6 +7,7 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
+import java.util.Optional;
 
 /**
  *  Repository class to retrieve Event-Player relational data.
@@ -27,4 +28,8 @@ public interface RelEventPlayerRepository extends JpaRepository<RelEventPlayer, 
             AND e.active = true AND t.active = true AND p.active = true
     """)
     List<EventTeamPlayerDTO> findEventTeamPlayerByEventIdAndActiveTrue(Long eventId);
+
+    Optional<RelEventPlayer> findOneByEvent_IdAndPlayer_DisplayNameIgnoreCase(Long eventId, String playerDisplayName);
+
+    Optional<RelEventPlayer> findOneByEventIdAndPlayerId(Long eventId, Long playerId);
 }
