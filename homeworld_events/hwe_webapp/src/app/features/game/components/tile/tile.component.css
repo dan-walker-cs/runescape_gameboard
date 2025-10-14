@@ -56,9 +56,6 @@
 }
 
 @layer difficulty {
-    .tile.diff--none .tile.warp--l1 .hex {
-    }
-
     .tile.diff--easy .hex .stroke {
         fill: rgb(185, 255, 185);
     }
