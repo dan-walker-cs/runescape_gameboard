@@ -38,6 +38,7 @@ public class RelTeamTileService {
 
     private final TileEvent tileEvent;
     private final PlayerService playerService;
+    private final RelEventPlayerService eventPlayerService;
 
     /**
      * Returns a TeamTileResponse containing:
@@ -76,6 +77,9 @@ public class RelTeamTileService {
 
         RelTeamTile target = teamTileRepository.findById(relId)
             .orElseThrow(() -> new CrudServiceException(this.getClass().getName(), CrudOperationType.READ, RelTeamTile.class.getName(), relId));
+
+        // Determines if a score update is needed & applies if so
+        eventPlayerService.updatePlayerScoreByEvent(target, tileUpdateRequest);
 
         target.setIsReserved(tileUpdateRequest.isReserved());
         target.setReservedBy(tileUpdateRequest.isReserved() ? playerService.findByDisplayName(tileUpdateRequest.reservedBy()) : null);
@@ -171,5 +175,25 @@ public class RelTeamTileService {
     private boolean isValidDefault(TileUpdateRequest tileUpdateRequest) {
         return !tileUpdateRequest.isCompleted() && !tileUpdateRequest.isReserved() &&
             CommonUtils.isNullOrBlankString(tileUpdateRequest.completedBy()) && CommonUtils.isNullOrBlankString(tileUpdateRequest.reservedBy());
+    }
+
+    /**
+     * If a Tile is being updated to the Completed State, add score to player's total.
+     * @param relEntity
+     * @param updateRequest
+     * @return boolean
+     */
+    private boolean isCompletingTile(RelTeamTile relEntity, TileUpdateRequest updateRequest) {
+        return !relEntity.getIsCompleted() && updateRequest.isCompleted();
+    }
+
+    /**
+     * If a Tile is being reverted from the Completed State, remove score from player's total.
+     * @param relEntity
+     * @param updateRequest
+     * @return boolean
+     */
+    private boolean isUnCompletingTile(RelTeamTile relEntity, TileUpdateRequest updateRequest) {
+        return relEntity.getIsCompleted() && !updateRequest.isCompleted();
     }
 }

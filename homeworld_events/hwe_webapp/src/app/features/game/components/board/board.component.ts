@@ -4,11 +4,11 @@ import { NgFor, NgStyle } from '@angular/common';
 import { BoardStore } from '../../data/store/board-store.service';
 import { GridTile } from '../../models/grid-tile';
 import { firstValueFrom } from 'rxjs';
-import { EventStore } from '../../data/store/event-store.service';
 import { TileStore } from '../../data/store/tile-store.service';
 import { TeamStore } from '../../data/store/team-store.service';
 import { TileModel } from '../../models/tile.model';
 import { TeamModel } from '../../models/team.model';
+import { EventStore } from '../../data/store/event-store.service';
 
 @Component({
     selector: 'app-board',

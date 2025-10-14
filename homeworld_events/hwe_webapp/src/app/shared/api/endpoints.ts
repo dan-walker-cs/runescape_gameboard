@@ -4,7 +4,8 @@ const api = environment.apiBaseUrl;
 
 export const endpoints = {
     events: {
-        snapshot: `${api}/events/current`
+        snapshot: `${api}/events/current`,
+        scores: (eventId: number) => `${api}/rel/scoresByEvent/${eventId}`
     },
     tiles: {
         snapshotByTeam: (teamId: number) => `${api}/rel/tilesByTeam/${teamId}`,

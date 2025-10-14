@@ -4,6 +4,7 @@ import lombok.Builder;
 
 /**
  * Request object containing Tile entity fields for update via Backend.
+ * @param eventId
  * @param isReserved
  * @param reservedBy
  * @param isCompleted
@@ -11,6 +12,7 @@ import lombok.Builder;
  */
 @Builder
 public record TileUpdateRequest (
+    Long eventId,
     boolean isReserved,
     String reservedBy,
     boolean isCompleted,
