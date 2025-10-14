@@ -8,16 +8,16 @@
                 <thead class="objective-table__header">
                     <tr>
                     <th>Title</th>
+                    <th>Description</th>
                     <th>Point(s)</th>
-                    <th>Completed</th>
                     </tr>
                 </thead>
 
                 <tbody>
-                    <tr *ngFor="let t of tileStore.tiles();">
-                    <td>{{ t.title }}</td>
-                    <td>{{ t.weight }}</td>
-                    <td>{{ t.completedBy ?? '-' }}</td>
+                    <tr *ngFor="let tile of getObjectiveTiles();">
+                    <td>{{ tile.title }}</td>
+                    <td>{{ tile.desc }}</td>
+                    <td>{{ tile.weight }}</td>
                     </tr>
                 </tbody>
             </table>
