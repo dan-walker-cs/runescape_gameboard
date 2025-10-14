@@ -42,8 +42,8 @@
 - v0.8: Alpha interactive Gameboard implementation: hex grid
 - v0.9: Networking Issues, duplicate subscriptions, Angular more-understanding better-er...
 - v1.0: Alpha multi-user compatability release: AWS Infrastructure, CI/CD, remote compatability
-- v1.1: Tile Completion rework: per-team completion & Board render rework: per-team render & Hot-Reloading! **<-- Current**
-- v1.2: Objectives rework: Just a read-only version of the board
+- v1.1: Tile Completion rework: per-team completion & Board render rework: per-team render & Hot-Reloading!
+- v1.2: Objectives rework: Just a read-only version of the board  **<-- Current**
 - v1.3: Replace External Links with Statistics - Points per team, points per player (dynamic DESC ordering)
 - v1.4: Backend logging. Better nginx logging?
 - v2.0: Beta multi-user compatability release
