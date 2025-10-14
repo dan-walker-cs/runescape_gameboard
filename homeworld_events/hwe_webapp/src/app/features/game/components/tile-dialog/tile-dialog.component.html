@@ -22,7 +22,7 @@
     </mat-form-field>
 
     <!-- Checkbox & input control for reservation -->
-    <mat-checkbox *ngIf="showIsReserved()" [formControl]="isReservedCtrl">Reserve?</mat-checkbox>
+    <mat-checkbox *ngIf="showIsReserved()"[formControl]="isReservedCtrl">Reserve?</mat-checkbox>
     <mat-form-field *ngIf="showReservedByInput()">
         <mat-label>Username</mat-label>
         <mat-select [formControl]="reservedByCtrl">
