@@ -58,7 +58,7 @@ public class RelTeamTileService {
     public Flux<ServerSentEvent<TeamTileResponse>> streamByTeamId(Long teamId) {
         return Flux.merge(
             streamSnapshot(teamId),
-            streamLive(),
+            streamLive(teamId),
             streamHeartBeat()
         );
     }
@@ -107,8 +107,8 @@ public class RelTeamTileService {
      * Provides a live stream of updates for subscribers.
      * @return Flux<ServerSentEvent<TeamTileResponse>>
      */
-    private Flux<ServerSentEvent<TeamTileResponse>> streamLive() {
-        return tileEvent.stream()
+    private Flux<ServerSentEvent<TeamTileResponse>> streamLive(Long teamId) {
+        return tileEvent.stream(teamId)
             .map(response -> ServerSentEvent.builder(response)
                 .event(ServerEventType.TILE_UPDATE.desc())
                 .build());

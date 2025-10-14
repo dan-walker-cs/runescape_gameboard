@@ -67,15 +67,26 @@ export class TileStore {
         this.selectedTeamId.set(teamId);
     }
 
-    // API execute by Team data
+    // API execute by Team data - snapshot
     loadSnapshotByTeam(teamId: number): Observable<TileModel[]> {
-        console.log('TILE-STORE loadSnapshotByTeam - teamId: ', teamId); /** DEBUG */
-
         return this.tileApi.getTilesSnapshotByTeam(teamId).pipe(
             map(tileResponseList => tileResponseList.map(tileResponse => this._adaptResponseToModel(tileResponse))),
                 tap(tileModelList => this._tiles.set(tileModelList))
         );
     }
+
+    // API execute by Team data - stream
+    startStreamByTeam(teamId: number): void {
+        this.streamInit$?.unsubscribe();
+        this.streamInit$ = this.tileApi.getTilesStreamingByTeam(teamId).pipe(
+            tap(tileResponse => this._updateLocalState(tileResponse)),
+            catchError(e => { console.error('[TileStore] stream error', e); return EMPTY; }),
+            takeUntilDestroyed(this.destroyRef)
+        )
+        .subscribe();
+    }
+
+
 
     // -- Queries --
     // Fetch a single TileModel

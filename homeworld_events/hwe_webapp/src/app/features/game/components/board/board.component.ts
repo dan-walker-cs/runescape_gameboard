@@ -4,7 +4,6 @@ import { NgFor, NgStyle } from '@angular/common';
 import { BoardStore } from '../../data/store/board-store.service';
 import { GridTile } from '../../models/grid-tile';
 import { firstValueFrom } from 'rxjs';
-import { takeUntilDestroyed, toObservable } from '@angular/core/rxjs-interop';
 import { EventStore } from '../../data/store/event-store.service';
 import { TileStore } from '../../data/store/tile-store.service';
 import { TeamStore } from '../../data/store/team-store.service';
@@ -19,9 +18,7 @@ import { TeamModel } from '../../models/team.model';
     styleUrl: './board.component.css'
 })
 export class BoardComponent implements OnInit{  
-    private injector   = inject(Injector);
-    private destroyRef = inject(DestroyRef);
-
+    // -- Stores --
     // Dynamic immutable data from the backend
     readonly tileStore = inject(TileStore); 
     // Read-once immutable data from the backend
@@ -29,25 +26,28 @@ export class BoardComponent implements OnInit{
     readonly boardStore = inject(BoardStore);
     readonly teamStore = inject(TeamStore);
 
-    // Signals
+    // -- Team Selection Logic --
+    // User-selected Team value from nav (nullable)
     selectedTeam = signal<number | null>(null);
-    private selectedTeamId = computed<number | null>(() => {
-        const teamId = this.selectedTeam();
-        const team = this.teamStore.teams().find(t => t.id === teamId);
-        return team ? team.id : null;
-    });
-    private tilesBySelectedTeam = computed(() => {
-        console.log('START MAP GEN BOARD-COMPONENT FOR ID: ', this.selectedTeamId()); /** DEBUG */
-        console.log('START MAP GEN BOARD-COMPONENT FROM TILES: ', this.tileStore.tiles()); /** DEBUG */
-        const id = this.selectedTeamId();
-        const map = new Map<number, TileModel>();
+    // Provides either the User selection or Default to avoid flicker
+    readonly selectedTeamId = computed<number | null>(() =>
+        this.selectedTeam() ?? this.teamStore.teams().at(0)?.id ?? null
+    );
 
-        if (id == null) return map;
-        for (const t of this.tileStore.tiles()) {
-            if (t.teamId === id) map.set(t.tileId, t);
+    // -- Tile Data Population --
+    // Each time the Team updates, this map is recomputed from the TileStore.
+    // TODO: Worth having a Map<teamId,tileModelList> in TileStore to avoid having to loop comparing teams.
+    private tilesBySelectedTeam = computed(() => {
+        const teamId = this.selectedTeamId();
+        const tileMap = new Map<number, TileModel>();
+
+        if (teamId == null) return tileMap;
+
+        for (const tileModel of this.tileStore.tiles()) {
+            if (tileModel.teamId === teamId) tileMap.set(tileModel.tileId, tileModel);
         }
-        console.log('Computed Tile Map: ', map);    /** DEBUG */
-        return map;
+
+        return tileMap;
     });
 
     async ngOnInit(): Promise<void> {
@@ -61,11 +61,6 @@ export class BoardComponent implements OnInit{
 
         // Set Default team
         this.selectedTeam.set(this.teamStore.teams().at(0)?.id ?? null);
-
-        // Subscribe to Tile updates
-        toObservable(this.tileStore.tiles, { injector: this.injector })
-            .pipe(takeUntilDestroyed(this.destroyRef))
-            .subscribe();
     }
 
     //  -- Board Data Logic --
@@ -86,6 +81,7 @@ export class BoardComponent implements OnInit{
     async selectTeam(teamId: number): Promise<void> {
         await firstValueFrom(this.tileStore.loadSnapshotByTeam(teamId));
         this.selectedTeam.set(teamId);
+        this.tileStore.startStreamByTeam(teamId);
     }
 
     /**
