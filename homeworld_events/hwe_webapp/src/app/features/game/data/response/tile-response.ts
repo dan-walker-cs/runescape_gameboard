@@ -2,7 +2,10 @@
  * Tile Response object for backend GET requests.
  */
 export interface TileResponse {
-    id: number;
+    relId: number;
+    teamId: number;         // TODO: potential cut
+    teamName: string;       // TODO: potential cut
+    tileId: number;         // TODO: potential cut
     title: string;
     description: string;
     weight: number;

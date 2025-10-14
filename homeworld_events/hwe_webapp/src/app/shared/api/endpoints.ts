@@ -3,20 +3,19 @@ import { environment } from '../../../environments/environment';
 const api = environment.apiBaseUrl;
 
 export const endpoints = {
+    events: {
+        snapshot: `${api}/events/current`
+    },
     tiles: {
-        snapshot: `${api}/tiles`,
-        stream: `${api}/tiles/stream`,
-        update: (tileId: number) => `${api}/tiles/${tileId}/update`,
+        snapshotByTeam: (teamId: number) => `${api}/rel/tilesByTeam/${teamId}`,
+        streamingByTeam: (teamId: number) => `${api}/rel/tilesByTeam/${teamId}/streaming`,
+        update: (relId: number) => `${api}/rel/tilesByTeam/${relId}/update`,
     },
     players: {
-        snapshot: `${api}/players`,
-    },
-    events: {
-        snapshot: `${api}/events/current`,
-        playersByTeam: (eventId: number) => `${api}/rel/event/${eventId}/playersByTeam`
+        snapshotByTeam: (eventId: number) => `${api}/rel/playerTeamsByEvent/${eventId}`
     },
     boards: {
         snapshot: (eventId: number) => `${api}/boards/byEvent/${eventId}`,
-        gridTilesByBoard: (boardId: number) => `${api}/rel/board/${boardId}/gridTiles`
+        gridTilesByBoard: (boardId: number) => `${api}/rel/gridTilesByBoard/${boardId}`
     }
 } as const;

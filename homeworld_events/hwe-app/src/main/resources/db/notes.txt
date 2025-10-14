@@ -3,36 +3,25 @@ Tile Updates
 =============
 Frontend
 - Each team tab needs its own endpoint
-- New
+- Endpoint / API audit
+    - Come up with only necessary endpoints
 
 Backend
 - Could render N tabs on the Board page - 1/team
     - Tab Name = team name
     - Only display players from the dropdown belonging to that team
     - Players could switch views to see other teams' progress
-    - Option 1:
-        - Data Requirements:
-            - completed & reserved information must move to rel_tile_player [new table]
-                - tile_id
-                - player_id
-                - is_completed
-                - is_reserved
-                - NO id, active, created_dt, updated_dt
-            - TileResponse still good for Objectives, minus old fields
-            - New Response object required that looks similar to current TileResponse - with tile & player data
-                - string teamName;
-
-            - Board GridTiles do not change
-            - Tile display data will now be built from tile, rel_tile_player
-    - Option 2:
-        - Data Requirements:
-            - team
-                - id, event_id, name
-            - rel_team_player
-                - id, team_id, player_id
-            - rel_team_tile
-                - id, team_id, tile_id, is_reserved, reserved_by, is_completed, completed_by
-            - getTilesByTeam
-            - Downside: Not dynamic, tiles will have to be inserted into the DB per team per event (not a big deal)
-                - If I build an event-maker type interface eventually, this can be done through UI - like everything else config-wise
-
+    - Data Requirements:
+        - tile
+            - remove is_reserved, reserved_by, is_completed, completed_by
+        - rel_event_player
+            - remove team_name
+        - team
+            - id, event_id, name + audit
+        - rel_team_player
+            - id, team_id, player_id + audit
+        - rel_team_tile
+            - id, team_id, tile_id, is_reserved, reserved_by, is_completed, completed_by + audit
+        - getTilesByTeam
+        - Downside: Not dynamic, tiles will have to be inserted into the DB per team per event (not a big deal)
+            - If I build an event-maker type interface eventually, this can be done through UI - like everything else config-wise

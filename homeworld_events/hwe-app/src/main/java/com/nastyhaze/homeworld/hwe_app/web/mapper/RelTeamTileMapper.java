@@ -42,9 +42,9 @@ public class RelTeamTileMapper {
             .description(relEntity.getTile().getDescription())
             .weight(relEntity.getTile().getWeight())
             .isReserved(relEntity.getIsReserved())
-            .reservedBy(relEntity.getReservedBy().getDisplayName())
+            .reservedBy(relEntity.getIsReserved() ? relEntity.getReservedBy().getDisplayName() : null)
             .isCompleted(relEntity.getIsCompleted())
-            .completedBy(relEntity.getCompletedBy().getDisplayName())
+            .completedBy(relEntity.getIsCompleted() ? relEntity.getCompletedBy().getDisplayName() : null)
             .iconPath(relEntity.getTile().getIconPath())
             .build();
     }

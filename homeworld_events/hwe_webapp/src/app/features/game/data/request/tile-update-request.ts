@@ -1,7 +1,7 @@
 /**
  * Tile Request object for backend PATCH/UPDATE requests.
  */
-export interface TileRequest {
+export interface TileUpdateRequest {
     isReserved: boolean;
     reservedBy: string | null;
     isCompleted: boolean;

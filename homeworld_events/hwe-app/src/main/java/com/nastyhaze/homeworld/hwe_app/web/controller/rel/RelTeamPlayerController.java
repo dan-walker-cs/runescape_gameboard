@@ -21,7 +21,7 @@ import java.util.List;
 @RequiredArgsConstructor
 public class RelTeamPlayerController {
 
-    private RelTeamPlayerService teamPlayerService;
+    private final RelTeamPlayerService teamPlayerService;
 
 
     @GetMapping(value = "/playerTeamsByEvent/{eventId}", produces = MediaType.APPLICATION_JSON_VALUE)

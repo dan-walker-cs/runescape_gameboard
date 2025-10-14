@@ -12,5 +12,6 @@ import java.util.List;
 @Builder
 public record TeamPlayerResponse(
     Long teamId,
+    String teamName,
     List<String> playerNames
 ) {}

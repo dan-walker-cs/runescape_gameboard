@@ -1,10 +1,10 @@
 import { computed, inject, Injectable, signal } from "@angular/core";
 import { EventStore } from "./event-store.service";
-import { BoardModel } from "../models/board.model";
-import { BoardResponse } from "./response/board-response";
-import { BoardApiService } from "./board-api.service";
-import { BoardTileResponse } from "./response/board-tile-response";
+import { BoardModel } from "../../models/board.model";
+import { BoardResponse } from "../response/board-response";
+import { BoardTileResponse } from "../response/board-tile-response";
 import { map, Observable, shareReplay, switchMap, take, tap } from "rxjs";
+import { BoardApiService } from "../api/board-api.service";
 
 /**
  *  Central location to retrieve stateful Tile data on the frontend.

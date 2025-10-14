@@ -1,13 +1,15 @@
-import { Component, DestroyRef, inject, Injector, OnInit, signal } from '@angular/core';
+import { Component, computed, DestroyRef, inject, Injector, OnInit, signal } from '@angular/core';
 import { TileComponent } from "../tile/tile.component";
-import { TileStore } from '../../data/tile-store.service';
 import { NgFor, NgStyle } from '@angular/common';
-import { PlayerStore } from '../../data/player-store.service';
-import { BoardStore } from '../../data/board-store.service';
+import { BoardStore } from '../../data/store/board-store.service';
 import { GridTile } from '../../models/grid-tile';
 import { firstValueFrom } from 'rxjs';
 import { takeUntilDestroyed, toObservable } from '@angular/core/rxjs-interop';
-import { EventStore } from '../../data/event-store.service';
+import { EventStore } from '../../data/store/event-store.service';
+import { TileStore } from '../../data/store/tile-store.service';
+import { TeamStore } from '../../data/store/team-store.service';
+import { TileModel } from '../../models/tile.model';
+import { TeamModel } from '../../models/team.model';
 
 @Component({
     selector: 'app-board',
@@ -25,18 +27,42 @@ export class BoardComponent implements OnInit{
     // Read-once immutable data from the backend
     readonly eventStore = inject(EventStore);
     readonly boardStore = inject(BoardStore);
-    readonly playerStore = inject(PlayerStore);
+    readonly teamStore = inject(TeamStore);
 
-    selectedTeam = signal<string | null>(null);
+    // Signals
+    selectedTeam = signal<number | null>(null);
+    private selectedTeamId = computed<number | null>(() => {
+        const teamId = this.selectedTeam();
+        const team = this.teamStore.teams().find(t => t.id === teamId);
+        return team ? team.id : null;
+    });
+    private tilesBySelectedTeam = computed(() => {
+        console.log('START MAP GEN BOARD-COMPONENT FOR ID: ', this.selectedTeamId()); /** DEBUG */
+        console.log('START MAP GEN BOARD-COMPONENT FROM TILES: ', this.tileStore.tiles()); /** DEBUG */
+        const id = this.selectedTeamId();
+        const map = new Map<number, TileModel>();
+
+        if (id == null) return map;
+        for (const t of this.tileStore.tiles()) {
+            if (t.teamId === id) map.set(t.tileId, t);
+        }
+        console.log('Computed Tile Map: ', map);    /** DEBUG */
+        return map;
+    });
 
     async ngOnInit(): Promise<void> {
         // Load snapshots
         await Promise.all([
             firstValueFrom(this.eventStore.init()),
+            firstValueFrom(this.teamStore.init()),
             firstValueFrom(this.boardStore.init()),
-            firstValueFrom(this.playerStore.init()),
             firstValueFrom(this.tileStore.init()),
         ]);
+
+        // Set Default team
+        this.selectedTeam.set(this.teamStore.teams().at(0)?.id ?? null);
+        console.log('BOARD-COMPONENT INIT - this.selectedTeam: ', this.selectedTeam());
+        console.log('BOARD-COMPONENT INIT - this.selectedTeamId: ', this.selectedTeamId());
 
         // Subscribe to Tile updates
         toObservable(this.tileStore.tiles, { injector: this.injector })
@@ -44,14 +70,22 @@ export class BoardComponent implements OnInit{
             .subscribe();
     }
 
-    // Determines number of Team tabs to render for the Board & provides their headers
-    getTeamNames(): string[] {
-        return this.eventStore.teams()
-            .map(teamModel => teamModel.teamName);
+    // Determines number of Team tabs to render for the Board & provides their data
+    getTeams(): TeamModel[] {
+        return this.teamStore.teams();
     }
 
-    selectTeam(teamName: string): void {
-            this.selectedTeam.set(teamName);
+    // Fires when a Team selection is made on the Board Nav
+    async selectTeam(teamId: number): Promise<void> {
+        await firstValueFrom(this.tileStore.loadSnapshotByTeam(teamId));
+        this.selectedTeam.set(teamId);
+        //this.tileStore.startStreamFor(teamId);
+    }
+
+    // Rturns the target Tile data associated with the selected
+    getTileByTeam(tileId: number): TileModel | null {
+        //console.log('BOARD-COMPONENT - getTileByTeam Model: ', this.tilesBySelectedTeam().get(tileId)); /** DEBUG */
+        return this.tilesBySelectedTeam().get(tileId) ?? null;
     }
 
     // Hex Dimensions

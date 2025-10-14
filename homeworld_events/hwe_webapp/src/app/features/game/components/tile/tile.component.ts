@@ -2,9 +2,9 @@ import { Component, computed, HostBinding, inject, Input, Signal } from '@angula
 import { MatDialogModule } from '@angular/material/dialog';
 import { CommonModule } from '@angular/common';
 import { TileModel } from '../../models/tile.model';
-import { TileStore } from '../../data/tile-store.service';
 import { DialogService } from '../../../../core/services/dialog.service';
 import { L1_WARP_TILE_IDS, L2_WARP_TILE_IDS, L3_WARP_TILE_IDS } from './tile.constants';
+import { TileStore } from '../../data/store/tile-store.service';
 
 @Component({
   selector: 'app-tile',
@@ -19,6 +19,7 @@ export class TileComponent {
 
     // Retrieve tile based on id input
     @Input({ required: true }) tileId!: number;
+    @Input() tileData: TileModel | null = null;
     tile: Signal<TileModel | undefined> = computed(() => this.tileStore.getTileById(this.tileId)());
 
     // Retrieve tile fields required for binding
@@ -30,12 +31,12 @@ export class TileComponent {
         // Create a clean snapshot of the current value & select if exists
         const t = this.tile();
         if (!t) return;
-        this.tileStore.setSelected(t.id, true);
+        this.tileStore.setSelected(t.tileId, true);
 
         // Subscribe to dialog changes & update the store to reflect
         this.tileDialogs.openTileDialog(t).subscribe((result?: Partial<TileModel>) => {
             if (result)
-                this.tileStore.updateFromDialog(t.id, {
+                this.tileStore.updateFromDialog(t.tileId, {
                 isReserved: result.isReserved,
                 reservedBy: result.reservedBy ?? null,
                 isCompleted: result.isCompleted,
@@ -43,7 +44,7 @@ export class TileComponent {
                 });
 
             // Unselect Tile on dialog closure
-            this.tileStore.setSelected(t.id, false);
+            this.tileStore.setSelected(t.tileId, false);
         });
     }
 
@@ -53,7 +54,7 @@ export class TileComponent {
     } // TODO: this goes in tile-dialog
 
     getVariableTileStyles(tileModel?: TileModel): Record<string, boolean> {
-        return { ...this.warpClasses(tileModel?.id), ...this.difficultyClasses(tileModel?.weight) };
+        return { ...this.warpClasses(tileModel?.tileId), ...this.difficultyClasses(tileModel?.weight) };
     }
 
     // Defines Warp Tile style classes

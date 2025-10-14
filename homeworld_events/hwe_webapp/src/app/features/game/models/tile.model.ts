@@ -2,7 +2,10 @@
  * Frontend Data Store Tile model-object.
  */
 export interface TileModel {
-    id: number;
+    relId: number;
+    teamId: number;
+    teamName: string;
+    tileId: number;
     title: string;
     desc: string;
     weight: number;

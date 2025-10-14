@@ -28,9 +28,9 @@ CREATE TABLE IF NOT EXISTS rel_team_tile (
     team_id       BIGINT NOT NULL,
     tile_id       BIGINT NOT NULL,
     is_reserved   BOOLEAN NOT NULL DEFAULT FALSE,
-    reserved_by   BIGINT NOT NULL,
+    reserved_by   BIGINT DEFAULT NULL,
     is_completed  BOOLEAN NOT NULL DEFAULT FALSE,
-    completed_by  BIGINT NOT NULL,
+    completed_by  BIGINT DEFAULT NULL,
     active        BOOLEAN NOT NULL DEFAULT TRUE,
     created_dt    TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
     updated_dt    TIMESTAMP DEFAULT NULL,
@@ -43,3 +43,18 @@ CREATE TABLE IF NOT EXISTS rel_team_tile (
     KEY ix_rel_team_tile_reserved_by (reserved_by),
     KEY ix_rel_team_tile_completed_by (completed_by)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+INSERT INTO team (event_id, name)
+    VALUES (1, 'TEAM_ONE');
+INSERT INTO team (event_id, name)
+    VALUES (1, 'TEAM_TWO');
+
+INSERT INTO rel_team_player (team_id, player_id)
+    SELECT 1, id FROM player WHERE id < 6;
+INSERT INTO rel_team_player (team_id, player_id)
+    SELECT 2, id FROM player WHERE id >= 6;
+
+INSERT INTO rel_team_tile (team_id, tile_id)
+    SELECT 1, id FROM tile;
+INSERT INTO rel_team_tile (team_id, tile_id)
+    SELECT 2, id FROM tile;
