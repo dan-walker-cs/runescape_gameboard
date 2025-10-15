@@ -3,6 +3,8 @@ package com.nastyhaze.homeworld.hwe_app.config.filter;
 import org.slf4j.LoggerFactory;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.core.Ordered;
+import org.springframework.core.annotation.Order;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.server.reactive.ServerHttpRequest;
 import org.springframework.web.server.WebFilter;
@@ -19,6 +21,7 @@ public class LogRequestConfig {
     private static final org.slf4j.Logger log = LoggerFactory.getLogger(HTTP_REQUEST_LOGGER_NAME);
 
     @Bean
+    @Order(Ordered.LOWEST_PRECEDENCE)
     public WebFilter logRequestWebFilter() {
         return (exchange, chain) -> {
             long startNanos = System.nanoTime();
