@@ -39,7 +39,7 @@ public class SecurityConfig {
     public CorsConfigurationSource corsConfigurationSource() {
         CorsConfiguration cors = new CorsConfiguration();
 
-        // In DEV, allow all. Prefer whitelisting Angular origin:
+        // Fine for LOCAL & for PROD - no exposure outside of localhost route
         cors.setAllowedOrigins(List.of("http://localhost:4200"));
         cors.setAllowedMethods(List.of("GET", "POST", "PUT", "PATCH", "DELETE", "OPTIONS"));
         cors.setAllowedHeaders(List.of("*"));
