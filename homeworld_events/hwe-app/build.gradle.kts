@@ -43,7 +43,7 @@ dependencies {
 	testRuntimeOnly("org.junit.platform:junit-platform-launcher")
 
     // Additional Dependencies
-    implementation("net.logstash.logback:logstash-logback-encoder")
+    implementation("net.logstash.logback:logstash-logback-encoder:8.1")
 }
 
 tasks.withType<Test> {

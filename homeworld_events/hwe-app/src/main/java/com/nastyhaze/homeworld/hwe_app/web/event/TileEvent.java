@@ -25,9 +25,7 @@ public class TileEvent {
      * @param event
      */
     public void emit(TeamTileResponse event) {
-        Sinks.EmitResult temp = sink(event.teamId()).tryEmitNext(event);
-        if (temp.isFailure()) System.out.println("Emit failed: " + temp);
-        System.out.println("Emit UPDATE successful.");
+        sink(event.teamId()).tryEmitNext(event);
     }
 
     /**
@@ -36,8 +34,6 @@ public class TileEvent {
      * @return Flux<TeamTileResponse>
      */
     public Flux<TeamTileResponse> stream(Long teamId) {
-        return sink(teamId).asFlux()
-            .doOnSubscribe(s -> System.out.println("live stream subscribed for team: " + teamId))
-            .doFinally(s -> System.out.println("live stream unsubscribed for team: " + teamId));
+        return sink(teamId).asFlux();
     }
 }
