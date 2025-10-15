@@ -45,8 +45,8 @@
 - v1.1: Tile Completion rework: per-team completion & Board render rework: per-team render & Hot-Reloading!
 - v1.2: Objectives rework: Just a read-only version of the board 
 - v1.3: Replace External Links with Statistics - Points per team, points per player (dynamic DESC ordering)
-- v1.4: Backend logging. Better nginx logging?  **<-- Current**
-- v1.5: HTTPS & Security Updates
+- v1.4: Backend logging: Logx4j additions - HTTP requests & ids / filter chain updates
+- v1.5: HTTPS & Security Updates   **<-- Current**
 - v2.0: Beta multi-user compatability release
 - v2.1: User Acceptance Testing & bugfixes
 - v2.2: Docker & CI/CD automation

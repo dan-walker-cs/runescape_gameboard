@@ -25,6 +25,7 @@ repositories {
 }
 
 dependencies {
+    // SpringBoot Initializr
 	implementation("org.springframework.boot:spring-boot-starter-actuator")
 	implementation("org.springframework.boot:spring-boot-starter-data-jpa")
 	implementation("org.springframework.boot:spring-boot-starter-security")
@@ -40,6 +41,9 @@ dependencies {
 	testImplementation("io.projectreactor:reactor-test")
 	testImplementation("org.springframework.security:spring-security-test")
 	testRuntimeOnly("org.junit.platform:junit-platform-launcher")
+
+    // Additional Dependencies
+    implementation("net.logstash.logback:logstash-logback-encoder:8.1")
 }
 
 tasks.withType<Test> {
