@@ -4,6 +4,8 @@
 # Note: Spring package name defined in build.gradle.kts
 VERSION="${1:-}"
 ANGULAR_PACKAGE_NAME="hwe_webapp_v${VERSION}.tar.gz"
+S3_ARCHIVE="s3://hwe-app-server-resources/archive/"
+S3_DEST="s3://hwe-app-server-resources/current_version/"
 LOG_FILE="build_${VERSION}.log"
 
 # Error & usage info when missing version arg
@@ -27,7 +29,7 @@ log() {
 
 # Move previous application packages to archive on AWS S3
 log 'Updating AWS S3 archive from current_version..';
-aws s3 mv s3://hwe-app-server-resources/current_version/ s3://hwe-app-server-resources/archive/ \
+aws s3 mv ${S3_DEST} ${S3_ARCHIVE} \
     --recursive \
     --exclude "*" \
     --include "*.jar" \
@@ -48,7 +50,7 @@ tar -czvf ${ANGULAR_PACKAGE_NAME} \
 log 'Complete.';
 
 log 'Uploading frontend application package to S3..';
-aws s3 cp ${ANGULAR_PACKAGE_NAME} s3://hwe-app-server-resources/current_version/
+aws s3 cp ${ANGULAR_PACKAGE_NAME} ${S3_DEST}
 log 'Complete.';
 
 log 'Cleaning up..';
@@ -62,13 +64,13 @@ cd ../hwe-app
 log 'Complete.';
 
 log 'Uploading backend application package to S3..';
-aws s3 cp ./build/libs/ s3://hwe-app-server-resources/current_version/ \
+aws s3 cp ./build/libs/ ${S3_DEST} \
     --recursive \
     --exclude "*-plain.jar"
 log 'Complete.';
 
 log 'Uploading external config files to S3..';
-aws s3 cp ./src/main/resources/environment/logback-spring-prod.xml s3://hwe-app-server-resources/current_version/
+aws s3 cp ./src/main/resources/environment/logback-spring-prod.xml ${S3_DEST}
 log 'Complete.';
 
 log "Local build of Application Version ${VERSION} completed."
