@@ -10,8 +10,8 @@ LOG_FILE="build_${VERSION}.log"
 
 # Error & usage info when missing version arg
 if [[ -z "$VERSION" ]]; then
-  log "Error: version is required." >&2
-  log "Usage: $0 <version>" >&2
+  echo "Error: version is required." >&2
+  echo "Usage: $0 <version>" >&2
   exit 2
 fi
 
