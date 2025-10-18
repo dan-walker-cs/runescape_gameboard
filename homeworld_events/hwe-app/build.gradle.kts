@@ -5,7 +5,6 @@ plugins {
 }
 
 group = "com.nastyhaze.homeworld"
-version = "1.0"
 description = "Web API for HomeWorld clan events in Oldschool Runescape."
 
 java {
@@ -22,6 +21,20 @@ configurations {
 
 repositories {
 	mavenCentral()
+}
+
+val ver: String = (findProperty("version") as String?)
+    ?: System.getenv("VERSION")
+    ?: "NOT_PROVIDED"
+
+version = ver
+
+springBoot {
+    buildInfo {
+        properties {
+            version = ver
+        }
+    }
 }
 
 dependencies {
