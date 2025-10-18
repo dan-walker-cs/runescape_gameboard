@@ -23,8 +23,8 @@ exec >"$LOG_FILE" 2>&1
 
 # use this instead of echo when you want console+log
 log() {
-  # prints args as a single line to both the log file and the console
-  printf '%s\n' "$*" | tee -a "$LOG_FILE" >&3
+  printf '%s\n' "$*"
+  printf '%s\n' "$*" >&3
 }
 
 # Move previous application packages to archive on AWS S3
