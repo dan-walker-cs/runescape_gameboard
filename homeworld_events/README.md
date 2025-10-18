@@ -5,6 +5,16 @@
 - CSS Framework: none
 - Frontend Framework: Angular 17
 - Backend Framework: Spring/SpringBoot
+- CI/CD: Bash
+
+# Cloud Infrastructure
+- Application Packages: AWS S3
+- Database: AWS RDS MySQL
+- Application Hosting: AWS EC2
+- Webserver: Nginx
+- DNS Hosting: AWS Route53
+- Web Security: AWS CloudFront + AWS Certificate Manager
+- CI/CD: Bash scripting (build from local [local -> S3]; deploy on EC2 [S3 -> EC2])
 
 # Git Practices
 - Contributors should follow the Git naming conventions below to have their PRs approved
@@ -12,7 +22,7 @@
 - Release Branches: vx.x (i.e. v0.1)
 - Feature Branches: feature/vx.x/feature_name (i.e. feature/v0.1/overview_template)
 
-# General Requirements
+# Initial Requirements
 - Display all event overview and rules data
 - Display all team & member data
 - Provide interactive tileset
