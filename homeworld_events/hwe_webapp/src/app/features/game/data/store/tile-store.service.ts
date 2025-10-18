@@ -7,7 +7,6 @@ import { TileResponse } from '../response/tile-response';
 import { TileUpdateRequest } from '../request/tile-update-request';
 import { takeUntilDestroyed, toObservable } from '@angular/core/rxjs-interop';
 import { EventStore } from './event-store.service';
-import { EventModel } from '../../models/event.model';
 
 /**
  *  Central location to retrieve stateful Tile data on the frontend.
@@ -175,9 +174,7 @@ export class TileStore {
      * @param tileModel
      */
     private async _updatePersistentState(tileModel: TileModel) {
-        console.log('TILE-STORE _updatePersistentState() BEFORE eventId'); /** DEBUG */
         const eventId = await this.awaitEventId();
-        console.log('TILE-STORE _updatePersistentState() AFTER eventId: ', eventId); /** DEBUG */
         let tileUpdateRequest = this._adaptModelToRequest(eventId, tileModel);
         this.tileApi.update(tileModel.relId, tileUpdateRequest).subscribe({
             next: response => this._updateLocalState(response),
@@ -240,7 +237,6 @@ export class TileStore {
      * @returns TileRequest
      */
     private _adaptModelToRequest(currentEventId: number, tileModel: TileModel): TileUpdateRequest {
-        console.log('TILE-STORE _adaptModelToRequest() currentEventId', currentEventId); /** DEBUG */
         return {
             eventId: currentEventId,
             isReserved: tileModel.isReserved,
