@@ -39,8 +39,7 @@ public class SecurityConfig {
     public CorsConfigurationSource corsConfigurationSource() {
         CorsConfiguration cors = new CorsConfiguration();
 
-        // Fine for LOCAL & for PROD - no exposure outside of localhost route
-        cors.setAllowedOrigins(List.of("http://localhost:4200"));
+        cors.setAllowedOriginPatterns(List.of("http://localhost:4200","https://homeworld-tech.com","https://*.homeworld-tech.com"));
         cors.setAllowedMethods(List.of("GET", "POST", "PUT", "PATCH", "DELETE", "OPTIONS"));
         cors.setAllowedHeaders(List.of("*"));
         cors.setAllowCredentials(true);
