@@ -16,13 +16,18 @@ router-outlet {
     display: content;
 }
 
-.background--primary {
-    --background-color: #ffffff;
-}
-
-.background--secondary {
+/* GreyScale */
+.background--content {
     background-color: rgb(194, 194, 194);
 }
+
+.background--shallow {
+    background-color: rgb(146, 146, 146);
+}
+
+.background--deep {
+    background-color: rgb(255, 255, 255);
+} 
 
 .font--primary {
     font-family: "Michroma", sans-serif;
@@ -79,4 +84,3 @@ router-outlet {
     width: 70%;
     margin-left: 3em;
 }
-/* -- */
