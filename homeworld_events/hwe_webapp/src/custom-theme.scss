@@ -7,29 +7,69 @@
 @use '@angular/material' as mat;
 
 html {
-  @include mat.theme((
-    color: (
-      primary: mat.$azure-palette,
-      tertiary: mat.$blue-palette,
-    ),
-    typography: Roboto,
-    density: 0,
-  ));
+    @include mat.theme((
+        color: (
+        primary: mat.$azure-palette,
+        tertiary: mat.$blue-palette,
+        ),
+        typography: Roboto,
+        density: 0,
+    ));
 }
 
 body {
-  // Default the application to a light color theme. This can be changed to
-  // `dark` to enable the dark color theme, or to `light dark` to defer to the
-  // user's system settings.
-  color-scheme: light;
+    // Default the application to a light color theme. This can be changed to
+    // `dark` to enable the dark color theme, or to `light dark` to defer to the
+    // user's system settings.
+    color-scheme: light;
 
-  // Set a default background, font and text colors for the application using
-  // Angular Material's system-level CSS variables. Learn more about these
-  // variables at https://material.angular.dev/guide/system-variables
-  background-color: var(--mat-sys-surface);
-  color: var(--mat-sys-on-surface);
-  font: var(--mat-sys-body-medium);
+    // Set a default background, font and text colors for the application using
+    // Angular Material's system-level CSS variables. Learn more about these
+    // variables at https://material.angular.dev/guide/system-variables
+    background-color: var(--mat-sys-surface);
+    color: var(--mat-sys-on-surface);
+    font: var(--mat-sys-body-medium);
 
-  // Reset the user agent margin.
-  margin: 0;
+    // Reset the user agent margin.
+    margin: 0;
+}
+
+
+/* ---------- Custom SCSS ---------- */
+@include mat.form-field-density(-5);
+@include mat.input-density(-5);
+@include mat.select-density(-5);
+
+.mat-form-field--no-validation {
+    .mat-mdc-form-field-subscript-wrapper {
+        display: none;
+    }
+}
+
+.mat-select--sm.mat-mdc-select-panel {
+    padding-block: 2px;    /* tighter top/bottom inside panel */
+}
+
+.mat-select--sm .mat-mdc-option {
+    min-height: 1.5em;      /* default ~48px */
+    padding-inline: 8px;   /* tighter left/right if you like */
+}
+
+.mat-select--tinted.mat-mdc-select-panel {
+    /* panel base */
+    background-color: rgb(194, 194, 194);
+
+    /* control selected/hover/focus row backgrounds */
+    --mdc-list-list-item-selected-container-color: rgb(140, 140, 140);
+    --mdc-list-list-item-hover-state-layer-color: rgb(170, 170, 170);
+    --mdc-list-list-item-focus-state-layer-color: rgb(170, 170, 170);
+
+    /* text colors in the list */
+    --mdc-list-list-item-label-text-color: #111;
+}
+
+/* Enforce everride defaults for selected dropdown */
+.mat-select--tinted.mat-mdc-select-panel
+.mat-mdc-option.mdc-list-item--selected { 
+    background-color: rgb(140,140,140) !important; 
 }

@@ -1,25 +1,39 @@
 import { Component, computed, inject, OnInit, signal } from "@angular/core";
-import { firstValueFrom, map, tap } from "rxjs";
+import { firstValueFrom, map, startWith, tap } from "rxjs";
 import { EventStore } from "../game/data/store/event-store.service";
 import { PlayerScoreResponse } from "../game/data/response/player-score-response";
 import { PlayerScoreModel } from "../game/models/player-score.model";
 import { NgFor } from "@angular/common";
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatOptionModule } from '@angular/material/core';
+import { MatSelectModule } from '@angular/material/select';
+import { ReactiveFormsModule, FormControl } from '@angular/forms';
+import { toSignal } from "@angular/core/rxjs-interop";
 
 @Component({
     selector: 'app-statistics',
     standalone: true,
-    imports: [ NgFor ],
+    imports: [ NgFor, MatOptionModule, MatSelectModule, MatFormFieldModule, ReactiveFormsModule ],
     templateUrl: './statistics.component.html',
     styleUrls: [ './statistics.component.css' ]
 })
 export class StatisticsComponent implements OnInit {
+    // -- External Data values --
     readonly eventStore = inject(EventStore);
-
     readonly scores = signal<PlayerScoreModel[]>([]);
 
-    
+    // -- Table Filter values --
+    teamFilterCtrl: FormControl<string> = new FormControl<string>('', { nonNullable: true });
+    readonly teamFilterValues = computed(() => this.getTeamFilterValues());
+    readonly teamFilterSignal = toSignal(
+        this.teamFilterCtrl.valueChanges.pipe(startWith(this.teamFilterCtrl.value)),
+        { initialValue: this.teamFilterCtrl.value }
+    );
+
+    // -- Table Data values --
     readonly totalsByTeam = computed(() => this.getTotalsByTeamDesc());
-    readonly totalsByPlayer = computed(() => this.getTotalsByPlayerDesc());
+    readonly totalsByPlayer = computed(() => this.getFilteredTotalsByPlayerDesc(this.teamFilterSignal()));
+
 
     async ngOnInit(): Promise<void> {
         await firstValueFrom(this.eventStore.init());
@@ -32,18 +46,14 @@ export class StatisticsComponent implements OnInit {
     }
 
     /**
-     * Converts a backend response to associated frontend model.
-     * @param playerScoreResponse
-     * @returns PlayerScoreModel
+     * Provides Team name data for the table filter.
+     * @returns string[]
      */
-    private _adaptResponseToModel(playerScoreResponse: PlayerScoreResponse): PlayerScoreModel {
-        return {
-            teamId: playerScoreResponse.teamId,
-            teamName: playerScoreResponse.teamName,
-            playerId: playerScoreResponse.playerId,
-            playerName: playerScoreResponse.playerName,
-            score: playerScoreResponse.score
-        };
+    private getTeamFilterValues(): string[] {
+        const teamNames: string[] = this.scores()
+            .map(playerScoreModel => playerScoreModel.teamName);
+        
+        return [...new Set(teamNames)];
     }
 
     /**
@@ -65,8 +75,33 @@ export class StatisticsComponent implements OnInit {
      * Returns local scores signal results by Player score DESC.
      * @returns PlayerScoreModel[]
      */
-    private getTotalsByPlayerDesc(): PlayerScoreModel[] {
+    private getFilteredTotalsByPlayerDesc(teamFilterValue: string): PlayerScoreModel[] {
         return [...this.scores()]
-            .sort((a, b) => b.score - a.score);
+            .sort((a, b) => b.score - a.score)
+            .filter(playerScoreModel => this.doTeamFilter(playerScoreModel, teamFilterValue));
+    }
+    
+    /**
+     * Returns whether the given PlayerScoreModel's teamName value appears in the teamFilterCtrl.
+     * @param playerScoreModel 
+     * @returns boolean
+     */
+    private doTeamFilter(playerScoreModel: PlayerScoreModel, teamFilterValue: string): boolean {
+        return teamFilterValue === playerScoreModel.teamName || teamFilterValue === '';
+    }
+
+    /**
+     * Converts a backend response to associated frontend model.
+     * @param playerScoreResponse
+     * @returns PlayerScoreModel
+     */
+    private _adaptResponseToModel(playerScoreResponse: PlayerScoreResponse): PlayerScoreModel {
+        return {
+            teamId: playerScoreResponse.teamId,
+            teamName: playerScoreResponse.teamName,
+            playerId: playerScoreResponse.playerId,
+            playerName: playerScoreResponse.playerName,
+            score: playerScoreResponse.score
+        };
     }
 }

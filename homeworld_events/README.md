@@ -57,8 +57,8 @@
 - v1.3: Replace External Links with Statistics - Points per team, points per player (dynamic DESC ordering)
 - v1.4: Backend logging: Logx4j additions - HTTP requests & ids / filter chain updates
 - v1.5: HTTPS, Security Updates, CI/CD automation
-- v2.0: Beta multi-user compatability release   **<-- Current**
-- v2.1: User Acceptance Testing & bugfixes
+- v2.0: Beta multi-user compatability release
+- v2.1: User Acceptance Testing & bugfixes (& site aesthetics?)   **<-- Current**
 - v2.2: Docker & CI/CD refactoring
 - v3.0: Containerization compatability release
 - v3.1: User Acceptance Testing & bugfixes

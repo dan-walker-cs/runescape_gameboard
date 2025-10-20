@@ -1,10 +1,10 @@
 <div class="wrapper">
-    <main class="background--primary">
-        <div class="main__hero background--secondary shadow--primary font--secondary">
+    <main>
+        <div class="main__hero background--content shadow--primary font--secondary">
             <h2>Statistics</h2>
         </div>
 
-        <div class="main__section background--secondary shadow--primary font--primary">
+        <div class="main__section background--content shadow--primary font--primary">
             <h3>Scores by Team</h3>
             <table class="statistics-table">
                 <thead class="statistics-table__header">
@@ -22,7 +22,18 @@
                 </tbody>
             </table>
 
-            <h3>Scores by Player</h3>
+            <div class="player-scores-header">
+                <h3>Scores by Player</h3>
+                <mat-form-field class="mat-form-field--no-validation mat-form-field--tinted" appearance="outline">
+                    <mat-label>Team</mat-label>
+                    <mat-select [formControl]="teamFilterCtrl" panelClass="mat-select--sm mat-select--tinted">
+                        <mat-option value="">All</mat-option>
+                        <mat-option *ngFor="let name of teamFilterValues()" [value]="name">
+                            {{ name }}
+                        </mat-option>
+                    </mat-select>
+                </mat-form-field>
+            </div>
             <table class="statistics-table">
                 <thead class="statistics-table__header">
                     <tr>
