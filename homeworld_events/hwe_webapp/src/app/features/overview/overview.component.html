@@ -5,16 +5,14 @@
         </div>
         <div class="main__section background--content shadow--primary font--primary">
             <h3>{{ eventStore.event()?.title }}</h3>
-            <hr class="shadow--primary"/>
             <p><b>Start:</b> {{ eventStore.event()?.startDt | date:'short' }}</p>
             <p><b>End:</b> {{ eventStore.event()?.endDt | date:'short' }}</p>
             <br/>
             <div class="main__section__teams" *ngFor="let t of teamStore.teams();">
                 <p><b>Team: {{ t.name }}</b></p>
-                <p><b>Members: </b>{{ t.playerNames.join(" - ") }}</p>
+                <p>{{ t.playerNames.join(" - ") }}</p>
             </div>
             <br/>
-            <hr class="shadow--primary"/>
             <br/>
             <p>Players may find event resources using the navigation at the top of this page.</p>
         </div>
