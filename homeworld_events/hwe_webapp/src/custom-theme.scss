@@ -36,6 +36,23 @@ body {
 
 
 /* ---------- Custom SCSS ---------- */
+@import url('https://fonts.googleapis.com/css2?family=Michroma&family=Press+Start+2P&display=swap');
+
+/* -- General Mat-* font updates */
+.mat-mdc-form-field,
+.mat-mdc-form-field * {
+  font-family: 'Press Start 2P', system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, sans-serif !important; 
+}
+
+.mat-mdc-select,
+.mat-mdc-select *,
+.mat-mdc-select-panel,
+.mat-mdc-option,
+.mat-mdc-option .mdc-list-item__primary-text {
+  font-family: 'Press Start 2P', system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, sans-serif !important;
+}
+
+/* -- Statistics Page Filter */
 @include mat.form-field-density(-5);
 @include mat.input-density(-5);
 @include mat.select-density(-5);
@@ -73,3 +90,13 @@ body {
 .mat-mdc-option.mdc-list-item--selected { 
     background-color: rgb(140,140,140) !important; 
 }
+
+/* Tile Mat Dialog */
+.tile-dialog-container,
+.tile-dialog-container * {
+  font-family: 'Press Start 2P', system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, sans-serif !important;
+}
+
+.tile-dialog-container .mat-mdc-dialog-title      { font-weight: 700; }
+.tile-dialog-container .mat-mdc-dialog-content    { font-size: 1em; line-height: 1.5; }
+.tile-dialog-container .mat-mdc-dialog-actions    { font-weight: 600; }
