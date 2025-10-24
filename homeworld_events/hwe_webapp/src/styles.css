@@ -4,7 +4,8 @@ html, body {
     padding: 0;
     margin: 0;
 
-    font-family: "Michroma", sans-serif;
+    /*font-family: "Michroma", sans-serif;*/
+    font-family: "Press Start 2P", system-ui;
     font-weight: 400;
     font-style: normal;
     font-size: 1em;
@@ -16,28 +17,48 @@ router-outlet {
     display: content;
 }
 
-.background--primary {
-    --background-color: #ffffff;
-}
-
-.background--secondary {
+/* GreyScale */
+.background--content {
     background-color: rgb(194, 194, 194);
 }
 
+.background--shallow {
+    background-color: rgb(146, 146, 146);
+}
+
+.background--deep {
+    background-color: rgb(255, 255, 255);
+} 
+
+/* Option 1: Solarized Dark */
+/* .background--content {
+    background-color: #004052;
+}
+
+.background--shallow {
+    background-color: #002b36;
+}
+
+.background--deep {
+    background-color: #00212b;
+}  */
+
 .font--primary {
-    font-family: "Michroma", sans-serif;
+    font-family: "Press Start 2P", system-ui;
     font-weight: 400;
     font-style: normal;
     font-size: 1em;
     color: black;
+    /*color: #93a1a1;  Solarized Dark */
 }
 
 .font--secondary {
-    font-family: "Michroma", sans-serif;
+    font-family: "Press Start 2P", system-ui;
     font-weight: 400;
     font-style: normal;
     font-size: 1em;
     color: black;
+    /* color: #859900; Solarized Dark */
 }
 
 .shadow--primary {
@@ -45,8 +66,13 @@ router-outlet {
     0 8px 16px rgba(0, 0, 0, 0.15);
 }
 
-/* Better text fit for TileDialog */
+/* Better text fit for Dialog */
 .cdk-overlay-pane.tile-dialog-container .mat-mdc-dialog-content {
+  max-height: none !important;
+  overflow: visible !important;
+}
+
+.cdk-overlay-pane.board-info-dialog-container .mat-mdc-dialog-content {
   max-height: none !important;
   overflow: visible !important;
 }
@@ -79,4 +105,3 @@ router-outlet {
     width: 70%;
     margin-left: 3em;
 }
-/* -- */

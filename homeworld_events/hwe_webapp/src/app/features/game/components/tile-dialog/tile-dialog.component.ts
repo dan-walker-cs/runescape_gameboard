@@ -37,13 +37,14 @@ export class TileDialogComponent {
 
     currentTeam: TeamModel | undefined;
 
-    constructor(public tileDialog: MatDialogRef<TileDialogComponent>, @Inject(MAT_DIALOG_DATA) public tile: TileModel) {
-        this.isReservedCtrl = new FormControl<boolean>(tile?.isReserved ?? false, { nonNullable: true });
-        this.reservedByCtrl = new FormControl<string>(tile?.reservedBy ?? '', { nonNullable: true });
-        this.isCompletedCtrl = new FormControl<boolean>(tile?.isCompleted ?? false, { nonNullable: true });
-        this.completedByCtrl = new FormControl<string>(tile?.completedBy ?? '', { nonNullable: true });
+    constructor(public tileDialog: MatDialogRef<TileDialogComponent>, 
+        @Inject(MAT_DIALOG_DATA) public tile: TileModel) {
+            this.isReservedCtrl = new FormControl<boolean>(tile?.isReserved ?? false, { nonNullable: true });
+            this.reservedByCtrl = new FormControl<string>(tile?.reservedBy ?? '', { nonNullable: true });
+            this.isCompletedCtrl = new FormControl<boolean>(tile?.isCompleted ?? false, { nonNullable: true });
+            this.completedByCtrl = new FormControl<string>(tile?.completedBy ?? '', { nonNullable: true });
 
-        this.currentTeam = this.teamStore.teams().find(team => team.id === tile.teamId);
+            this.currentTeam = this.teamStore.teams().find(team => team.id === tile.teamId);
     }
 
     /** Enter "Edit Mode" */

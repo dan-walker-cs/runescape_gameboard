@@ -1,6 +1,4 @@
 main {
-    --outline: auto; /*debug*/
-    --background-color: rgb(43, 0, 255); /*debug*/
     min-height: 0;
     width: 75em;
     flex: 1;
@@ -13,7 +11,6 @@ main {
 }
 
 .main__hero {
-    --outline:auto; /*debug*/
     width: 50%;
     margin-top: 2em;
 

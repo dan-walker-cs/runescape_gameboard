@@ -1,12 +1,24 @@
 <main class="board" [ngStyle]="boardStyle()">
 
     <div class="board__team-nav">
-        <div class="board__team-nav__tab background--secondary shadow--secondary"
+        <div class="board__team-nav__tab font--secondary background--content shadow--secondary"
             *ngFor="let team of getTeams()"
             (click)="selectTeam(team.id)"
             [attr.aria-selected]="team.id === selectedTeam()">
             <a>{{ team.name }}</a>
         </div>
+    </div>
+
+    <div class="board__info">
+        <button
+            mat-icon-button
+            class="board__info__icon background--content"
+            (click)="triggerBoardInfoDialog()"
+            [class.flash]="!hasSeenBoardInfo()"
+            [attr.aria-selected]="this.isOpenBoardInfo()"
+            aria-label="Board info">
+            <mat-icon>info</mat-icon>
+        </button>
     </div>
 
     <div class="board__origin">

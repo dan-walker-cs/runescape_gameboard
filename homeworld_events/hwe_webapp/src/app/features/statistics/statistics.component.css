@@ -40,3 +40,12 @@ main {
     padding: 0.5em;
     padding-right: 3em;
 }
+
+.player-scores-header {
+    display: flex;
+    flex-direction: row;
+    gap: 1em;
+
+    align-items: center;
+    justify-content: center;
+}

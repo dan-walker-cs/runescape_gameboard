@@ -9,15 +9,25 @@ import { TeamStore } from '../../data/store/team-store.service';
 import { TileModel } from '../../models/tile.model';
 import { TeamModel } from '../../models/team.model';
 import { EventStore } from '../../data/store/event-store.service';
+import { MatIcon } from '@angular/material/icon';
+import { DialogService } from '../../../../core/services/dialog.service';
+
+// TODO: Refactor using service / directive
+const BOARD_INFO_STORAGE_KEY = 'hwe.board.info.seen';
 
 @Component({
     selector: 'app-board',
     standalone: true,
-    imports: [TileComponent, NgFor, NgStyle],
+    imports: [TileComponent, NgFor, NgStyle, MatIcon],
     templateUrl: './board.component.html',
     styleUrl: './board.component.css'
 })
-export class BoardComponent implements OnInit{  
+export class BoardComponent implements OnInit{
+    // -- UI Elements --
+    private readonly boardInfoDialog = inject(DialogService);
+    hasSeenBoardInfo = signal<boolean>(false);
+    isOpenBoardInfo = signal<boolean>(false);
+
     // -- Stores --
     // Dynamic immutable data from the backend
     readonly tileStore = inject(TileStore); 
@@ -61,6 +71,26 @@ export class BoardComponent implements OnInit{
 
         // Set Default team
         this.selectedTeam.set(this.teamStore.teams().at(0)?.id ?? null);
+
+        // Determine if info icon should be flashing
+        this.hasSeenBoardInfo.set(localStorage.getItem(BOARD_INFO_STORAGE_KEY) === '1');
+    }
+
+    // -- Board Info Icon --
+    /**
+     * Provides content & behavior for Board Info Dialog
+     */
+    triggerBoardInfoDialog(): void {
+        this.isOpenBoardInfo.set(true);
+
+        if (!this.hasSeenBoardInfo()) {
+            this.hasSeenBoardInfo.set(true);
+            localStorage.setItem(BOARD_INFO_STORAGE_KEY, '1');
+        }
+
+        this.boardInfoDialog.openBoardInfoDialog()
+            .subscribe()
+            .add(() => this.isOpenBoardInfo.set(false));
     }
 
     //  -- Board Data Logic --

@@ -12,7 +12,7 @@ import { EventStore } from '../game/data/store/event-store.service';
     styleUrls: ['./overview.component.css']
 })
 export class OverviewComponent implements OnInit {
-    // Dynamic immutable Event data from the backend
+    // Dynamic immutable data from the backend
     readonly eventStore = inject(EventStore);
     readonly teamStore = inject(TeamStore);
 
