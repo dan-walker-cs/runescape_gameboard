@@ -64,57 +64,57 @@ UPDATE tile
     WHERE id = 71;
 UPDATE tile
     SET title='Beyond the Shadow of a Doubt',
-        description='Receive any mega-rare purple chest unique from the Tombs of Amascut',
+        description='PRE-REQ: Unlock any ToA tile. Receive any mega-rare purple chest unique from the Tombs of Amascut',
         icon_path=CONCAT(@icon_path_prefix, 'toa_mega', @icon_path_postfix)
     WHERE id = 72;
 UPDATE tile
     SET title='Get It Twisted',
-        description='Receive any mega-rare purple chest unique from the Chambers of Xeric',
+        description='PRE-REQ: Unlock any CoX tile. Receive any mega-rare purple chest unique from the Chambers of Xeric',
         icon_path=CONCAT(@icon_path_prefix, 'cox_mega', @icon_path_postfix)
     WHERE id = 73;
 UPDATE tile
     SET title='A Scythe of Relief',
-        description='Receive any mega-rare purple chest unique from the Theatre of Blood',
+        description='PRE-REQ: Unlock any ToB tile. Receive any mega-rare purple chest unique from the Theatre of Blood',
         icon_path=CONCAT(@icon_path_prefix, 'tob_mega', @icon_path_postfix)
     WHERE id = 74;
 UPDATE tile
     SET title='See Examine Text',
-        description='Loot a Ring of Endurance from the Hallowed Sepulchre',
+        description='PRE-REQ: Unlock any Sepulchre tile. Loot a Ring of Endurance from the Hallowed Sepulchre',
         icon_path=CONCAT(@icon_path_prefix, 'endurance_ring', @icon_path_postfix)
     WHERE id = 75;
 UPDATE tile
     SET title='Ax-ing for a Friend',
-        description='Obtain every component of the Soul Reaper Axe from the Zarosian Generals',
+        description='PRE-REQ: Unlock any DT2 tile. Obtain every component of the Soul Reaper Axe from the Zarosian Generals',
         icon_path=CONCAT(@icon_path_prefix, 'soul_reaper_axe', @icon_path_postfix)
     WHERE id = 76;
 UPDATE tile
     SET title='Smaller Version of the Thing You Killed',
-        description='Receive any boss pet (no chompy chick)',
+        description='PRE-REQ: none. Receive any boss pet (no chompy chick)',
         icon_path=CONCAT(@icon_path_prefix, 'pet_bossing', @icon_path_postfix)
     WHERE id = 77;
 UPDATE tile
     SET title='DoubleUQ & Tenzo 4eva',
-        description='Obtain any Ring Vestige from the Zarosian Generals - plus 3 chromium ingots',
+        description='PRE-REQ: Unlock any DT2 tile. Obtain any Ring Vestige from the Zarosian Generals - plus 3 chromium ingots',
         icon_path=CONCAT(@icon_path_prefix, 'wedding_ring', @icon_path_postfix)
     WHERE id = 78;
 UPDATE tile
     SET title='Prisonbreak!',
-        description='Receive an Enhanced Crystal Weapon Seed from the Gauntlet - either difficulty',
+        description='PRE-REQ: Unlock any Gauntlet tile. Receive an Enhanced Crystal Weapon Seed from the Gauntlet - either difficulty',
         icon_path=CONCAT(@icon_path_prefix, 'enhanced_weapon_seed', @icon_path_postfix)
     WHERE id = 79;
 UPDATE tile
     SET title="Rada's Regret",
-        description='Receive the Golden Tench from Aerial Fishing',
+        description='PRE-REQ: Unlock any Aerial Fishing tile. Receive the Golden Tench from Aerial Fishing',
         icon_path=CONCAT(@icon_path_prefix, 'golden_tench', @icon_path_postfix)
     WHERE id = 80;
 UPDATE tile
     SET title='Do Players Skill?',
-        description='Receive any skilling pet - skilling bosses count! (no chompy chick)',
+        description='PRE-REQ: none. Receive any skilling pet - skilling bosses count! (no chompy chick)',
         icon_path=CONCAT(@icon_path_prefix, 'pet_skilling', @icon_path_postfix)
     WHERE id = 81;
 UPDATE tile
     SET title="Sitter's Euphoria",
-        description='Receive any Sigil from the Corporeal Beast',
+        description='PRE-REQ: Unlock any Corp tile. Receive any Sigil from the Corporeal Beast',
         icon_path=CONCAT(@icon_path_prefix, 'corp_sigil', @icon_path_postfix)
     WHERE id = 82;
 UPDATE tile
