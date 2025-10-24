@@ -1,0 +1,9 @@
+<h3 mat-dialog-title>{{ this.dialogTitle }}</h3>
+
+<div mat-dialog-content>
+    <div [innerHTML]="boardInfoHtml"></div>
+</div>
+
+<div mat-dialog-actions>
+    <button mat-button (click)="onClose()">Close</button>
+</div>

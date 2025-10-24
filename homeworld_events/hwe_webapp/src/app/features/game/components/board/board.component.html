@@ -9,6 +9,18 @@
         </div>
     </div>
 
+    <div class="board__info">
+        <button
+            mat-icon-button
+            class="board__info__icon background--content"
+            (click)="triggerBoardInfoDialog()"
+            [class.flash]="!hasSeenBoardInfo()"
+            [attr.aria-selected]="this.isOpenBoardInfo()"
+            aria-label="Board info">
+            <mat-icon>info</mat-icon>
+        </button>
+    </div>
+
     <div class="board__origin">
         <div class="hex-wrap" 
         *ngFor="let gridTile of gridTiles();"

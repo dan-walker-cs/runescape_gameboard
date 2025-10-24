@@ -50,8 +50,13 @@ router-outlet {
     0 8px 16px rgba(0, 0, 0, 0.15);
 }
 
-/* Better text fit for TileDialog */
+/* Better text fit for Dialog */
 .cdk-overlay-pane.tile-dialog-container .mat-mdc-dialog-content {
+  max-height: none !important;
+  overflow: visible !important;
+}
+
+.cdk-overlay-pane.board-info-dialog-container .mat-mdc-dialog-content {
   max-height: none !important;
   overflow: visible !important;
 }

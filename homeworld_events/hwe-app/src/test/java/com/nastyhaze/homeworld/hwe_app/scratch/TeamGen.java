@@ -2,18 +2,29 @@ package com.nastyhaze.homeworld.hwe_app.scratch;
 
 import java.util.*;
 import java.util.stream.Collectors;
-import java.util.stream.IntStream;
 
 public class TeamGen {
 
-    public static record Gamer(String name, double weight) {}
+    public record Gamer(String name, double weight) {}
+
+    // Constraint names
+    private static final String TENZO = "Tenzo";
+    private static final String DOUBLE_UQ = "DoubleUQ";
+    private static final String KWANZILLA = "Kwanzilla";
+    private static final String NASTY_HAZE = "nasty_haze";
+    private static final String OSMIUM_OATS = "Osmium Oats";
+    private static final String SLORKO = "Slorko";
+    private static final String RUNITE_EGG = "Runite Egg";
+
+    private static final int TEAM_SIZE = 5;     // Each team of 5
+    private static final int TARGET_SUM = 15;   // Total weight 30 ⇒ 15 each
 
     public static void main(String[] args) {
         List<Gamer> gamers = new ArrayList<>(
             List.of(
                 new Gamer("Tenzo", 5),
                 new Gamer("Kwanzilla", 5),
-                new Gamer("nasty_haze", 4),
+                new Gamer("nasty_haze", 5),
                 new Gamer("Osmium Oats", 4),
                 new Gamer("Taxol", 3),
                 new Gamer("DoubleUQ", 3),
@@ -24,144 +35,151 @@ public class TeamGen {
             )
         );
 
-        List<SplitResult> results = generateConstrainedSplits(gamers)
-            .stream()
-            .filter(r -> r.diff <= 1)
-            .toList();
+        // Sort heavy-first to prune faster
+        gamers.sort(Comparator.comparingDouble(Gamer::weight).reversed());
 
-        for (int i = 0; i < results.size(); i++) {
-            SplitResult r = results.get(i);
-            System.out.printf(
-                "Option %d: \nSet1: %s (w=%f), \nSet2: %s (w=%f) → diff=%f%n",
-                i, names(r.set1()), r.weight1(), names(r.set2()), r.weight2(), r.diff()
-            );
+        // Fix Tenzo to Team 1 to avoid mirrored duplicates
+        Gamer tenzo = gamers.stream()
+            .filter(g -> g.name().equals(TENZO))
+            .findFirst().orElseThrow();
+        Set<Gamer> team1 = new HashSet<>();
+        Set<Gamer> team2 = new HashSet<>();
+        team1.add(tenzo);
+
+        List<Gamer> order = new ArrayList<>(gamers);
+        order.remove(tenzo);
+
+        List<TeamSplit> solutions = new ArrayList<>();
+        backtrack(order, 0, team1, team2,
+            (int) tenzo.weight(), 0,
+            solutions);
+
+        System.out.println("Total solutions: " + solutions.size());
+        for (int i = 0; i < solutions.size(); i++) {
+            TeamSplit s = solutions.get(i);
+            System.out.println("\nOption " + (i + 1) + ":");
+            printTeam("Team 1", s.team1);
+            printTeam("Team 2", s.team2);
+            int sum1 = sum(s.team1);
+            int sum2 = sum(s.team2);
+            System.out.println("Weight difference: " + Math.abs(sum1 - sum2));
         }
     }
 
-    public static record SplitResult(List<Gamer> set1, List<Gamer> set2, double weight1, double weight2, double diff) {}
+    private static void backtrack(
+        List<Gamer> gamers, int idx,
+        Set<Gamer> t1, Set<Gamer> t2,
+        int sum1, int sum2,
+        List<TeamSplit> out
+    ) {
+        // Size pruning
+        if (t1.size() > TEAM_SIZE || t2.size() > TEAM_SIZE) return;
+        int remaining = gamers.size() - idx;
+        if (t1.size() + remaining < TEAM_SIZE) return;
+        if (t2.size() + remaining < TEAM_SIZE) return;
 
-    private static String names(List<Gamer> gamers) {
-        return gamers.stream().map(Gamer::name).toList().toString();
-    }
+        // Weight pruning
+        if (sum1 > TARGET_SUM || sum2 > TARGET_SUM) return;
 
-    /**
-     * Constraints:
-     * 1) Two weight-5 gamers are split across teams.
-     * 2) "Tenzo" and "DoubleUQ" are on the SAME team.
-     * 3) "Kwanzilla", "nasty_haze", and "Osmium Oats" are NOT all on the same team.
-     */
-    private static List<SplitResult> generateConstrainedSplits(List<Gamer> gamers) {
-        if (gamers.size() != 10) throw new IllegalArgumentException("Expected exactly 10 gamers.");
-
-        // Two 5-weights
-        List<Integer> fives = new ArrayList<>(2);
-        for (int i = 0; i < gamers.size(); i++) if (gamers.get(i).weight() == 5) fives.add(i);
-        if (fives.size() != 2) throw new IllegalArgumentException("Expected exactly two gamers with weight == 5.");
-
-        // Indices for required names
-        int tenzoIdx = indexOfName(gamers, "Tenzo");
-        int doubleUqIdx = indexOfName(gamers, "DoubleUQ");
-        int kwanzillaIdx = indexOfName(gamers, "Kwanzilla");
-        int nastyIdx = indexOfName(gamers, "nasty_haze");
-        int oatsIdx = indexOfName(gamers, "Osmium Oats");
-
-        if (tenzoIdx < 0 || doubleUqIdx < 0 || kwanzillaIdx < 0 || nastyIdx < 0 || oatsIdx < 0)
-            throw new IllegalArgumentException("One or more required names not found.");
-
-        // Other 5-weight must oppose Tenzo (with current data, that's Kwanzilla)
-        Integer otherFiveIdx = fives.get(0).equals(tenzoIdx) ? fives.get(1) : fives.get(0);
-
-        // Remaining pool EXCLUDING: Tenzo, DoubleUQ, other 5-weight
-        int[] rem = IntStream.range(0, gamers.size())
-            .filter(i -> i != tenzoIdx && i != doubleUqIdx && i != otherFiveIdx)
-            .toArray();
-
-        // We fixed 2 in Set1 (Tenzo + DoubleUQ) and 1 in Set2 (other 5-weight).
-        // Choose 3 of the remaining for Set1.
-        int k = 3, m = rem.length; // m == 7
-        int[] comb = IntStream.range(0, k).toArray();
-
-        List<SplitResult> out = new ArrayList<>();
-        while (true) {
-            boolean[] used = new boolean[gamers.size()];
-            List<Gamer> set1 = new ArrayList<>(5);
-            List<Gamer> set2 = new ArrayList<>(5);
-
-            // Force Tenzo and DoubleUQ together (Set1)
-            set1.add(gamers.get(tenzoIdx));     used[tenzoIdx] = true;
-            set1.add(gamers.get(doubleUqIdx));  used[doubleUqIdx] = true;
-
-            // Choose remaining 3 for Set1
-            for (int idx : comb) {
-                int gi = rem[idx];
-                set1.add(gamers.get(gi));
-                used[gi] = true;
+        if (idx == gamers.size()) {
+            if (t1.size() == TEAM_SIZE && t2.size() == TEAM_SIZE &&
+                sum1 == TARGET_SUM && sum2 == TARGET_SUM &&
+                constraintsHold(t1, t2)) {
+                out.add(new TeamSplit(new ArrayList<>(t1), new ArrayList<>(t2)));
             }
-
-            // Force the other 5-weight to Set2
-            set2.add(gamers.get(otherFiveIdx)); used[otherFiveIdx] = true;
-
-            // Fill rest of Set2
-            for (int i = 0; i < gamers.size(); i++) if (!used[i]) set2.add(gamers.get(i));
-
-            // ----- NEW CONSTRAINT CHECK -----
-            // "Kwanzilla", "nasty_haze", and "Osmium Oats" cannot all be on the same team
-            if (teamHasAll(set1, "Kwanzilla", "nasty_haze", "Osmium Oats")
-                || teamHasAll(set2, "Kwanzilla", "nasty_haze", "Osmium Oats")) {
-                // Skip this split
-            } else {
-                double w1 = set1.stream().mapToDouble(Gamer::weight).sum();
-                double w2 = set2.stream().mapToDouble(Gamer::weight).sum();
-                out.add(new SplitResult(set1, set2, w1, w2, Math.abs(w1 - w2)));
-            }
-            // --------------------------------
-
-            // Next combination (3-of-7)
-            int i = k - 1;
-            while (i >= 0 && comb[i] == i + m - k) i--;
-            if (i < 0) break;
-            comb[i]++;
-            for (int j = i + 1; j < k; j++) comb[j] = comb[j - 1] + 1;
+            return;
         }
-        return out;
+
+        Gamer g = gamers.get(idx);
+        int w = (int) g.weight();
+
+        // Try Team 1
+        if (t1.size() < TEAM_SIZE) {
+            t1.add(g);
+            if (partialConstraintsHold(t1, t2)) {
+                backtrack(gamers, idx + 1, t1, t2, sum1 + w, sum2, out);
+            }
+            t1.remove(g);
+        }
+
+        // Try Team 2
+        if (t2.size() < TEAM_SIZE) {
+            t2.add(g);
+            if (partialConstraintsHold(t1, t2)) {
+                backtrack(gamers, idx + 1, t1, t2, sum1, sum2 + w, out);
+            }
+            t2.remove(g);
+        }
     }
 
-    private static boolean teamHasAll(List<Gamer> team, String... names) {
-        Set<String> present = team.stream().map(Gamer::name).collect(Collectors.toSet());
-        for (String n : names) if (!present.contains(n)) return false;
+    // ===== Constraints =====
+    private static boolean constraintsHold(Set<Gamer> t1, Set<Gamer> t2) {
+        return partialConstraintsHold(t1, t2);
+    }
+
+    private static boolean partialConstraintsHold(Set<Gamer> t1, Set<Gamer> t2) {
+        // Tenzo & DoubleUQ must be together
+        if (!sameTeamIfBothAssigned(t1, t2, TENZO, DOUBLE_UQ)) return false;
+        // Slorko & Runite Egg cannot be together
+        if (!notBothOnSameTeam(t1, t2, SLORKO, RUNITE_EGG)) return false;
+        // Trio restriction
+        if (!notAllThreeOnSameTeam(t1, KWANZILLA, NASTY_HAZE, OSMIUM_OATS)) return false;
+        if (!notAllThreeOnSameTeam(t2, KWANZILLA, NASTY_HAZE, OSMIUM_OATS)) return false;
         return true;
     }
 
-    private static int indexOfName(List<Gamer> gamers, String name) {
-        for (int i = 0; i < gamers.size(); i++) {
-            if (gamers.get(i).name().equals(name)) return i;
-        }
-        return -1;
+    private static boolean sameTeamIfBothAssigned(Set<Gamer> t1, Set<Gamer> t2, String a, String b) {
+        boolean a1 = in(t1, a), a2 = in(t2, a);
+        boolean b1 = in(t1, b), b2 = in(t2, b);
+        if ((a1 || a2) && (b1 || b2))
+            return (a1 && b1) || (a2 && b2);
+        return true;
     }
 
-    // (Unchanged utility if you keep it)
-    private static List<SplitResult> generateSplits(List<Gamer> gamers) {
-        List<SplitResult> results = new ArrayList<>();
-        int n = gamers.size();
-        int k = n / 2;
-        int[] indices = IntStream.range(0, k).toArray();
+    private static boolean notBothOnSameTeam(Set<Gamer> t1, Set<Gamer> t2, String a, String b) {
+        boolean a1 = in(t1, a), a2 = in(t2, a);
+        boolean b1 = in(t1, b), b2 = in(t2, b);
+        return !((a1 && b1) || (a2 && b2));
+    }
 
-        while (true) {
-            List<Gamer> set1 = new ArrayList<>();
-            List<Gamer> set2 = new ArrayList<>(gamers);
-            for (int i = 0; i < k; i++) set1.add(gamers.get(indices[i]));
-            set2.removeAll(set1);
+    private static boolean notAllThreeOnSameTeam(Set<Gamer> team, String n1, String n2, String n3) {
+        int c = 0;
+        if (in(team, n1)) c++;
+        if (in(team, n2)) c++;
+        if (in(team, n3)) c++;
+        return c < 3;
+    }
 
-            double w1 = set1.stream().mapToDouble(Gamer::weight).sum();
-            double w2 = set2.stream().mapToDouble(Gamer::weight).sum();
-            results.add(new SplitResult(set1, set2, w1, w2, Math.abs(w1 - w2)));
+    private static boolean in(Set<Gamer> team, String name) {
+        for (Gamer g : team)
+            if (g.name().equals(name))
+                return true;
+        return false;
+    }
 
-            int i = k - 1;
-            while (i >= 0 && indices[i] == i + n - k) i--;
-            if (i < 0) break;
-            indices[i]++;
-            for (int j = i + 1; j < k; j++) indices[j] = indices[j - 1] + 1;
+    // ===== Output Helpers =====
+    private static int sum(Collection<Gamer> team) {
+        return (int) Math.round(team.stream().mapToDouble(Gamer::weight).sum());
+    }
+
+    private static void printTeam(String label, Collection<Gamer> team) {
+        int s = sum(team);
+        // Sort by weight DESC, then name ASC
+        String line = team.stream()
+            .sorted(Comparator.comparingDouble(Gamer::weight).reversed()
+                .thenComparing(Gamer::name))
+            .map(g -> g.name() + " [" + (int) g.weight() + "]")
+            .collect(Collectors.joining(", "));
+        System.out.println(label + " (" + s + "): " + line);
+    }
+
+    private static final class TeamSplit {
+        final List<Gamer> team1;
+        final List<Gamer> team2;
+
+        TeamSplit(List<Gamer> t1, List<Gamer> t2) {
+            this.team1 = t1;
+            this.team2 = t2;
         }
-        return results;
     }
 }
