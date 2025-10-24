@@ -100,3 +100,13 @@ body {
 .tile-dialog-container .mat-mdc-dialog-title      { font-weight: 700; }
 .tile-dialog-container .mat-mdc-dialog-content    { font-size: 1em; line-height: 1.5; }
 .tile-dialog-container .mat-mdc-dialog-actions    { font-weight: 600; }
+
+/* BoardInfo Mat Dialog */
+.board-info-dialog-container,
+.board-info-dialog-container * {
+  font-family: 'Press Start 2P', system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, sans-serif !important;
+}
+
+.board-info-dialog-container .mat-mdc-dialog-title      { font-weight: 700; }
+.board-info-dialog-container .mat-mdc-dialog-content    { font-size: 1em; line-height: 1.5; }
+.board-info-dialog-container .mat-mdc-dialog-actions    { font-weight: 600; }
