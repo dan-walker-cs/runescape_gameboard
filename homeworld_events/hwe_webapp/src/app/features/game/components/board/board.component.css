@@ -76,6 +76,7 @@
 .flash {
   animation: pulse-ring 1.2s ease-in-out infinite;
   box-shadow: 0 0 0 0 #ffcc00;
+  background-color: #ffe374;
 }
 
 @keyframes pulse-ring {

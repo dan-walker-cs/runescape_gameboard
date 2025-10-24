@@ -50,9 +50,11 @@ INSERT INTO team (event_id, name)
     VALUES (1, 'TEAM_TWO');
 
 INSERT INTO rel_team_player (team_id, player_id)
-    SELECT 1, id FROM player WHERE id < 6;
+    SELECT 1, id FROM player
+        WHERE display_name IN("Tenzo","Osmium Oats","DoubleUQ","TheATFisgay","Slorko");
 INSERT INTO rel_team_player (team_id, player_id)
-    SELECT 2, id FROM player WHERE id >= 6;
+    SELECT 2, id FROM player
+        WHERE display_name IN("Kwanzilla","nasty_haze","Taxol","AddyAddicted","Runite Egg");
 
 INSERT INTO rel_team_tile (team_id, tile_id)
     SELECT 1, id FROM tile;
