@@ -99,7 +99,7 @@ UPDATE rel_board_tile
     SET q_coord = 8, r_coord = -3
     WHERE tile_id = 33;
 UPDATE rel_board_tile
-    SET q_coord = 8, r_coord = -4
+    SET q_coord = -12, r_coord = 7
     WHERE tile_id = 34;
 UPDATE rel_board_tile
     SET q_coord = 8, r_coord = -5
@@ -162,7 +162,7 @@ UPDATE rel_board_tile
     SET q_coord = -11, r_coord = 5
     WHERE tile_id = 54;
 UPDATE rel_board_tile
-    SET q_coord = -12, r_coord = 7
+    SET q_coord = 8, r_coord = -4
     WHERE tile_id = 55;
 UPDATE rel_board_tile
     SET q_coord = -12, r_coord = 5
@@ -177,79 +177,79 @@ UPDATE rel_board_tile
     SET q_coord = -12, r_coord = 6
     WHERE tile_id = 59;
 UPDATE rel_board_tile
-    SET q_coord = -4, r_coord = 7
+    SET q_coord = -8, r_coord = 10
     WHERE tile_id = 60;
 UPDATE rel_board_tile
-    SET q_coord = 0, r_coord = 5
+    SET q_coord = -7, r_coord = 10
     WHERE tile_id = 61;
 UPDATE rel_board_tile
-    SET q_coord = 4, r_coord = 3
+    SET q_coord = -7, r_coord = 9
     WHERE tile_id = 62;
 UPDATE rel_board_tile
-    SET q_coord = -6, r_coord = 8
+    SET q_coord = -5, r_coord = 9
     WHERE tile_id = 63;
 UPDATE rel_board_tile
-    SET q_coord = -5, r_coord = 8
+    SET q_coord = -4, r_coord = 8
     WHERE tile_id = 64;
 UPDATE rel_board_tile
-    SET q_coord = -5, r_coord = 7
+    SET q_coord = -5, r_coord = 8
     WHERE tile_id = 65;
 UPDATE rel_board_tile
-    SET q_coord = -4, r_coord = 8
+    SET q_coord = 4, r_coord = 4
     WHERE tile_id = 66;
 UPDATE rel_board_tile
-    SET q_coord = -4, r_coord = 6
+    SET q_coord = 5, r_coord = 4
     WHERE tile_id = 67;
 UPDATE rel_board_tile
-    SET q_coord = -3, r_coord = 7
+    SET q_coord = 5, r_coord = 3
     WHERE tile_id = 68;
 UPDATE rel_board_tile
-    SET q_coord = -3, r_coord = 6
+    SET q_coord = 7, r_coord = 3
     WHERE tile_id = 69;
 UPDATE rel_board_tile
-    SET q_coord = -2, r_coord = 6
+    SET q_coord = 8, r_coord = 2
     WHERE tile_id = 70;
 UPDATE rel_board_tile
-    SET q_coord = -1, r_coord = 6
+    SET q_coord = 7, r_coord = 2
     WHERE tile_id = 71;
 UPDATE rel_board_tile
-    SET q_coord = -1, r_coord = 5
+    SET q_coord = -2, r_coord = 8
     WHERE tile_id = 72;
 UPDATE rel_board_tile
-    SET q_coord = 0, r_coord = 6
+    SET q_coord = 0, r_coord = 8
     WHERE tile_id = 73;
 UPDATE rel_board_tile
-    SET q_coord = 0, r_coord = 4
+    SET q_coord = 2, r_coord = 6
     WHERE tile_id = 74;
 UPDATE rel_board_tile
-    SET q_coord = 1, r_coord = 5
+    SET q_coord = -1, r_coord = 7
     WHERE tile_id = 75;
 UPDATE rel_board_tile
-    SET q_coord = 1, r_coord = 4
+    SET q_coord = 0, r_coord = 7
     WHERE tile_id = 76;
 UPDATE rel_board_tile
-    SET q_coord = 2, r_coord = 4
+    SET q_coord = 1, r_coord = 6
     WHERE tile_id = 77;
 UPDATE rel_board_tile
-    SET q_coord = 3, r_coord = 4
+    SET q_coord = 0, r_coord = 6
     WHERE tile_id = 78;
 UPDATE rel_board_tile
-    SET q_coord = 3, r_coord = 3
+    SET q_coord = -1, r_coord = 6
     WHERE tile_id = 79;
 UPDATE rel_board_tile
-    SET q_coord = 4, r_coord = 4
+    SET q_coord = 1, r_coord = 5
     WHERE tile_id = 80;
 UPDATE rel_board_tile
-    SET q_coord = 4, r_coord = 2
+    SET q_coord = 0, r_coord = 5
     WHERE tile_id = 81;
 UPDATE rel_board_tile
-    SET q_coord = 5, r_coord = 3
+    SET q_coord = 0, r_coord = 4
     WHERE tile_id = 82;
 UPDATE rel_board_tile
-    SET q_coord = 5, r_coord = 2
+    SET q_coord = -6, r_coord = 9
     WHERE tile_id = 83;
 UPDATE rel_board_tile
-    SET q_coord = 6, r_coord = 2
+    SET q_coord = 6, r_coord = 3
     WHERE tile_id = 84;
 
 -- Add missing Warp Tiles

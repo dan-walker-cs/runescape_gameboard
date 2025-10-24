@@ -102,17 +102,17 @@ INSERT INTO tile (`title`, `description`, `weight`, `icon_path`)
     VALUES ('My Fucking Eyes: Zamorak',"Receive any non-shard unique from K'ril Tsutsaroth in the God Wars Dungeon",2,
     CONCAT(@icon_path_prefix, 'zammy_gwd', @icon_path_postfix));
 INSERT INTO tile (`title`, `description`, `weight`, `icon_path`)
-    VALUES ('Jaw Dropper','Receive the Basilisk Jaw as a drop from Basilisk Knights',2,
-    CONCAT(@icon_path_prefix, 'basilisk_jaw', @icon_path_postfix));
+    VALUES ('Sit Rat','Receive any non-bracelet unique from Revenants in the Wilderness',2,
+    CONCAT(@icon_path_prefix, 'ice_barrage', @icon_path_postfix));
 INSERT INTO tile (`title`, `description`, `weight`, `icon_path`)
     VALUES ('My Fucking Eyes: Bandos','Receive any non-shard unique from General Graardor in the God Wars Dungeon',2,
     CONCAT(@icon_path_prefix, 'bandos_gwd', @icon_path_postfix));
 INSERT INTO tile (`title`, `description`, `weight`, `icon_path`)
-    VALUES ('Four Quartz Tuah Gallon: Blood','Receive the Blood Quartz as a drop from Vardorvis',2,
-    CONCAT(@icon_path_prefix, 'dt2_blood', @icon_path_postfix));
+    VALUES ('Four Quartz Tuah Gallon: Blood','Receive any non-tablet/orb unique from Vardorvis - ingots count!',2,
+    CONCAT(@icon_path_prefix, 'vardorvis', @icon_path_postfix));
 INSERT INTO tile (`title`, `description`, `weight`, `icon_path`)
-    VALUES ('Four Quartz Tuah Gallon: Smoke','Receive the Smoke Quartz as a drop from The Leviathan',2,
-    CONCAT(@icon_path_prefix, 'dt2_smoke', @icon_path_postfix));
+    VALUES ('Four Quartz Tuah Gallon: Smoke','Receive any non-tablet/orb unique from The Leviathan - ingots count!',2,
+    CONCAT(@icon_path_prefix, 'leviathan', @icon_path_postfix));
 INSERT INTO tile (`title`, `description`, `weight`, `icon_path`)
     VALUES ('Wizardous Digit','Receive a Seers Ring from Dagannoth Prime',2,
     CONCAT(@icon_path_prefix, 'seer_ring', @icon_path_postfix));
@@ -138,11 +138,11 @@ INSERT INTO tile (`title`, `description`, `weight`, `icon_path`)
     VALUES ('My Fucking Eyes: Armadyl',"Receive any non-shard unique from Kree'arra in the God Wars Dungeon",2,
     CONCAT(@icon_path_prefix, 'arma_gwd', @icon_path_postfix));
 INSERT INTO tile (`title`, `description`, `weight`, `icon_path`)
-    VALUES ('Four Quartz Tuah Gallon: Shadow','Receive the Shadow Quartz as a drop from The Whisperer',2,
-    CONCAT(@icon_path_prefix, 'dt2_shadow', @icon_path_postfix));
+    VALUES ('Four Quartz Tuah Gallon: Shadow','Receive any non-tablet/orb unique from The Whisperer - ingots count!',2,
+    CONCAT(@icon_path_prefix, 'whisperer', @icon_path_postfix));
 INSERT INTO tile (`title`, `description`, `weight`, `icon_path`)
-    VALUES ('Four Quartz Tuah Gallon: Ice','Receive the Ice Quartz as a drop from Duke Sucellus',2,
-    CONCAT(@icon_path_prefix, 'dt2_ice', @icon_path_postfix));
+    VALUES ('Four Quartz Tuah Gallon: Ice','Receive any non-tablet/orb unique from Duke Sucellus - ingots count!',2,
+    CONCAT(@icon_path_prefix, 'duke', @icon_path_postfix));
 INSERT INTO tile (`title`, `description`, `weight`, `icon_path`)
     VALUES ('Californian Art','Receive either the ring, claws, or hilt from Callisto or Artio',2,
     CONCAT(@icon_path_prefix, 'callisto', @icon_path_postfix));
