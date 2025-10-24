@@ -18,7 +18,7 @@ router-outlet {
 }
 
 /* GreyScale */
-/* .background--content {
+.background--content {
     background-color: rgb(194, 194, 194);
 }
 
@@ -28,10 +28,10 @@ router-outlet {
 
 .background--deep {
     background-color: rgb(255, 255, 255);
-}  */
+} 
 
 /* Option 1: Solarized Dark */
-.background--content {
+/* .background--content {
     background-color: #004052;
 }
 
@@ -41,15 +41,15 @@ router-outlet {
 
 .background--deep {
     background-color: #00212b;
-} 
+}  */
 
 .font--primary {
     font-family: "Press Start 2P", system-ui;
     font-weight: 400;
     font-style: normal;
     font-size: 1em;
-    /* color: black; */
-    color: #93a1a1; /* Solarized Dark */
+    color: black;
+    /*color: #93a1a1;  Solarized Dark */
 }
 
 .font--secondary {
@@ -57,8 +57,8 @@ router-outlet {
     font-weight: 400;
     font-style: normal;
     font-size: 1em;
-    /* color: black; */
-    color: #859900; /* Solarized Dark */
+    color: black;
+    /* color: #859900; Solarized Dark */
 }
 
 .shadow--primary {
