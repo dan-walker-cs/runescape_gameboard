@@ -1,10 +1,10 @@
-<div class="wrapper">
+<div class="wrapper background--content">
     <main>
-        <div class="main__hero background--content shadow--primary font--secondary">
+        <div class="main__hero font--content-header">
             <h2>Overview</h2>
         </div>
-        <div class="main__section background--content shadow--primary font--primary">
-            <h3>{{ eventStore.event()?.title }}</h3>
+        <div class="main__section font--content">
+            <h3 class="font--content-header">{{ eventStore.event()?.title }}</h3>
             <p><b>Start:</b> {{ eventStore.event()?.startDt | date:'short' }}</p>
             <p><b>End:</b> {{ eventStore.event()?.endDt | date:'short' }}</p>
             <br/>

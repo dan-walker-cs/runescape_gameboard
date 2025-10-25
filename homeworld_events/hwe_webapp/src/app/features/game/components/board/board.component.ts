@@ -166,7 +166,6 @@ export class BoardComponent implements OnInit{
         return {
             width:  `${Math.ceil(bbox.width)}px`,
             height: `${Math.ceil(bbox.height)}px`,
-            // overflow: 'hidden' // TODO: This is overflowing. I really just want to extend board to fill app__main..
         };
     }
 
