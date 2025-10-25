@@ -48,8 +48,8 @@ nav {
     display: flex;
     flex-direction: row;
 
-    justify-content: flex-end;  /* items align to the right inside nav */
-    margin-left: auto;          /* ⟵ pushes the whole nav to the far right */
+    justify-content: flex-end;
+    margin-left: auto;
     gap: 1em;   
 }
 
