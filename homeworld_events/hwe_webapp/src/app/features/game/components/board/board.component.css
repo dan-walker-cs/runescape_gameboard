@@ -30,7 +30,7 @@
 
     align-items: center;
     justify-content: center;
-    gap: 10em;
+    gap: 4em;
 
     padding: 2em;
 }
@@ -44,9 +44,9 @@
 }
 
 .board__team-nav__tab a {
-    width: 100%;
+    width: 50%;
 
-    font-size: 0.75em;
+    font-size: 0.6em;
     font-weight: 300;
     text-decoration: none;
 
@@ -54,12 +54,11 @@
     align-items: center;
     justify-content: center;
 
-    padding: 1rem 5em;
+    padding: 1em 2em;
     border: 2px solid #90C040;
     border-radius: 9999px;
     text-decoration: none;
 
-    /* smoother interactions without layout jump */
     transition: transform .2s ease, 
                 background-color .2s ease, 
                 border-color .2s ease, 
@@ -67,7 +66,7 @@
 }
 
 .board__team-nav__tab[aria-selected="true"] a {
-    font-size: 0.8em;
+    font-size: 0.7em;
     text-shadow: 2px 2px 4px rgba(0,0,0,0.5),
         -2px -2px 4px rgba(255,255,255,0.5);
     border: 4px solid #12615a;
@@ -75,7 +74,7 @@
 }
 
 .board__team-nav__tab:hover a {
-    font-size: 0.8em;
+    font-size: 0.7em;
     cursor: pointer;
     transition: font-size 0.25s ease;
     border: 4px solid #12615a;
@@ -85,24 +84,29 @@
     transition: font-size 0.5s ease;
 }
 
+.board__info {
+    width: 20%;
+    display: flex;
+    flex-direction: row;
 
+    justify-content: end;
+}
 
+.board__info__icon {
+    width: 5em;
+    background-color: #8b8885;
+    color: black;
 
+    border: none;
+    border-radius: 1.5em;
+}
 
-
-
-
-
-
-
-
-/* Animations for team nav & info icon */
 .board__info__icon:active,
 .board__info__icon:hover,
 .board__info__icon[aria-selected="true"] {
     transform: scale(1.1);
     cursor: pointer;
-    filter: invert(1);
+    filter:opacity(50%);
     text-shadow:
         2px 2px 4px rgba(0,0,0,.5),
         -2px -2px 4px rgba(255,255,255,.5);
@@ -110,12 +114,7 @@
 
 .board__info__icon:active {
     transform: scale(1.1);
-    filter: invert(1);
-}
-
-.board__info__icon {
-    border: none;
-    border-radius: 1.5em;
+    filter:opacity(50%);
 }
 
 .flash {

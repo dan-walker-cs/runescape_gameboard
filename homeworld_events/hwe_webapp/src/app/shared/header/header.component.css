@@ -43,13 +43,14 @@ header {
 }
 
 nav {
-    width: 65%;
+    width: 60%;
 
     display: flex;
     flex-direction: row;
 
     justify-content: flex-end;
     margin-left: auto;
+    padding-right: 1em;
     gap: 1em;   
 }
 
@@ -64,7 +65,7 @@ nav {
 .header__nav__item a {
     width: 100%;
 
-    font-size: 0.75em;
+    font-size: 0.6em;
     font-weight: 300;
     text-decoration: none;
 
@@ -85,7 +86,7 @@ nav {
 }
 
 .header__nav__item a.active {
-    font-size: 0.8em;
+    font-size: 0.7em;
     text-shadow: 2px 2px 4px rgba(0,0,0,0.5),
         -2px -2px 4px rgba(255,255,255,0.5);
     border: 4px solid #12615a;
@@ -93,7 +94,7 @@ nav {
 }
 
 .header__nav__item :hover {
-    font-size: 0.8em;
+    font-size: 0.7em;
     cursor: pointer;
     transition: font-size 0.25s ease;
     border: 4px solid #12615a;
