@@ -1,11 +1,11 @@
-<div class="wrapper">
+<div class="wrapper background--content">
     <main>
-        <div class="main__hero background--content shadow--primary font--secondary">
+        <div class="main__hero font--content-header">
             <h2>Statistics</h2>
         </div>
 
-        <div class="main__section background--content shadow--primary font--primary">
-            <h3>Scores by Team</h3>
+        <div class="main__section font--content">
+            <h3 class="font--content-header">Scores by Team</h3>
             <table class="statistics-table">
                 <thead class="statistics-table__header">
                     <tr>
@@ -23,7 +23,7 @@
             </table>
 
             <div class="player-scores-header">
-                <h3>Scores by Player</h3>
+                <h3 class="font--content-header">Scores by Player</h3>
                 <mat-form-field class="mat-form-field--no-validation mat-form-field--tinted" appearance="outline">
                     <mat-label>Team</mat-label>
                     <mat-select [formControl]="teamFilterCtrl" panelClass="mat-select--sm mat-select--tinted">
