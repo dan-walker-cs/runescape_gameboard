@@ -97,9 +97,49 @@ body {
   font-family: 'Press Start 2P', system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, sans-serif !important;
 }
 
-.tile-dialog-container .mat-mdc-dialog-title      { font-weight: 700; }
-.tile-dialog-container .mat-mdc-dialog-content    { font-size: 1em; line-height: 1.5; }
-.tile-dialog-container .mat-mdc-dialog-actions    { font-weight: 600; }
+.tile-dialog-container .mdc-dialog__surface {
+    position: relative;
+    background: 
+        url('assets/layout/content_background_top.gif') no-repeat top center,
+        url('assets/layout/content_background_bottom.gif') no-repeat bottom center,
+        url('assets/layout/content_background.gif') repeat-y top center;
+    background-size: 100% auto, 100% auto, 96% auto;
+
+    --cap-h: 2em;
+    padding-top: var(--cap-h);
+    padding-bottom: var(--cap-h);
+
+    border-radius: 1em;
+    overflow: hidden;
+
+    background-origin: padding-box, padding-box, content-box;
+    background-clip:   padding-box, padding-box, content-box;
+}
+
+.tile-dialog-container .mat-mdc-dialog-title      { 
+    font-weight: 700;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center; 
+
+    background: transparent;
+    margin: 1em;
+}
+
+.tile-dialog-container .mat-mdc-dialog-content    { 
+    font-size: 1em; 
+    line-height: 1.5; 
+
+    background: transparent;
+    margin: 0 1em;
+}
+
+.tile-dialog-container .mat-mdc-dialog-actions    { 
+    font-weight: 600; 
+    background: transparent;
+}
 
 /* BoardInfo Mat Dialog */
 .board-info-dialog-container,
@@ -107,6 +147,47 @@ body {
   font-family: 'Press Start 2P', system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, sans-serif !important;
 }
 
-.board-info-dialog-container .mat-mdc-dialog-title      { font-weight: 700; }
-.board-info-dialog-container .mat-mdc-dialog-content    { font-size: 1em; line-height: 1.5; }
-.board-info-dialog-container .mat-mdc-dialog-actions    { font-weight: 600; }
+.board-info-dialog-container .mdc-dialog__surface {
+    position: relative;
+    background: 
+        url('assets/layout/content_background_top.gif') no-repeat top center,
+        url('assets/layout/content_background_bottom.gif') no-repeat bottom center,
+        url('assets/layout/content_background.gif') repeat-y top center;
+    background-size: 100% auto, 100% auto, 96% auto;
+
+    --cap-h: 2em;
+    padding-top: var(--cap-h);
+    padding-bottom: var(--cap-h);
+
+    border-radius: 1em;
+    overflow: hidden;
+
+    background-origin: padding-box, padding-box, content-box;
+    background-clip:   padding-box, padding-box, content-box;
+}
+
+.board-info-dialog-container .mat-mdc-dialog-title      { 
+    font-weight: 700; 
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center; 
+
+    background: transparent;
+    margin: 1em;
+}
+
+.board-info-dialog-container .mat-mdc-dialog-content    { 
+    font-size: 1em; 
+    line-height: 1.5; 
+
+    background: transparent;
+    margin: 0 1em;
+}
+
+.board-info-dialog-container .mat-mdc-dialog-actions    { 
+    font-weight: 600; 
+
+    background: transparent;
+}
