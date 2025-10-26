@@ -1,7 +1,7 @@
 <main class="board" [ngStyle]="boardStyle()">
 
     <div class="board__team-nav">
-        <div class="board__team-nav__tab font--secondary background--content shadow--secondary"
+        <div class="board__team-nav__tab font--secondary shadow--secondary"
             *ngFor="let team of getTeams()"
             (click)="selectTeam(team.id)"
             [attr.aria-selected]="team.id === selectedTeam()">
@@ -12,7 +12,7 @@
     <div class="board__info">
         <button
             mat-icon-button
-            class="board__info__icon background--content"
+            class="board__info__icon"
             (click)="triggerBoardInfoDialog()"
             [class.flash]="!hasSeenBoardInfo()"
             [attr.aria-selected]="this.isOpenBoardInfo()"

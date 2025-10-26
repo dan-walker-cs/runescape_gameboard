@@ -1,4 +1,4 @@
-@layer base, difficulty, state, warp, live;
+@layer base, difficulty, warp, state, live;
 
 @layer base {
     /* Make the tile component fill its parent wrapper */
@@ -14,8 +14,8 @@
         width: 100%;
         height: 100%;
 
-        stroke: #333; 
-        stroke-width: 3;
+        stroke: #ffffff; 
+        stroke-width: 0.5em;
         stroke-linejoin: round;
 
         fill: #e6f3ff;
@@ -53,53 +53,102 @@
         max-height: 100%;
         object-fit: contain;
     }
+
+    .tile__lock {
+        position: absolute;
+        left: 50%;
+        top: 50%;
+        transform: translate(-25%, -90%);
+
+        display: none;
+        align-items: center;
+        justify-content: center;
+
+        background: none;
+
+        z-index: 3;
+        pointer-events: none; 
+    }
+
+    .tile__lock mat-icon {
+        color: #fff !important;
+    }
 }
 
 @layer difficulty {
+    .tile.diff--none .hex .stroke {
+        fill: #0e2e28;
+        stroke: #12615a;
+        stroke-width: 1em;
+        fill-opacity: 100%;
+        
+    }
+
     .tile.diff--easy .hex .stroke {
-        fill: rgb(185, 255, 185);
+        fill: #799f36;
+        fill-opacity: 70%;
     }
 
     .tile.diff--med .hex .stroke {
-        fill: rgb(250, 250, 149);
+        fill: #b16f33;
+        fill-opacity: 70%;
     }
 
     .tile.diff--hard .hex .stroke {
-        fill: rgb(255, 190, 190);
+        fill: #a5403f;
+        fill-opacity: 70%;
     }
 }
 
 @layer state {
     :host(.complete) .tile .hex .stroke {
-        stroke: #3f841c; 
-        fill: #50ff3c;
+        fill: #12615a;
+        fill-opacity: 100%;
+        stroke: none;
+    }
+
+    :host(.complete) .tile .tile__icon img {
+        filter: grayscale(100%);
+        transition: filter .2s ease;
     }
 
     :host(.reserve) .tile .hex .stroke {
-        stroke: #287783; 
-        fill: #7bdcff;
+        stroke-width: 1em;
+        fill: #0d6186;
+    }
+
+    :host(.reserve) .tile .tile__icon {
+        filter: grayscale(100%);
+        transition: filter .2s ease;
+    }
+
+    :host(.reserve) .tile__lock {
+        display: flex;
     }
 }
 
 @layer warp {
     .tile.warp--l1 .hex .stroke {
-        stroke: #008ddf;
+        stroke: #39e339 !important;
+        fill: #799f36;
         animation: strokePulse var(--pulse-dur, 3s) ease-in-out infinite;
     }
 
     .tile.warp--l2 .hex .stroke {
-        stroke: #e100ff;
+        stroke: #ff7b00 !important;
+        fill: #b16f33;
         animation: strokePulse var(--pulse-dur, 3s) ease-in-out infinite;
     }
 
     .tile.warp--l3 .hex .stroke {
-        stroke: #ff0000;
+        stroke: #ff0051 !important;
+        fill: #a5403f;
         animation: strokePulse var(--pulse-dur, 3s) ease-in-out infinite;
     }
 
     @keyframes strokePulse {
-        0%, 100% { stroke-width: var(--min-stroke, 5); }
-        50%      { stroke-width: var(--max-stroke, 15); }
+        0%, 100% { stroke-width: var(--min-stroke, 8); }
+        50%      { stroke-width: var(--max-stroke, 20); }
     }
 }
 

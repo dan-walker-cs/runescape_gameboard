@@ -149,12 +149,13 @@ export class BoardComponent implements OnInit{
         const bbox = this.getBBoxFromTiles();
         const cx = bbox?.cx ?? 0;
         const cy = bbox?.cy ?? 0;
+        const gutter = 2;
 
         return {
             left: `${x - cx}px`,
             top: `${y - cy}px`,
-            width: `${this.hexW}px`,
-            height: `${this.hexH}px`,
+            width: `${this.hexW - gutter}px`,
+            height: `${this.hexH - gutter}px`,
         };
     }
 
@@ -166,7 +167,6 @@ export class BoardComponent implements OnInit{
         return {
             width:  `${Math.ceil(bbox.width)}px`,
             height: `${Math.ceil(bbox.height)}px`,
-            // overflow: 'hidden' // TODO: This is overflowing. I really just want to extend board to fill app__main..
         };
     }
 

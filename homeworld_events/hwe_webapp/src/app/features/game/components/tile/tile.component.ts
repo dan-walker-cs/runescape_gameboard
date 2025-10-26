@@ -5,11 +5,12 @@ import { TileModel } from '../../models/tile.model';
 import { DialogService } from '../../../../core/services/dialog.service';
 import { L1_WARP_TILE_IDS, L2_WARP_TILE_IDS, L3_WARP_TILE_IDS } from './tile.constants';
 import { TileStore } from '../../data/store/tile-store.service';
+import { MatIcon } from '@angular/material/icon';
 
 @Component({
   selector: 'app-tile',
   standalone: true,
-  imports: [CommonModule, MatDialogModule],
+  imports: [ CommonModule, MatDialogModule, MatIcon ],
   templateUrl: './tile.component.html',
   styleUrl: './tile.component.css'
 })

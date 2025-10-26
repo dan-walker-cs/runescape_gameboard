@@ -1,8 +1,5 @@
 footer {
     height: 10%;
-    /* width: 80%;
-
-    justify-self: center; */
 
     display: flex;
     flex-direction: row;
