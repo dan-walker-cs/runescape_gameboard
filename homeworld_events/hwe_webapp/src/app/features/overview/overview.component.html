@@ -7,10 +7,21 @@
             <h3 class="font--content-header">{{ eventStore.event()?.title }}</h3>
             <p><b>Start:</b> {{ eventStore.event()?.startDt | date:'short' }}</p>
             <p><b>End:</b> {{ eventStore.event()?.endDt | date:'short' }}</p>
+            <p><b>Registration Fee:</b> {{ eventStore.event()?.buyIn }}</p>
             <br/>
+
+            <h3 class="font--content-header">Teams</h3>
             <div class="main__section__teams" *ngFor="let t of teamStore.teams();">
-                <p><b>Team: {{ t.name }}</b></p>
+                <p><b>{{ t.name }}</b></p>
                 <p>{{ t.playerNames.join(" - ") }}</p>
+            </div>
+            <br/>
+
+            <h3 class="font--content-header">Donors</h3>
+            <div class="main__section__donors">
+                <p>CTFU: 6 bonds [5 to winning team + 1 to highest score]</p>
+                <p>Tenzo: 13m</p>
+                <p>nasty_haze: 30m [15m to highest score on each team]</p>
             </div>
             <br/>
             <br/>
